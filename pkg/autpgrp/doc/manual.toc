@@ -1,0 +1,11 @@
+\chapcontents {1}{Introduction}{3}
+\chapcontents {2}{The automorphism group method}{4}
+\chapcontents {3}{The underlying function}{6}
+\chapcontents {4}{Influencing the algorithm}{8}
+\seccontents {4.1}{Outline of the algorithm} {8}
+\seccontents {4.2}{The initialisation step} {9}
+\seccontents {4.3}{Stabilisers in matrix groups} {9}
+\seccontents {4.4}{Searching for a small generating set} {10}
+\seccontents {4.5}{An interactive version of the algorithm} {10}
+\seccontents {4.6}{Acknowledgements} {11}
+\chapcontents {}{Index}{12}

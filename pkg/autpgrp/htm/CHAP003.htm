@@ -1,0 +1,102 @@
+<html><head><title>[AutPGrp] 3 The underlying function</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>3 The underlying function</h1><p>
+<p>
+Underlying the method installation for <code>AutomorphismGroup</code>
+is the function <code>AutomorphismGroupPGroup</code>. This function is
+intended for expert users who wish to influence the steps of 
+the algorithm.  Note also that <code>AutomorphismGroup</code> will always
+choose default values.
+<p>
+<a name = ""></a>
+<li><code>AutomorphismGroupPGroup( </code><var>G</var><code> [,</code><var>flag</var><code>] ) F</code>
+<p>
+The input is a finite <var>p</var>-group as above and an optional <var>flag</var> 
+which can be true or false. Here the filters for <var>G</var> need not be 
+set, but they should be true for <var>G</var>. The possible values for <var>flag</var>
+are considered later in Chapter <a href="CHAP004.htm">Influencing the algorithm</a>. If 
+<var>flag</var> is not supplied, the algorithm proceeds similarly to the 
+method installed for <code>AutomorphismGroup</code>, but it produces slightly 
+more detailed output.  The output of the function is a record 
+which contains the following fields:
+<p>
+<p>
+<dl compact>
+<dt><code>glAutos</code> <dd> a set of automorphisms which together with <code>agAutos</code>
+            generate the automorphism group;
+<p>
+<dt><code>glOrder</code> <dd> an integer whose product with the <code>agOrders</code> gives
+            the size of the automorphism group;
+<p>
+<dt><code>agAutos</code> <dd> a polycyclic generating sequence for a soluble normal
+            subgroup of the automorphism group;
+<p>
+<dt><code>agOrder</code> <dd> the relative orders corresponding to <code>agAutos</code>;
+<p>
+<dt><code>one</code>     <dd> the identity element of the automorphism group;
+<p>
+<dt><code>group</code>   <dd> the underlying group <var>G</var>;
+<p>
+<dt><code>size</code>    <dd> the size of the automorphism group.
+</dl>
+<p>
+We do not return an automorphism group in the standard form 
+because we wish to distinguish between <code>agAutos</code> and <code>glAutos</code>; 
+the latter act non-trivially on the Frattini quotient of <var>G</var>. This
+hybrid-group description of the automorphism group permits more 
+efficient computations with it. The following function converts
+the output of <code>AutomorphismGroupPGroup</code> to the output of 
+<code>AutomorphismGroup</code>.
+<p>
+<a name = ""></a>
+<li><code>ConvertHybridAutGroup( </code><var>A</var><code> ) F</code>
+<p>
+<pre>
+gap&gt; RequirePackage("autpgrp");
+#I ------------ The AutPGrp package --------------
+#I -- Computing automorphism groups of p-groups -- 
+true
+
+gap&gt; H := SmallGroup (729, 34);
+&lt;pc group of size 729 with 6 generators&gt;
+
+gap&gt; A := AutomorphismGroupPGroup(H);
+rec( glAutos := [  ], 
+     glOrder := 1, 
+     agAutos := [ Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1^2, f2, f3^2*f4, f4, f5^2*f6, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f2^2, f1, f3*f5^2, f5^2, f4*f6^2, f6^2 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1^2, f2^2, f3*f4^2*f5^2*f6, f4^2*f6, f5^2*f6, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1*f3, f2, f3*f5^2, f4*f6^2, f5, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ])
+                    -&gt; [ f1, f2*f3, f3*f4, f4, f5*f6, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1*f4, f2, f3*f6^2, f4, f5, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1, f2*f4, f3, f4, f5, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1*f5, f2, f3, f4, f5, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1, f2*f5, f3*f6, f4, f5, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1*f6, f2, f3, f4, f5, f6 ], 
+                  Pcgs([ f1, f2, f3, f4, f5, f6 ]) 
+                    -&gt; [ f1, f2*f6, f3, f4, f5, f6 ] ], 
+     agOrder := [ 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3 ], 
+     one     := IdentityMapping( &lt;pc group of size 729 with 6 generators&gt; ), 
+     group   := &lt;pc group of size 729 with 6 generators&gt;, 
+     size    := 52488 )
+
+gap&gt; ConvertHybridAutGroup( A );
+&lt;group of size 52488 with 11 generators&gt;
+</pre>
+<p>
+<p>
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<address>AutPGrp manual<br>August 2003
+</address></body></html>

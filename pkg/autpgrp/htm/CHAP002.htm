@@ -1,0 +1,96 @@
+<html><head><title>[AutPGrp] 2 The automorphism group method</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>2 The automorphism group method</h1><p>
+<p>
+The <font face="Gill Sans,Helvetica,Arial">AutPGrp</font> package installs a method for <code>AutomorphismGroup</code> for a 
+finite <var>p</var>-group (see also Section&nbsp;<a href="../../../doc/htm/ref/CHAP038.htm#SECT007">Groups of Automorphisms</a> 
+in the <font face="Gill Sans,Helvetica,Arial">GAP</font> Reference Manual).
+<p>
+<a name = ""></a>
+<li><code>AutomorphismGroup( </code><var>G</var><code> ) M</code>
+<p>
+The input is a finite <var>p</var>-group <var>G</var>. If the filters <code>IsPGroup</code>, 
+<code>IsFinite</code> and <code>CanEasilyComputePcgs</code> are set and true for <var>G</var>, 
+the method selection of <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 invokes this algorithm. 
+<p>
+The output of the method is an automorphism group, whose generators 
+are given in <code>GroupHomomorphismByImages</code> format in terms of their action 
+on the underlying group <var>G</var>. 
+<p>
+<a name = "I0"></a>
+
+<a name = ""></a>
+<li><code>InfoAutGrp V</code>
+<p>
+This is a <font face="Gill Sans,Helvetica,Arial">GAP</font> InfoClass (these are described in Chapter&nbsp;<a href="../../../doc/htm/ref/CHAP007.htm#SECT004">Info Functions</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> Reference Manual). By assigning an <var>info-level</var>
+in the range 1 to 4 via
+<p>
+<code>SetInfoLevel(InfoAutGrp, </code><var>info-level</var><code>)</code>
+<p>
+varying levels of information on the progress of 
+the computation, will be obtained. 
+<p>
+<pre>
+gap&gt; RequirePackage("autpgrp");
+#I ------------ The AutPGrp package --------------
+#I -- Computing automorphism groups of p-groups -- 
+true
+
+gap&gt; G := SmallGroup( 32, 15 );
+&lt;pc group of size 32 with 5 generators&gt;
+
+gap&gt; SetInfoLevel( InfoAutGrp, 1 );
+
+gap&gt; AutomorphismGroup(G);
+#I  step 1: 2^2 -- init automorphisms 
+#I  step 2: 2^2 -- aut grp has size 2
+#I  step 3: 2^1 -- aut grp has size 32
+#I  final step: convert
+&lt;group of size 64 with 6 generators&gt;
+</pre>
+<p>
+The algorithm proceeds by induction down the lower <var>p</var>-central
+series of <var>G</var> and the information corresponds 
+to the steps of this induction. In the following example we observe
+that the method also accepts permutation groups as input, provided
+they satisfy the required filters.
+<p>
+<pre>
+gap&gt; G := DihedralGroup( IsPermGroup, 2^5 );
+Group([ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16), 
+  ( 2,16)( 3,15)( 4,14)( 5,13)( 6,12)( 7,11)( 8,10) ])
+gap&gt; IsPGroup(G);
+true
+gap&gt; CanEasilyComputePcgs(G);
+true
+gap&gt; IsFinite(G);
+true
+gap&gt; AutomorphismGroup(G);
+#I  step 1: 2^2 -- init automorphisms 
+#I  step 2: 2^1 -- aut grp has size 2
+#I  step 3: 2^1 -- aut grp has size 8
+#I  step 4: 2^1 -- aut grp has size 32
+#I  final step: convert
+&lt;group of size 128 with 7 generators&gt;
+gap&gt; A := last;;
+gap&gt; A.1;
+Pcgs([ ( 2,16)( 3,15)( 4,14)( 5,13)( 6,12)( 7,11)( 8,10), 
+  ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16), 
+  ( 1, 3, 5, 7, 9,11,13,15)( 2, 4, 6, 8,10,12,14,16), 
+  ( 1, 5, 9,13)( 2, 6,10,14)( 3, 7,11,15)( 4, 8,12,16), 
+  ( 1, 9)( 2,10)( 3,11)( 4,12)( 5,13)( 6,14)( 7,15)( 8,16) ]) -&gt; 
+[ ( 1, 2)( 3,16)( 4,15)( 5,14)( 6,13)( 7,12)( 8,11)( 9,10), 
+  ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16), 
+  ( 1, 3, 5, 7, 9,11,13,15)( 2, 4, 6, 8,10,12,14,16), 
+  ( 1, 5, 9,13)( 2, 6,10,14)( 3, 7,11,15)( 4, 8,12,16), 
+  ( 1, 9)( 2,10)( 3,11)( 4,12)( 5,13)( 6,14)( 7,15)( 8,16) ]
+gap&gt; Order(A.1);
+16
+</pre>
+<p>
+<p>
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<address>AutPGrp manual<br>August 2003
+</address></body></html>
