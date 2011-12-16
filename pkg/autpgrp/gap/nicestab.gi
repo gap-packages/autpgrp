@@ -2,10 +2,10 @@
 ##
 #W  nicestab.gi             AutPGrp package                      Bettina Eick
 ##
-#H  @(#)$Id: nicestab.gi,v 1.6 2002/11/19 13:36:38 gap Exp $
+#H  @(#)$Id: nicestab.gi,v 1.7 2005/01/06 12:47:06 gap Exp $
 ##
 Revision.("autpgrp/gap/nicestab_gi") :=
-    "@(#)$Id: nicestab.gi,v 1.6 2002/11/19 13:36:38 gap Exp $";
+    "@(#)$Id: nicestab.gi,v 1.7 2005/01/06 12:47:06 gap Exp $";
 
 #############################################################################
 ##
@@ -164,7 +164,7 @@ NiceHybridGroup := function( A )
     local mats, done, auts, i, mat, aut, fac, rels, e, f; 
 
     # catch the trivial cases
-    if Length( A.glAutos) = 0 or A.glOrder = 1 then
+    if Length( A.glAutos ) = 0 or A.glOrder = 1 then
         Unbind( A.glOper );
         A.glautos := [];
         return;

@@ -95,8 +95,32 @@ gap&gt; ConvertHybridAutGroup( A );
 &lt;group of size 52488 with 11 generators&gt;
 </pre>
 <p>
+Let <var>A</var> be the automorphism group of a <var>p</var>-group <var>G</var> as computed by 
+<code>AutomorphismGroupPGroup</code>. Then the following function can compute 
+a pc group isomorphic to the solvable part of <var>A</var> stored in the record 
+component <var>A</var>.agGroup. This solvable part forms a subgroup of the
+automorphism group which  contains at least the automorphisms centralizing
+the Frattini factor of <var>G</var>. The pc group facilitates various further
+computations with <var>A</var>.
+<p>
+<a name = ""></a>
+<li><code>PcGroupAutPGroup( </code><var>A</var><code> ) F</code>
+<p>
+computes a pc presentation for the solvable part of the automorphism
+group <var>A</var> defined by <var>A</var>.agGroup. <var>A</var> is the output of the function
+<code>AutomorphismGroupPGroup</code>.
+<p>
+<pre>
+gap&gt; H := SmallGroup (729, 34);;
+gap&gt; A := AutomorphismGroupPGroup(H);;
+gap&gt; B := PcGroupAutPGroup( A );
+&lt;pc group of size 52488 with 11 generators&gt;
+gap&gt; I := InnerAutGroupPGroup( B );
+Group([ f5, f4^2*f8, f6^2*f9^2, f11^2, f10^2, &lt;identity&gt; of ... ])
+</pre>
+<p>
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>AutPGrp manual<br>August 2003
+<address>AutPGrp manual<br>Juli 2009
 </address></body></html>

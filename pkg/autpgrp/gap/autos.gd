@@ -2,10 +2,10 @@
 ##
 #W  autos.gd                 AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: autos.gd,v 1.4 2003/08/18 12:10:28 gap Exp $
+#H  @(#)$Id: autos.gd,v 1.7 2008/05/29 06:30:23 gap Exp $
 ##
 Revision.("autpgrp/gap/autos_gd") :=
-    "@(#)$Id: autos.gd,v 1.4 2003/08/18 12:10:28 gap Exp $";
+    "@(#)$Id: autos.gd,v 1.7 2008/05/29 06:30:23 gap Exp $";
 
 #############################################################################
 ##
@@ -31,13 +31,18 @@ DeclareOperation( "PGAutomorphism", [ IsPGroup, IsList, IsList ] );
 
 
 DeclareGlobalFunction( "AutomorphismGroupPGroup" );
+DeclareGlobalFunction( "PcGroupAutPGroup" );
 DeclareGlobalFunction( "ConvertHybridAutGroup" );
 DeclareGlobalFunction( "PGOrbitStabilizer" );
 DeclareGlobalFunction( "IdentityPGAutomorphism" );
 
-DeclareOperation( "PGMult", [IsMapping, IsMapping] );
-DeclareOperation( "PGInverse",[IsMapping] );
-DeclareOperation( "PGPower",[IsInt, IsMapping] );
+DeclareGlobalFunction( "CountOrbitsGL" );
+DeclareGlobalFunction( "NumberOfPClass2PGroups" );
+DeclareGlobalFunction( "NumberOfClass2LieAlgebras" );
+
+DeclareOperation( "PGMult", [IsObject, IsObject] );
+DeclareOperation( "PGInverse",[IsObject] );
+DeclareOperation( "PGPower",[IsInt, IsObject] );
 DeclareOperation( "PGMultList", [IsList] );
 
 #############################################################################

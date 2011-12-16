@@ -2,10 +2,10 @@
 ##
 #W  general.gi               AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: general.gi,v 1.2 2002/11/19 13:36:38 gap Exp $
+#H  @(#)$Id: general.gi,v 1.3 2009/07/03 08:25:23 gap Exp $
 ##
 Revision.("autpgrp/gap/general_gi") :=
-    "@(#)$Id: general.gi,v 1.2 2002/11/19 13:36:38 gap Exp $";
+    "@(#)$Id: general.gi,v 1.3 2009/07/03 08:25:23 gap Exp $";
 
 #############################################################################
 ##
@@ -77,15 +77,15 @@ end;
 ##
 #F DepthVector( vec )
 ##
-DepthVector := function( vec )
-    local i;
-    for i in [1..Length(vec)] do
-        if vec[i] <> 0 * vec[i] then
-            return i;
-        fi;
-    od;
-    return Length(vec) + 1;
-end;
+#DepthVector := function( vec )
+#    local i;
+#    for i in [1..Length(vec)] do
+#        if vec[i] <> 0 * vec[i] then
+#            return i;
+#        fi;
+#    od;
+#    return Length(vec) + 1;
+#end;
 
 #############################################################################
 ##

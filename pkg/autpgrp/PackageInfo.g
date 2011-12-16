@@ -7,9 +7,9 @@ SetPackageInfo( rec(
 
 PackageName := "AutPGrp",
 Subtitle := "Computing the Automorphism Group of a p-Group",
-Version := "1.2",
-Date := "19/11/2002",
-ArchiveURL := "http://www.tu-bs.de/~beick/soft/autpgrp/autpgrp-1.2", 
+Version := "1.3",
+Date := "03/07/2009",
+ArchiveURL := "http://www-public.tu-bs.de:8080/~beick/soft/autpgrp/autpgrp-1.3", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
@@ -19,9 +19,9 @@ Persons := [
       IsAuthor      := true,
       IsMaintainer  := true,
       Email         := "b.eick@tu-bs.de",
-      WWWHome       := "http://www.tu-bs.de/~beick",
+      WWWHome       := "http://www-public.tu-bs.de:8080/~beick",
       PostalAddress := Concatenation( [
-            "Institut f\"ur Geometrie, Algebra und diskrete Mathematik\n",
+            "Institut Computational Mathematics\n",
             "TU Braunschweig\n",
             "Pockelsstr. 14\n D-38106 Braunschweig\n Germany" ] ),
       Place         := "Braunschweig",
@@ -47,13 +47,13 @@ Status := "accepted",
 CommunicatedBy := "Derek F. Holt (Warwick)",
 AcceptDate := "09/2000",
 
-README_URL := "http://www.tu-bs.de/~beick/soft/autpgrp/README",
-PackageInfoURL := "http://www.tu-bs.de/~beick/soft/autpgrp/PackageInfo.g",
+README_URL := "http://www-public.tu-bs.de:8080/~beick/soft/autpgrp/README",
+PackageInfoURL := "http://www-public.tu-bs.de:8080/~beick/soft/autpgrp/PackageInfo.g",
 
 AbstractHTML := 
 "The <span class=\"pkgname\">AutPGrp</span> package introduces a new function to compute the automorphism group of a finite $p$-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANUPQ method. Our package is written in GAP code and it makes use of a number of methods from the GAP library such as the MeatAxe for matrix groups and permutation group functions. We have compared our method to the others available in GAP. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.",
  
-PackageWWWHome := "http://www.tu-bs.de/~beick/so.html",
+PackageWWWHome := "http://www-public.tu-bs.de:8080/~beick/so.html",
                
 PackageDoc := rec(
   BookName  := "AutPGrp",
@@ -71,7 +71,7 @@ Dependencies := rec(
   ExternalConditions := [] ),
 
 AvailabilityTest := ReturnTrue,
-BannerString := "Loading autpgrp 1.2 ... \n",
+BannerString := "Loading autpgrp 1.3 ... \n",
 Autoload := true,
 Keywords := ["p-group", "automorphism group"]
 

@@ -2,10 +2,10 @@
 ##
 #W  matrstab.gi             AutPGrp package                      Bettina Eick
 ##
-#H  @(#)$Id: matrstab.gi,v 1.2 2002/11/19 13:36:38 gap Exp $
+#H  @(#)$Id: matrstab.gi,v 1.3 2009/03/09 07:26:55 gap Exp $
 ##
 Revision.("autpgrp/gap/matrstab_gi") :=
-    "@(#)$Id: matrstab.gi,v 1.2 2002/11/19 13:36:38 gap Exp $";
+    "@(#)$Id: matrstab.gi,v 1.3 2009/03/09 07:26:55 gap Exp $";
 
 #############################################################################
 ##
@@ -166,10 +166,36 @@ end;
 
 #############################################################################
 ##
+#F CheckStab(A, pt)
+##
+CheckAgStab := function( A, pt )
+    local g, s, c;
+    for g in A.agAutos do
+        for s in pt do
+            c := SolutionMat(pt, s*g!.mat);
+            if IsBool(c) then return false; fi;
+        od;
+    od;
+    return true;
+end;
+
+CheckGlStab := function( A, pt )
+    local g, s, c;
+    for g in A.glAutos do
+        for s in pt do
+            c := SolutionMat(pt, s*g!.mat);
+            if IsBool(c) then return false; fi;
+        od;
+    od;
+    return true;
+end;
+
+#############################################################################
+##
 #F PGOrbitStabilizerBySeries( A, baseU, chop )
 ##
 PGOrbitStabilizerBySeries := function( A, baseU, chop )
-    local s, U, T, i, S, R, j, V, W;
+    local s, U, T, i, S, R, j, V, W, B;
 
     s := Length(chop);
     U := baseU;
@@ -190,6 +216,14 @@ PGOrbitStabilizerBySeries := function( A, baseU, chop )
                     W := SumMat( S, chop[j] );
                     if Length( R ) > Length( W ) then
                         PGMatrixOrbitStabilizer( A, V, W, R );
+                        if CHECK then 
+                            if not CheckAgStab(A, R) then 
+                                Error("ag stab wrong ");
+                            fi;
+                            if not CheckGlStab(A, R) then 
+                                Error("gl stab wrong ");
+                            fi;
+                        fi;
                     else
                         Info( InfoAutGrp, 4, "    skip trivial factor");
                     fi;

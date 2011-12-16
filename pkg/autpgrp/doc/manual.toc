@@ -8,4 +8,4 @@
 \seccontents {4.4}{Searching for a small generating set} {10}
 \seccontents {4.5}{An interactive version of the algorithm} {10}
 \seccontents {4.6}{Acknowledgements} {11}
-\chapcontents {}{Index}{12}
+\chapcontents {5}{Additional Features of the Package}{12}

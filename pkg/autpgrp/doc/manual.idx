@@ -3,11 +3,16 @@
 \indexentry {InfoAutGrp@`InfoAutGrp'}{4}
 \indexentry {AutomorphismGroupPGroup@`AutomorphismGroupPGroup'}{6}
 \indexentry {ConvertHybridAutGroup@`ConvertHybridAutGroup'}{6}
+\indexentry {PcGroupAutPGroup@`PcGroupAutPGroup'}{7}
 \indexentry {Outline of the algorithm@Outline of the algorithm|indexit}{8}
-\indexentry {The initialisation step@The initialisation step|indexit}{8}
+\indexentry {The initialisation step@The initialisation step|indexit}{9}
 \indexentry {Stabilisers in matrix groups@Stabilisers in matrix groups|indexit}{9}
 \indexentry {CHOP_MULT@`CHOP_MULT'}{9}
-\indexentry {Searching for a small generating set@Searching for a small generating set|indexit}{9}
-\indexentry {NICE_STAB@`NICE_STAB'}{9}
+\indexentry {Searching for a small generating set@Searching for a small generating set|indexit}{10}
+\indexentry {NICE_STAB@`NICE_STAB'}{10}
 \indexentry {An interactive version of the algorithm@An interactive version of the algorithm|indexit}{10}
 \indexentry {Acknowledgements@Acknowledgements|indexit}{11}
+\indexentry {NumberOfPClass2PGroups@`NumberOfPClass2PGroups'}{12}
+\indexentry {NumberOfPClass2PGroups@`NumberOfPClass2PGroups'}{12}
+\indexentry {NumberOfClass2LieAlgebras@`NumberOfClass2LieAlgebras'}{12}
+\indexentry {NumberOfClass2LieAlgbras@`NumberOfClass2LieAlgbras'}{12}
