@@ -130,11 +130,12 @@ end;
 ##
 #F ImageAutPGroup( B, G, auto ) . . . . . . . . . . . . . . image in pc group
 ##
-ImageAutPGroup := function( B, G, auto )
+InstallGlobalFunction( ImageAutPGroup,
+  function( B, G, auto )
     local exp;
     exp := ExponentsAutPGroup( B, auto );
     return MappedVector( exp, GeneratorsOfGroup( G ) );
-end;
+  end);
 
 #############################################################################
 ##
@@ -171,7 +172,8 @@ end );
 ##
 #F InnerAutGroupPGroup( C ). . . . . . . . . . . . embed Inn(G) into pc group
 ##
-InnerAutGroupPGroup := function( C )
+InstallGlobalFunction( InnerAutGroupPGroup,
+  function( C )
     local B, G, gens, auts, imgs, I;
     B := C!.autrec;
     G := B.group;
@@ -180,4 +182,4 @@ InnerAutGroupPGroup := function( C )
     imgs := List( auts, x -> ImageAutPGroup( B, C, x ) );
     I := Subgroup(C, imgs );
     return I;
-end;
+  end);

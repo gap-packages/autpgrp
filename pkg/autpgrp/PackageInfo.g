@@ -7,9 +7,9 @@ SetPackageInfo( rec(
 
 PackageName := "AutPGrp",
 Subtitle := "Computing the Automorphism Group of a p-Group",
-Version := "1.3",
-Date := "03/07/2009",
-ArchiveURL := "http://www-public.tu-bs.de:8080/~beick/soft/autpgrp/autpgrp-1.3", 
+Version := "1.4",
+Date := "31/08/2009",
+ArchiveURL := "http://www-public.tu-bs.de:8080/~beick/soft/autpgrp/autpgrp-1.4", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
@@ -71,7 +71,7 @@ Dependencies := rec(
   ExternalConditions := [] ),
 
 AvailabilityTest := ReturnTrue,
-BannerString := "Loading autpgrp 1.3 ... \n",
+BannerString := "Loading autpgrp 1.4 ... \n",
 Autoload := true,
 Keywords := ["p-group", "automorphism group"]
 

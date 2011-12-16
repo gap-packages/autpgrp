@@ -2,10 +2,10 @@
 ##
 #W  general.gi               AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: general.gi,v 1.3 2009/07/03 08:25:23 gap Exp $
+#H  @(#)$Id: general.gi,v 1.4 2009/08/31 07:40:15 gap Exp $
 ##
 Revision.("autpgrp/gap/general_gi") :=
-    "@(#)$Id: general.gi,v 1.3 2009/07/03 08:25:23 gap Exp $";
+    "@(#)$Id: general.gi,v 1.4 2009/08/31 07:40:15 gap Exp $";
 
 #############################################################################
 ##
@@ -162,7 +162,8 @@ end;
 ##
 #F EcheloniseMat( mat )
 ##
-EcheloniseMat := function( mat )
+InstallGlobalFunction( EcheloniseMat,
+  function( mat )
     local ech, tmp, i;
 
     if Length(mat) = 0 then return mat; fi;
@@ -174,7 +175,7 @@ EcheloniseMat := function( mat )
         fi;
     od;
     return tmp;
-end;
+  end);
 
 #############################################################################
 ##
