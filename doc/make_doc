@@ -3,7 +3,7 @@
 ##
 #W  make_doc        make AutPGrp Package documentation        Greg Gamble
 ##
-#H  $Id: make_doc,v 1.1 2002/04/18 20:24:29 gap Exp $
+#H  $Id: make_doc,v 1.2 2003/10/01 11:39:27 gap Exp $
 ##
 ##  This shell script uses TeX, BibTeX and MakeIndex to  build  the .dvi,
 ##  PostScript (commented out), PDF, and  HTML  (provided  you  have  tth
@@ -16,7 +16,7 @@ tex manual
 # when there's a bibliography uncomment next line
 #bibtex manual
 # TeX the manual again to incorporate the ToC ... and build the index
-tex manual; ../../../doc/manualindex manual
+tex manual; ../../../dmanualindex manual
 # Finally TeX the manual again to get cross-references right
 tex manual
 # Create the PostScript version (uncomment next line, if needed)
@@ -27,7 +27,7 @@ pdftex manual; pdftex manual
 # The HTML version of the manual
 mkdir -p ../htm
 echo "Creating HTML documentation"
-../../../etc/convert.pl -c -n AutPGrp . ../htm
+../../convert.pl -c -n AutPGrp . ../htm
 
 #########################################################################
 ##

@@ -2,10 +2,10 @@
 ##
 #W  hybridst.gi              AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: hybrstab.gi,v 1.8 2003/08/18 12:10:28 gap Exp $
+#H  @(#)$Id: hybrstab.gi,v 1.10 2009/03/09 07:26:55 gap Exp $
 ##
 Revision.("autpgrp/gap/hybridst_gi") :=
-    "@(#)$Id: hybrstab.gi,v 1.8 2003/08/18 12:10:28 gap Exp $";
+    "@(#)$Id: hybrstab.gi,v 1.10 2009/03/09 07:26:55 gap Exp $";
 
 #############################################################################
 ##
@@ -252,8 +252,10 @@ BlockOrbitStabilizer := function( B, oper, os, fpt, info )
 
     # get acting elements
     auts := B.glAutos;
-    pers := B.glOper;
-    ords := List( pers, x -> Order(x) );
+    ords := List( auts, Order );
+    if IsBound( B.glOper ) then pers := B.glOper; fi;
+
+    # loop
     k := 1;
     while k <= Length( orbit ) do
         pt := orbit[k][1];
@@ -288,8 +290,7 @@ BlockOrbitStabilizer := function( B, oper, os, fpt, info )
 
                 # add permutations if known
                 if IsBound( B.glOper ) then
-                    per := Transform( get, pers, () );
-                    Add( pstab, per );
+                    Add( pstab, Transform( get, pers, () ) );
                 fi;
             fi;
         od;
@@ -299,46 +300,9 @@ BlockOrbitStabilizer := function( B, oper, os, fpt, info )
             k := k + 1;
         fi;
     od;
+
     return rec( stabl := stabl, pstab := pstab, 
                 length := Length(orbit), trans := trans );
-end;
-
-#############################################################################
-##
-#F CheckOperation( A )
-##
-CheckOperation := function( A )
-    local G, g, d, mats, a, imgs, M, base, V, norm, iso, i, pers, S;
-
-    if Length(A.agAutos) > 0 then return fail; fi;
-    if Length(A.glAutos) = 0 then return fail; fi;
-
-    G := A.group;
-    g := Pcgs(G);
-    d := RankPGroup(G);
-
-    mats := [];
-    for a in A.glAutos do
-        imgs := a!.baseimgs;
-        imgs := List( imgs, x -> ExponentsOfPcElement( g, x ) );
-        imgs := List( imgs, x -> x{[1..d]}*One(A.field) );
-        Add( mats, imgs );
-    od;
-    M := Group( mats, mats[1]^0 );
-
-    base := IdentityMat( d, A.field );
-    V    := A.field^d;
-    norm := Elements(V);
-    iso  := ActionHomomorphism( M, norm, OnRight );
-    pers := List( mats, x -> Image( iso, x ) );
-
-    S := SymmetricGroup( Length(norm) );
-    for i in [1..Length(mats)] do
-        if IsBool( RepresentativeAction( S, pers[i], A.glOper[i] ) ) then 
-            return false; 
-        fi;
-    od;
-    return true;    
 end;
 
 #############################################################################
@@ -357,25 +321,12 @@ PGHybridOrbitStabilizer := function( A, glMats, agMats, pt, oper, info )
     A.agAutos := os.stabl;
     A.agOrder := os.srels;
 
-    if CHECK then 
-        if CheckOperation( A ) = false then Error("wrong oper 1"); fi;
-    fi;
-
     # compute block orbit and stabiliser
     if Length( glMats ) = 0 then return; fi;
     OS := BlockOrbitStabilizer( A, glMats, os, oper, info );
     Info( InfoAutGrp, 4, "    gl-orbit -- length ", OS.length, 
                          " -- gens ",Length(OS.stabl));
-
-    if CHECK then
-        B := StructuralCopy(A);
-        B.glAutos := OS.stabl;
-        B.glOrder := B.glOrder / OS.length;
-        Assert(1,IsInt(B.glOrder));
-        if IsBound( B.glOper ) then B.glOper := OS.pstab; fi;
-        if CheckOperation( B ) = false then Error("wrong oper 2"); fi;
-    fi;
-
+  
     # set up new aut grp
     A.glAutos := OS.stabl;
     A.glOrder := A.glOrder / OS.length;

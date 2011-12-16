@@ -2,7 +2,7 @@
 ##
 #W  init.g                   AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: init.g,v 1.3 2002/11/19 14:30:19 gap Exp $
+#H  @(#)$Id: init.g,v 1.4 2003/10/01 11:39:27 gap Exp $
 ##
 
 DeclareAutoPackage( "autpgrp", "1.2", 

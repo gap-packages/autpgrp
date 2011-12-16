@@ -5,6 +5,7 @@
 \makelabel{autpgrp:The underlying function}{3}
 \makelabel{autpgrp:AutomorphismGroupPGroup}{3}
 \makelabel{autpgrp:ConvertHybridAutGroup}{3}
+\makelabel{autpgrp:PcGroupAutPGroup}{3}
 \makelabel{autpgrp:Influencing the algorithm}{4}
 \makelabel{autpgrp:Outline of the algorithm}{4.1}
 \makelabel{autpgrp:The initialisation step}{4.2}
@@ -14,4 +15,9 @@
 \makelabel{autpgrp:NICE_STAB}{4.4.1}
 \makelabel{autpgrp:An interactive version of the algorithm}{4.5}
 \makelabel{autpgrp:Acknowledgements}{4.6}
+\makelabel{autpgrp:Additional Features of the Package}{5}
+\makelabel{autpgrp:NumberOfPClass2PGroups}{5}
+\makelabel{autpgrp:NumberOfPClass2PGroups}{5}
+\makelabel{autpgrp:NumberOfClass2LieAlgebras}{5}
+\makelabel{autpgrp:NumberOfClass2LieAlgbras}{5}
 \makelabel{autpgrp:Index}{}
