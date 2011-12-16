@@ -2,10 +2,10 @@
 ##
 #W  autos.gd                 AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: autos.gd,v 1.7 2008/05/29 06:30:23 gap Exp $
+#H  @(#)$Id: autos.gd,v 1.8 2009/08/31 07:40:15 gap Exp $
 ##
 Revision.("autpgrp/gap/autos_gd") :=
-    "@(#)$Id: autos.gd,v 1.7 2008/05/29 06:30:23 gap Exp $";
+    "@(#)$Id: autos.gd,v 1.8 2009/08/31 07:40:15 gap Exp $";
 
 #############################################################################
 ##
@@ -53,3 +53,16 @@ if not CompareVersionNumbers( VERSION, "4.4") then
     DeclareProperty("IsGroupOfAutomorphismsFiniteGroup", IsGroup);
 fi;
 
+
+############################################################################
+## 
+#V for external applications
+##
+DeclareGlobalFunction( "ImageAutPGroup" );
+DeclareGlobalFunction( "InnerAutGroupPGroup" );
+DeclareGlobalFunction( "ConvertAutGroup" );
+DeclareGlobalFunction( "InduceAutGroup" );
+DeclareGlobalFunction( "EcheloniseMat" );
+DeclareGlobalFunction( "LinearActionAutGrp" );
+DeclareGlobalFunction( "AddInfoCover" );
+DeclareGlobalFunction( "InitAutomorphismGroupOver" );

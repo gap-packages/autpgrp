@@ -2,10 +2,10 @@
 ##
 #W  autos.gi                 AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: autos.gi,v 1.12 2003/04/04 17:12:57 gap Exp $
+#H  @(#)$Id: autos.gi,v 1.13 2009/08/31 07:40:15 gap Exp $
 ##
 Revision.("autpgrp/gap/autos_gi") :=
-    "@(#)$Id: autos.gi,v 1.12 2003/04/04 17:12:57 gap Exp $";
+    "@(#)$Id: autos.gi,v 1.13 2009/08/31 07:40:15 gap Exp $";
 
 #############################################################################
 ##
@@ -46,7 +46,8 @@ end;
 ##
 #F LinearActionAutGrp( <A>, <P>, <M> )
 ##
-LinearActionAutGrp := function( A, P, M )
+InstallGlobalFunction( LinearActionAutGrp,
+  function( A, P, M )
     local aut;
 
     # add information
@@ -59,7 +60,7 @@ LinearActionAutGrp := function( A, P, M )
     A.field := M!.field;
     A.prime := PrimePGroup( P );
     A.one!.mat := 1;
-end;
+  end);
 
 #############################################################################
 ##
@@ -107,7 +108,8 @@ end;
 ##
 #F InduceAutGroup( <A>, <Q>, <P>, <M>, <U> )
 ##
-InduceAutGroup := function( A, Q, P, M, U )
+InstallGlobalFunction( InduceAutGroup,
+  function( A, Q, P, M, U )
     local p, r, F, s, t, pcgsF, pcgsL, L, B, central;
 
     # set up
@@ -149,7 +151,7 @@ InduceAutGroup := function( A, Q, P, M, U )
 
     # and return
     return B;
-end;
+  end);
 
 #############################################################################
 ##
@@ -183,7 +185,8 @@ end;
 ##
 #F ConvertAutGroup ( <A>, <G> )
 ##
-ConvertAutGroup := function( A, G )
+InstallGlobalFunction( ConvertAutGroup,
+  function( A, G )
     local r, gens, imgs, iso, C;
 
     r := RankPGroup( G );
@@ -214,13 +217,14 @@ ConvertAutGroup := function( A, G )
     if IsBound( A.glOper ) then C.glOper := A.glOper; fi;
 
     return C;
-end;
+  end);
 
 #############################################################################
 ##
 #F AddInfoCover( Q, P, M, U )
 ##
-AddInfoCover := function( Q, P, M, U )
+InstallGlobalFunction( AddInfoCover, 
+  function( Q, P, M, U )
     local r, p, f, fam, gensP, pcgsP, gensM, pcgsM, gensU, pcgsU, pos, def; 
   
     r := Q!.RanksOfDescendingSeries;
@@ -251,7 +255,7 @@ AddInfoCover := function( Q, P, M, U )
     pos := List( pcgsP, x -> Position( fam, x ) );
     def := Q!.definitions{pos};
     P!.definitions := RewriteDef( pcgsP, def, p );
-end;
+  end);
 
 #############################################################################
 ##

@@ -2,10 +2,10 @@
 ##
 #W  initperm.gi              AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: initperm.gi,v 1.6 2002/11/19 13:36:38 gap Exp $
+#H  @(#)$Id: initperm.gi,v 1.7 2009/08/31 07:40:15 gap Exp $
 ##
 Revision.("autpgrp/gap/initperm_gi") :=
-    "@(#)$Id: initperm.gi,v 1.6 2002/11/19 13:36:38 gap Exp $";
+    "@(#)$Id: initperm.gi,v 1.7 2009/08/31 07:40:15 gap Exp $";
 
 #############################################################################
 ##
@@ -141,7 +141,8 @@ end;
 ##
 #F InitAutomorphismGroupOver( G )
 ##
-InitAutomorphismGroupOver := function( G )
+InstallGlobalFunction( InitAutomorphismGroupOver,
+  function( G )
     local r, p, pcgsG, pcgsN, pcgs, base, V, norm, part, stab, H, kern, A;
 
     Info( InfoAutGrp, 2, "  initialize automorphism group: Over ");
@@ -180,5 +181,4 @@ InitAutomorphismGroupOver := function( G )
     # try to construct solvable normal subgroup
     NiceInitGroup( A, true );
     return A;
-end;
-
+  end);
