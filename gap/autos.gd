@@ -2,10 +2,10 @@
 ##
 #W  autos.gd                 AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: autos.gd,v 1.8 2009/08/31 07:40:15 gap Exp $
+#H  @(#)$Id: autos.gd,v 1.9 2012/05/29 07:07:20 gap Exp $
 ##
 Revision.("autpgrp/gap/autos_gd") :=
-    "@(#)$Id: autos.gd,v 1.8 2009/08/31 07:40:15 gap Exp $";
+    "@(#)$Id: autos.gd,v 1.9 2012/05/29 07:07:20 gap Exp $";
 
 #############################################################################
 ##
@@ -44,15 +44,6 @@ DeclareOperation( "PGMult", [IsObject, IsObject] );
 DeclareOperation( "PGInverse",[IsObject] );
 DeclareOperation( "PGPower",[IsInt, IsObject] );
 DeclareOperation( "PGMultList", [IsList] );
-
-#############################################################################
-##
-#V A version problem
-##
-if not CompareVersionNumbers( VERSION, "4.4") then 
-    DeclareProperty("IsGroupOfAutomorphismsFiniteGroup", IsGroup);
-fi;
-
 
 ############################################################################
 ## 
