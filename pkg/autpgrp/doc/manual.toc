@@ -9,3 +9,4 @@
 \seccontents {4.5}{An interactive version of the algorithm} {10}
 \seccontents {4.6}{Acknowledgements} {11}
 \chapcontents {5}{Additional Features of the Package}{12}
+\chapcontents {}{Index}{13}

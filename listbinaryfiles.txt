@@ -1,9 +1,12 @@
-autpgrp/doc/manual.pdf
 autpgrp/doc/manual.log
-autpgrp/doc/manual.toc
-autpgrp/doc/make_doc
 autpgrp/doc/manual.dvi
+autpgrp/doc/manual.pdf
 autpgrp/doc/manual.mst
 autpgrp/doc/manual.aux
+autpgrp/doc/manual.toc
 autpgrp/doc/manual.lab
+autpgrp/doc/manual.six
+autpgrp/doc/manual.ind
+autpgrp/doc/manual.ilg
+autpgrp/doc/make_doc
 autpgrp/doc/manual.idx

@@ -54,10 +54,10 @@ Note that since version 1.1 of AutPGrp, at least GAP 4.3fix4 is required.
 The AutPGrp package was written by:
 
 Bettina Eick,
-Institut f\"ur Geometrie, Algebra und diskrete Mathematik,
+Institut Computational Mathematics,
 TU Braunschweig,
 Pockelsstr. 14, D-38106 Braunschweig, Germany
-e-mail: b.eick@tu-bs.de
+e-mail: beick@tu-bs.de
 
 Eamonn O'Brien
 Department of Mathematics
@@ -94,5 +94,5 @@ the problem; so please include:
 
   - Bettina Eick
     e-mail: b.eick@tu-bs.de 
-    www:    http://www-public.tu-bs.de:8080/~beick/so.html
-  -- 17 April, 2002.
+    www:    http://www.icm.tu-bs.de/~beick/so.html
+

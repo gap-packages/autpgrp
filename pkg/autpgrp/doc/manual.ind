@@ -1,0 +1,25 @@
+\letter A
+  Acknowledgements, \indexit{11}
+  An interactive version of the algorithm, \indexit{10}
+  `AutomorphismGroup', 4
+  `AutomorphismGroupPGroup', 6
+\letter C
+  `CHOP_MULT', 9
+  `ConvertHybridAutGroup', 6
+\letter I
+  `InfoAutGrp', 4
+\letter N
+  `NICE_STAB', 10
+  `NumberOfClass2LieAlgbras', 12
+  `NumberOfClass2LieAlgebras', 12
+  `NumberOfPClass2PGroups', 12
+\letter O
+  Outline of the algorithm, \indexit{8}
+\letter P
+  `PcGroupAutPGroup', 7
+\letter S
+  Searching for a small generating set, \indexit{10}
+  `SetInfoLevel', 4
+  Stabilisers in matrix groups, \indexit{9}
+\letter T
+  The initialisation step, \indexit{9}

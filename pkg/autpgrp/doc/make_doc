@@ -16,7 +16,7 @@ tex manual
 # when there's a bibliography uncomment next line
 #bibtex manual
 # TeX the manual again to incorporate the ToC ... and build the index
-tex manual; ../../../dmanualindex manual
+tex manual; ../../../doc/manualindex manual
 # Finally TeX the manual again to get cross-references right
 tex manual
 # Create the PostScript version (uncomment next line, if needed)
@@ -27,7 +27,7 @@ pdftex manual; pdftex manual
 # The HTML version of the manual
 mkdir -p ../htm
 echo "Creating HTML documentation"
-../../convert.pl -c -n AutPGrp . ../htm
+../../../etc/convert.pl -c -n AutPGrp . ../htm
 
 #########################################################################
 ##
