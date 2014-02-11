@@ -103,7 +103,7 @@ TrySolvableSubgroup := function( A )
     if Length(pcgs) = 0 then return; fi;
 
     # construct factor
-    nhom := NaturalHomomorphismByNormalSubgroup( P, N );
+    nhom := NaturalHomomorphismByNormalSubgroupNC( P, N );
     G := ImagesSource( nhom );
 
     # get ag part

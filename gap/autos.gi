@@ -267,15 +267,13 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
 
     # catch the trivial case
     G := arg[1];
+    p := PrimePGroup( G );
+    r := RankPGroup( G );
     if Size( G ) = 1 then return Group( [], IdentityMapping(G) ); fi;
 
-    # catch arguments
+    # choose a initialisation
     if Length( arg ) = 1 then
-        interrupt := false;
 
-        # choose a initialisation
-        p := PrimePGroup( G );
-        r := RankPGroup( G );
         if IsHomoCyclic( G ) then
             InitAutGroup := InitAutomorphismGroupFull;
         elif (p^r - 1)/(p - 1) < 30000 then
@@ -284,14 +282,38 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
             InitAutGroup := InitAutomorphismGroupChar;
         fi;
 
-        # choose flags
-        CHOP_MULT := true;
-        NICE_STAB := true; 
-        USE_LABEL := false;
+    elif Length( arg ) = 2 and IsString(arg[2]) then 
 
-    elif Length( arg ) = 2 then
-        interrupt := arg[2];
+        if arg[2] = "Full" then 
+            InitAutGroup := InitAutomorphismGroupFull;
+        elif arg[2] = "Over" then 
+            InitAutGroup := InitAutomorphismGroupOver;
+        elif arg[2] = "Char" then 
+            InitAutGroup := InitAutomorphismGroupChar;
+        else
+            Print("not a valid inititialisation \n");
+            return;
+        fi;
+
+    elif Length( arg ) = 2 and IsBool(arg[2]) and arg[2] = true then
+        str := Interrupt("choose initialisation (Over/Char/Full)");
+        if str = "Over" then
+            InitAutGroup := InitAutomorphismGroupOver;
+        elif str = "Char" then
+            InitAutGroup := InitAutomorphismGroupChar;
+        elif str = "Full" then
+            InitAutGroup := InitAutomorphismGroupFull;
+        else
+            Print("not a valid inititialisation \n");
+            return;
+        fi;
+
     fi;
+
+    # choose flags
+    CHOP_MULT := true;
+    NICE_STAB := true; 
+    USE_LABEL := false;
 
     # compute special pcgs 
     pcgs := SpecialPcgs( G );
@@ -305,19 +327,6 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     Info( InfoAutGrp, 1, 
           "step 1: ",p,"^", first[2]-1, " -- init automorphisms ");
 
-    if interrupt or IsBool( InitAutGroup ) then
-        str := Interrupt("choose initialisation (Over/Char/Full)");
-        if str = "Over" then
-            InitAutGroup := InitAutomorphismGroupOver;
-        elif str = "Char" then
-            InitAutGroup := InitAutomorphismGroupChar;
-        elif str = "Full" then
-            InitAutGroup := InitAutomorphismGroupFull;
-        else
-            Print("not a valid inititialisation \n");
-            return;
-        fi;
-    fi;
     A := InitAutGroup( G );
 
     # loop over remaining steps
@@ -350,7 +359,7 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
         baseN := List(baseN, x -> ExponentsOfPcElement(Pcgs(M), x)) * One(f);
         baseU := List(baseU, x -> ExponentsOfPcElement(Pcgs(M), x)) * One(f);
         baseU := EcheloniseMat( baseU );
-        PGOrbitStabilizer( A, baseU, baseN, interrupt );
+        PGOrbitStabilizer( A, baseU, baseN, false );
 
         # next step of p-quotient
         IncorporateCentralRelations( Q );

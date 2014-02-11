@@ -84,13 +84,34 @@ end;
 
 #############################################################################
 ##
+#F MaxSubIntersections(G)
+##
+MaxSubIntersections := function(G)
+    local max, fp, fpset, fpbin, i, j;
+    max := MaximalSubgroups(G);
+    fp := List(max, IdGroup);
+    fpset := Set(fp);
+    fpbin := List(fpset, x -> []);
+    for i in [1..Length(max)] do
+        j := Position(fpset, fp[i]);
+        Add(fpbin[j], max[i]);
+    od;
+    return List(fpbin, Intersection);
+end;
+        
+#############################################################################
+##
 #F PGCharSubgroups( G )
 ##
 PGCharSubgroups := function(G)
     local  cent, omega;
     cent := TwoStepCentralizersByLcs( G );
     omega := OmegaSubgroupsByLcs( G );
-    return Union( cent, omega );
+    if Size(G) <= 512 then 
+        return Union(cent, omega, MaxSubIntersections(G));
+    else
+        return Union( cent, omega );
+    fi;
 end;
 
 #############################################################################
