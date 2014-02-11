@@ -41,7 +41,7 @@ FingerprintHuge := function( G, U )
 end;
 
 PGFingerprint := function ( G, U )
-    if Size( U ) <= 255 and IsRecord( ID_AVAILABLE( Size(U) ) ) then
+    if Size( U ) <= 256 and IsRecord( ID_AVAILABLE( Size(U) ) ) then
         return FingerprintSmall( G, U );
     elif Size( U ) <= 1000 then
         return FingerprintMedium( G, U );
@@ -72,7 +72,6 @@ PartitionMinimalOvergrps := function( G, pcgs, norm )
     part := [];
     for i in [1..Length(norm)] do
         Info( InfoAutGrp, 4, "    start ",i);
-        #min := DualBasis( [norm[i]] );
         min := InducedPcgsByBasis( pcgs, [norm[i]] );
         tup := PGFingerprint( G, SubgroupByPcgs( G, min ) );
         pos := Position( done, tup );

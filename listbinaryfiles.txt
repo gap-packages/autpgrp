@@ -1,3 +1,4 @@
+autpgrp/copying
 autpgrp/doc/manual.log
 autpgrp/doc/manual.dvi
 autpgrp/doc/manual.pdf
