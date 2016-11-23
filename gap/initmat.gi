@@ -2,10 +2,6 @@
 ##
 #W  initmat.gi               AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: initmat.gi,v 1.2 2002/11/19 13:36:38 gap Exp $
-##
-Revision.("autpgrp/gap/initmat_gi") :=
-    "@(#)$Id: initmat.gi,v 1.2 2002/11/19 13:36:38 gap Exp $";
 
 #############################################################################
 ##

@@ -2,10 +2,6 @@
 ##
 #W  autoops.gi               AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: autoops.gi,v 1.5 2003/08/18 12:10:28 gap Exp $
-##
-Revision.("autpgrp/gap/autoops_gi") :=
-    "@(#)$Id: autoops.gi,v 1.5 2003/08/18 12:10:28 gap Exp $";
 
 
 #############################################################################

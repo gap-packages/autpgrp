@@ -2,10 +2,6 @@
 ##
 #W  matrix.gi               AutPGrp package                      Bettina Eick
 ##
-#H  @(#)$Id: matrix.gi,v 1.3 2003/08/18 12:10:28 gap Exp $
-##
-Revision.("autpgrp/gap/matrix_gi") :=
-    "@(#)$Id: matrix.gi,v 1.3 2003/08/18 12:10:28 gap Exp $";
 
 #############################################################################
 ##

@@ -2,10 +2,6 @@
 ##
 #W  general.gi               AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: general.gi,v 1.4 2009/08/31 07:40:15 gap Exp $
-##
-Revision.("autpgrp/gap/general_gi") :=
-    "@(#)$Id: general.gi,v 1.4 2009/08/31 07:40:15 gap Exp $";
 
 #############################################################################
 ##

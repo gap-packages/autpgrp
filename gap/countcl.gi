@@ -259,18 +259,62 @@ end );
 #F Some Actions
 ##
 WedgeAction := function( mat, f )
-    local M, N;
-    M := GModuleByMats( [mat], f );
-    N := WedgeGModule( M );
-    return N.generators[1];
+    return WedgeGModule(GModuleByMats([mat], f)).generators[1];
 end;
 
 TensorAction := function( mat, f )
     return KroneckerProduct( mat, mat );
 end;
 
-WedgePlusAction := function( mat, f )
+WedgePlusChar2Action := function( mat, f )
+    local d, e, M, i, j, l, k, a, b; 
+
+    # set up
+    d := Length(mat);
+    e := (d^2 - d)/2;
+    M := MutableNullMat(e+d,e+d);
+
+    # wedge part
+    for i in [2..d] do
+        for j in [1..i-1] do
+            a := (i-1)*(i-2)/2+j;
+            for k in [2..d] do
+                for l in [1..k-1] do
+                    b := (k-1)*(k-2)/2+l;
+                    M[a][b] := mat[i][k]*mat[j][l] - mat[i][l]*mat[j][k];
+                od;
+            od;
+        od;
+    od;
+
+    # power part
+    for i in [1..d] do
+        a := e+i;
+        for k in [2..d] do
+            for l in [1..k-1] do
+                b := (k-1)*(k-2)/2+l;
+                M[a][b] := mat[i][k]*mat[i][l];
+            od;
+        od;
+        for j in [1..d] do
+            b := e+j;
+            M[a][b] := mat[i][j];
+        od;
+    od;
+
+    return M * One(f);
+end;
+
+WedgePlusCharPAction := function( mat, f )
     return DirectSumMat( WedgeAction(mat,f), mat );
+end;
+
+WedgePlusAction := function( mat, f )
+    if Characteristic(f) = 2 then 
+        return WedgePlusChar2Action(mat, f);
+    else
+        return WedgePlusCharPAction(mat, f);
+    fi;
 end;
 
 ############################################################################
@@ -278,17 +322,21 @@ end;
 #F NumberOfPClass2PGroups( n, p, [k] )
 ##
 InstallGlobalFunction( NumberOfPClass2PGroups, function( arg )
-    local n, k, c, m;
+    local n, p, l, k, c;
+    n := arg[1];
+    p := arg[2];
+    l := n*(n+1)/2;
     if Length(arg) = 3 then 
+        if arg[3] > l then return 0; fi;
+        if arg[3] = l then return 1; fi;
+        if arg[3] = 0 then return 0; fi;
         return CountOrbitsGL( arg[1], arg[2], arg[3], WedgePlusAction );
     elif Length(arg) = 2 then
-        n := arg[1];
-        m := n*(n+1)/2;
-        c := []; c[m] := 1;
-        for k in [1..m-1] do
+        c := []; c[l] := 1;
+        for k in [1..l-1] do
             if not IsBound( c[k] ) then 
                 c[k] := CountOrbitsGL( n, arg[2], k, WedgePlusAction );
-                c[m-k] := c[k];
+                c[l-k] := c[k];
             fi;
         od;
         return c;
@@ -318,4 +366,37 @@ InstallGlobalFunction( NumberOfClass2LieAlgebras, function( arg )
     fi;
     Error("wrong input");
 end );
+
+############################################################################
+##
+#F NumberOfClass2AssociativeAlgebras( n, p, [k] )
+##
+NumberOfClass2AssocAlgebras := function( arg )
+    local n, k, c, m;
+    if Length(arg) = 3 then
+        return CountOrbitsGL( arg[1], arg[2], arg[3], TensorAction );
+    elif Length(arg) = 2 then
+        n := arg[1];
+        m := n*(n-1)/2;
+        c := []; c[m] := 1;
+        for k in [1..m-1] do
+            if not IsBound( c[k] ) then
+                c[k] := CountOrbitsGL( n, arg[2], k, TensorAction );
+                c[m-k] := c[k];
+            fi;
+        od;
+        return c;
+    fi;
+    Error("wrong input");
+end;
+
+NumberOfClass2AssocAlgebrasByDim := function( d, p )
+    local r, n, c;
+    r := 2;
+    for n in [2..d-1] do
+        c := NumberOfClass2AssocAlgebras( n, p, d-n );
+        r := r+c;
+    od;
+    return r;
+end;
 
