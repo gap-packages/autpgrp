@@ -2,8 +2,6 @@
 ##
 #W  read.g                   AutPGrp package                     Bettina Eick
 ##
-##  @(#)$Id: read.g,v 1.6 2012/05/29 07:07:19 gap Exp $
-##
 
 ReadPackage( "autpgrp", "gap/general.gi");
 ReadPackage( "autpgrp", "gap/autoops.gi");

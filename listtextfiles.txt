@@ -2,6 +2,7 @@ autpgrp/README
 autpgrp/init.g
 autpgrp/read.g
 autpgrp/PackageInfo.g
+autpgrp/COPYING
 autpgrp/gap/general.gi
 autpgrp/gap/autos.gd
 autpgrp/gap/autoops.gi

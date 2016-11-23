@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "AutPGrp",
 Subtitle := "Computing the Automorphism Group of a p-Group",
-Version := "1.6",
-Date := "29/05/2012",
+Version := "1.7",
+Date := "20/11/2016",
 
 Persons := [
   rec(
@@ -51,7 +51,8 @@ AcceptDate := "09/2000",
 PackageWWWHome := "http://www.icm.tu-bs.de/~beick/so.html",
 
 ArchiveFormats := ".tar.gz",
-ArchiveURL := "http://www.icm.tu-bs.de/~beick/soft/autpgrp/autpgrp-1.5",
+ArchiveURL := Concatenation( 
+       "http://www.icm.tu-bs.de/~beick/soft/autpgrp/autpgrp-", ~.Version ),
 README_URL := "http://www.icm.tu-bs.de/~beick/soft/autpgrp/README",
 PackageInfoURL := "http://www.icm.tu-bs.de/~beick/soft/autpgrp/PackageInfo.g",
 # ArchiveURL     := Concatenation( ~.PackageWWWHome, "autpgrp-", ~.Version ),

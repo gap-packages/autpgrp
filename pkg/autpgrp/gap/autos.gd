@@ -2,10 +2,6 @@
 ##
 #W  autos.gd                 AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: autos.gd,v 1.9 2012/05/29 07:07:20 gap Exp $
-##
-Revision.("autpgrp/gap/autos_gd") :=
-    "@(#)$Id: autos.gd,v 1.9 2012/05/29 07:07:20 gap Exp $";
 
 #############################################################################
 ##

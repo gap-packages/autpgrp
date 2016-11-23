@@ -2,10 +2,6 @@
 ##
 #W  initperm.gi              AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: initperm.gi,v 1.7 2009/08/31 07:40:15 gap Exp $
-##
-Revision.("autpgrp/gap/initperm_gi") :=
-    "@(#)$Id: initperm.gi,v 1.7 2009/08/31 07:40:15 gap Exp $";
 
 #############################################################################
 ##

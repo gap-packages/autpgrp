@@ -2,10 +2,6 @@
 ##
 #W  autos.gi                 AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: autos.gi,v 1.13 2009/08/31 07:40:15 gap Exp $
-##
-Revision.("autpgrp/gap/autos_gi") :=
-    "@(#)$Id: autos.gi,v 1.13 2009/08/31 07:40:15 gap Exp $";
 
 #############################################################################
 ##
@@ -34,10 +30,8 @@ LinearActionPGAut := function( P, M, aut )
     if imgs = pcgsM then
         aut!.mat := 1;
     else
-	#AH: make the matrix FF *before* conpacting
-        mat := List( imgs, x -> ExponentsOfPcElement( pcgsM, x)*One(M!.field) );
-        ConvertToMatrixRep( mat,Size(M!.field) );
-        mat := Immutable( mat );
+        mat := List(imgs, x -> ExponentsOfPcElement(pcgsM, x)*One(M!.field));
+        mat := ImmutableMatrix( M!.field, mat );
         aut!.mat :=  mat;
     fi;
 end;
@@ -263,7 +257,7 @@ InstallGlobalFunction( AddInfoCover,
 ##
 InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     local p, r, G, pcgs, first, n, str, A, F, Q, i, s, t, P, N, M, U, B,
-          baseU, baseN, epi, interrupt, f;
+          baseU, baseN, epi, f;
 
     # catch the trivial case
     G := arg[1];
@@ -368,7 +362,6 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
         # induce to next factor
         Info( InfoAutGrp, 2, "  induce autos and add central autos");
         A := InduceAutGroup( A, Q, P, M, U );
-
     od;
 
     # now get a real automorphism group

@@ -1,4 +1,4 @@
-autpgrp/copying
+autpgrp/gap/hybrstab.old
 autpgrp/doc/manual.log
 autpgrp/doc/manual.dvi
 autpgrp/doc/manual.pdf

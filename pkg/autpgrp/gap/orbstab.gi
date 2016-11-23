@@ -2,10 +2,6 @@
 ##
 #W  orbstab.gi              AutPGrp package                      Bettina Eick
 ##
-#H  @(#)$Id: orbstab.gi,v 1.4 2003/08/18 12:10:28 gap Exp $
-##
-Revision.("autpgrp/gap/orbstab_gi") :=
-    "@(#)$Id: orbstab.gi,v 1.4 2003/08/18 12:10:28 gap Exp $";
 
 #############################################################################
 ##

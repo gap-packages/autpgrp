@@ -3,8 +3,6 @@
 %A  method.tex         AutPGrp documentation                 Bettina Eick
 %A                                                         Eamonn O'Brien
 %%
-%H  @(#)$Id: method.tex,v 1.2 2002/11/27 07:27:27 gap Exp $
-%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Chapter{The automorphism group method}
@@ -36,9 +34,7 @@ varying levels of information on the progress of
 the computation, will be obtained. 
 
 \beginexample 
-gap> RequirePackage("autpgrp");
-#I ------------ The AutPGrp package --------------
-#I -- Computing automorphism groups of p-groups -- 
+gap> LoadPackage("autpgrp", false);
 true
 
 gap> G := SmallGroup( 32, 15 );
@@ -70,14 +66,13 @@ gap> CanEasilyComputePcgs(G);
 true
 gap> IsFinite(G);
 true
-gap> AutomorphismGroup(G);
+gap> A := AutomorphismGroup(G);
 #I  step 1: 2^2 -- init automorphisms 
 #I  step 2: 2^1 -- aut grp has size 2
 #I  step 3: 2^1 -- aut grp has size 8
 #I  step 4: 2^1 -- aut grp has size 32
 #I  final step: convert
 <group of size 128 with 7 generators>
-gap> A := last;;
 gap> A.1;
 Pcgs([ ( 2,16)( 3,15)( 4,14)( 5,13)( 6,12)( 7,11)( 8,10), 
   ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16), 

@@ -2,10 +2,6 @@
 ##
 #W  matrstab.gi             AutPGrp package                      Bettina Eick
 ##
-#H  @(#)$Id: matrstab.gi,v 1.3 2009/03/09 07:26:55 gap Exp $
-##
-Revision.("autpgrp/gap/matrstab_gi") :=
-    "@(#)$Id: matrstab.gi,v 1.3 2009/03/09 07:26:55 gap Exp $";
 
 #############################################################################
 ##
@@ -100,9 +96,9 @@ InducedActionByHom := function( hom, mat )
 
     # again catch a special case for efficiency
     if ind = ind^0 then return 1; fi;
-    ind := Immutable(ind);
-    ConvertToMatrixRep( ind );
-    return ind;
+
+    # otherwise return
+    return ImmutableMatrix( Characteristic(ind[1][1]), ind);
 end;
 
 #############################################################################
@@ -113,9 +109,7 @@ ActionOnDual := function( mat )
     local new;
     if mat = 1 then return 1; fi;
     new := TransposedMat( mat )^-1;
-    new:=Immutable(new);
-    ConvertToMatrixRep( new );
-    return new;
+    return ImmutableMatrix( Characteristic(new[1][1]), new);
 end;
 
 #############################################################################
@@ -158,8 +152,7 @@ PGMatrixOrbitStabilizer := function( A, V, W, R )
         lab := LabelOfBasis( pt, info );
         PGHybridOrbitStabilizer( A, glMats, agMats, lab, OnLabel, info );
     else
-        pt := Immutable( pt );
-        ConvertToMatrixRep( pt );
+        pt := ImmutableMatrix( A.field, pt );
         PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec() );
     fi;
 end;
