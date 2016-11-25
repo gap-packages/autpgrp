@@ -154,7 +154,7 @@ InstallGlobalFunction( InitAutomorphismGroupOver,
     # get partition stabilizer
     base := IdentityMat( r, GF(p) );
     V    := GF(p)^r;
-    norm := NormedVectors( V );
+    norm := NormedRowVectors( V );
     part := PartitionMinimalOvergrps( G, pcgs, norm );
     stab := PartitionStabilizer( GL( r, p ), part, norm );
 
