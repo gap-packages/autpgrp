@@ -272,7 +272,7 @@ WedgePlusChar2Action := function( mat, f )
     # set up
     d := Length(mat);
     e := (d^2 - d)/2;
-    M := MutableNullMat(e+d,e+d);
+    M := NullMat(e+d,e+d);
 
     # wedge part
     for i in [2..d] do
