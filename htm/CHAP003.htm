@@ -12,7 +12,7 @@ choose default values.
 <a name = ""></a>
 <li><code>AutomorphismGroupPGroup( </code><var>G</var><code> [,</code><var>flag</var><code>] ) F</code>
 <p>
-The input is a finite <var>p</var>-group as above and an optional <var>flag</var> 
+The input is a finite <i>p</i>-group as above and an optional <var>flag</var> 
 which can be true or false. Here the filters for <var>G</var> need not be 
 set, but they should be true for <var>G</var>. The possible values for <var>flag</var>
 are considered later in Chapter <a href="CHAP004.htm">Influencing the algorithm</a>. If 
@@ -54,8 +54,6 @@ the output of <code>AutomorphismGroupPGroup</code> to the output of
 <p>
 <pre>
 gap&gt; LoadPackage("autpgrp", false);
-#I ------------ The AutPGrp package --------------
-#I -- Computing automorphism groups of p-groups -- 
 true
 
 gap&gt; H := SmallGroup (729, 34);
@@ -95,12 +93,12 @@ gap&gt; ConvertHybridAutGroup( A );
 &lt;group of size 52488 with 11 generators&gt;
 </pre>
 <p>
-Let <var>A</var> be the automorphism group of a <var>p</var>-group <var>G</var> as computed by 
+Let <var>A</var> be the automorphism group of a <i>p</i>-group <i>G</i> as computed by 
 <code>AutomorphismGroupPGroup</code>. Then the following function can compute 
 a pc group isomorphic to the solvable part of <var>A</var> stored in the record 
 component <var>A</var>.agGroup. This solvable part forms a subgroup of the
 automorphism group which  contains at least the automorphisms centralizing
-the Frattini factor of <var>G</var>. The pc group facilitates various further
+the Frattini factor of <i>G</i>. The pc group facilitates various further
 computations with <var>A</var>.
 <p>
 <a name = ""></a>

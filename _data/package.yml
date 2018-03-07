@@ -1,6 +1,6 @@
 name: AutPGrp
-version: 1.8
-date: 2016-11-25
+version: 1.9
+date: 2018-03-07
 description: |
     Computing the Automorphism Group of a p-Group
 
@@ -14,15 +14,15 @@ maintainers:
     - name: Bettina Eick
       url: http://www.icm.tu-bs.de/~beick
 
-GAP: ">=4.4"
+GAP: ">=4.7"
 
-www: http://www.icm.tu-bs.de/~beick/so.html
+www: https://gap-packages.github.io/autpgrp/
 readme: README
-packageinfo: http://www.icm.tu-bs.de/~beick/soft/autpgrp/PackageInfo.g
+packageinfo: https://gap-packages.github.io/autpgrp/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: http://www.icm.tu-bs.de/~beick/soft/autpgrp/autpgrp-1.8.tar.gz
+      url: https://github.com/gap-packages/autpgrp/releases/download/v1.9/autpgrp-1.9.tar.gz
 
 abstract: |
     The <span class="pkgname">AutPGrp</span> package introduces a new function to compute the automorphism group of a finite $p$-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANUPQ method. Our package is written in GAP code and it makes use of a number of methods from the GAP library such as the MeatAxe for matrix groups and permutation group functions. We have compared our method to the others available in GAP. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.

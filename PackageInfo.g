@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "AutPGrp",
 Subtitle := "Computing the Automorphism Group of a p-Group",
-Version := "1.8",
-Date := "25/11/2016",
+Version := "1.9",
+Date := "07/03/2018",
 
 Persons := [
   rec(
@@ -48,16 +48,18 @@ Status := "accepted",
 CommunicatedBy := "Derek F. Holt (Warwick)",
 AcceptDate := "09/2000",
 
-PackageWWWHome := "http://www.icm.tu-bs.de/~beick/so.html",
-
+PackageWWWHome  := "https://gap-packages.github.io/autpgrp/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/autpgrp",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/autpgrp-", ~.Version ),
 ArchiveFormats := ".tar.gz",
-ArchiveURL := Concatenation( 
-       "http://www.icm.tu-bs.de/~beick/soft/autpgrp/autpgrp-", ~.Version ),
-README_URL := "http://www.icm.tu-bs.de/~beick/soft/autpgrp/README",
-PackageInfoURL := "http://www.icm.tu-bs.de/~beick/soft/autpgrp/PackageInfo.g",
-# ArchiveURL     := Concatenation( ~.PackageWWWHome, "autpgrp-", ~.Version ),
-# README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-# PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
 AbstractHTML :=
 "The <span class=\"pkgname\">AutPGrp</span> package introduces a new function to compute the automorphism group of a finite $p$-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANUPQ method. Our package is written in GAP code and it makes use of a number of methods from the GAP library such as the MeatAxe for matrix groups and permutation group functions. We have compared our method to the others available in GAP. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.",
@@ -72,13 +74,15 @@ PackageDoc := rec(
   Autoload  := true),
 
 Dependencies := rec(
-  GAP := ">=4.4",
+  GAP := ">=4.7",
   NeededOtherPackages := [],
   SuggestedOtherPackages := [],
   ExternalConditions := [] ),
 
 AvailabilityTest := ReturnTrue,
-Autoload := true,
+
+TestFile := "tst/testall.g",
+
 Keywords := ["p-group", "automorphism group"]
 
 ));

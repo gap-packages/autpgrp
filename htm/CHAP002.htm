@@ -4,13 +4,13 @@
 <h1>2 The automorphism group method</h1><p>
 <p>
 The <font face="Gill Sans,Helvetica,Arial">AutPGrp</font> package installs a method for <code>AutomorphismGroup</code> for a 
-finite <var>p</var>-group (see also Section&nbsp;<a href="../../../doc/ref/chap40.html#X79640F3682BDBFC1">Groups of Automorphisms</a> 
+finite <i>p</i>-group (see also Section&nbsp;<a href="https://www.gap-system.org/Manuals/doc/ref/chap40.html#X79640F3682BDBFC1">Groups of Automorphisms</a> 
 in the <font face="Gill Sans,Helvetica,Arial">GAP</font> Reference Manual).
 <p>
 <a name = ""></a>
 <li><code>AutomorphismGroup( </code><var>G</var><code> ) M</code>
 <p>
-The input is a finite <var>p</var>-group <var>G</var>. If the filters <code>IsPGroup</code>, 
+The input is a finite <i>p</i>-group <var>G</var>. If the filters <code>IsPGroup</code>, 
 <code>IsFinite</code> and <code>CanEasilyComputePcgs</code> are set and true for <var>G</var>, 
 the method selection of <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 invokes this algorithm. 
 <p>
@@ -23,7 +23,7 @@ on the underlying group <var>G</var>.
 <a name = ""></a>
 <li><code>InfoAutGrp V</code>
 <p>
-This is a <font face="Gill Sans,Helvetica,Arial">GAP</font> InfoClass (these are described in Chapter&nbsp;<a href="../../../doc/ref/chap7.html#X7A9C902479CB6F7C">Info Functions</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> Reference Manual). By assigning an <var>info-level</var>
+This is a <font face="Gill Sans,Helvetica,Arial">GAP</font> InfoClass (these are described in Chapter&nbsp;<a href="https://www.gap-system.org/Manuals/doc/ref/chap7.html#X7A9C902479CB6F7C">Info Functions</a> in the <font face="Gill Sans,Helvetica,Arial">GAP</font> Reference Manual). By assigning an <var>info-level</var>
 in the range 1 to 4 via
 <p>
 <code>SetInfoLevel(InfoAutGrp, </code><var>info-level</var><code>)</code>
@@ -48,7 +48,7 @@ gap&gt; AutomorphismGroup(G);
 &lt;group of size 64 with 6 generators&gt;
 </pre>
 <p>
-The algorithm proceeds by induction down the lower <var>p</var>-central
+The algorithm proceeds by induction down the lower <i>p</i>-central
 series of <var>G</var> and the information corresponds 
 to the steps of this induction. In the following example we observe
 that the method also accepts permutation groups as input, provided
