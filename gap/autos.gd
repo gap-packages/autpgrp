@@ -23,7 +23,7 @@ DeclareRepresentation( "IsPGAutomorphismRep",
                        ["base", "baseimgs", "pcgs", "pcgsimgs"] );
 
 IsPGAutomorphism := IsMapping and IsPGAutomorphismRep;
-DeclareOperation( "PGAutomorphism", [ IsPGroup, IsList, IsList ] );
+DeclareOperation( "PGAutomorphism", [ IsPGroup and IsFinite, IsList, IsList ] );
 
 
 DeclareGlobalFunction( "AutomorphismGroupPGroup" );

@@ -9,7 +9,7 @@
 #F PGAutomorphism( <G>, <gens>, <imgs> )
 ##
 InstallMethod( PGAutomorphism,
-   "for p-groups", true, [IsPGroup, IsList, IsList ], 0,
+   "for p-groups", true, [IsPGroup and IsFinite, IsList, IsList ], 0,
 
 function( G, gens, imgs )
     local filter, type, r, p, pcgs, base, pcgsimgs, baseimgs, def, d;
