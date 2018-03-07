@@ -285,8 +285,7 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
         elif arg[2] = "Char" then 
             InitAutGroup := InitAutomorphismGroupChar;
         else
-            Print("not a valid inititialisation \n");
-            return;
+            Error("invalid initialisation");
         fi;
 
     elif Length( arg ) = 2 and IsBool(arg[2]) and arg[2] = true then
@@ -298,8 +297,7 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
         elif str = "Full" then
             InitAutGroup := InitAutomorphismGroupFull;
         else
-            Print("not a valid inititialisation \n");
-            return;
+            Error("invalid initialisation");
         fi;
 
     fi;
