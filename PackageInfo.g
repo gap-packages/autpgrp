@@ -80,7 +80,9 @@ Dependencies := rec(
   ExternalConditions := [] ),
 
 AvailabilityTest := ReturnTrue,
-Autoload := true,
+
+TestFile := "tst/testall.g",
+
 Keywords := ["p-group", "automorphism group"]
 
 ));
