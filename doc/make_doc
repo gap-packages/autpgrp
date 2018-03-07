@@ -25,7 +25,7 @@ pdftex manual; pdftex manual
 # The HTML version of the manual
 mkdir -p ../htm
 echo "Creating HTML documentation"
-../../../etc/convert.pl -c -i -n AutPGrp . ../htm
+../../../etc/convert.pl -i -u -c -n AutPGrp . ../htm
 
 #########################################################################
 ##
