@@ -1,0 +1,57 @@
+<html><head><title>[AutPGrp] 1 Introduction</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<h1>1 Introduction</h1><p>
+<p>
+Given an arbitrary finite group, the computation of its automorphism
+group is a very difficult task. Pioneer work in this area was carried 
+out by Felsch &amp;  Neub&uuml;ser (1970), whose algorithm used 
+the output of their subgroup lattice program. A technique developed 
+by Neub&uuml;ser in the early 1970s sought to compute the 
+automorphism group viewed as a permutation group acting on unions of 
+certain conjugacy classes of the group. A similar method was implemented 
+by Hulpke (1997) in the <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 library. Recently, Cannon &amp; Holt (1999) 
+presented a new algorithm which uses a ``hybrid group'' approach. 
+<p>
+More efficient approaches are available to determine the automorphism 
+group for groups satisfying certain properties. Following the work of 
+Shoda (1928), Hulpke in 1997 implemented a practical method for finite 
+abelian groups in the <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 library. Wursthorn (1993) adapted modular 
+group algebra techniques to compute the automorphism groups of <var>p</var>-groups; 
+the <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3 share package <font face="Gill Sans,Helvetica,Arial">Sisyphos</font> includes an implementation. Smith 
+(1994) introduced an algorithm for finite solvable groups which is 
+available in the <font face="Gill Sans,Helvetica,Arial">AutAg</font> share package of <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3. 
+<p>
+Moreover, the <var>p</var>-group generation method of Newman (1977) and O'Brien 
+(1990) can be modified to compute the automorphism group of a finite 
+<var>p</var>-group as outlined in O'Brien (1995). This algorithm is implemented 
+in the ANU <code>pq</code> C program. 
+<p>
+Here we introduce a new function to compute the automorphism group of 
+a finite <var>p</var>-group. The underlying algorithm is a refinement of the
+methods described in O'Brien (1995). In particular, this implementation
+is more efficient in both time and space requirements and hence has a 
+wider range of applications than the ANU <code>pq</code> method. Our package is 
+written in <font face="Gill Sans,Helvetica,Arial">GAP</font> code and it makes use of a number of methods from the 
+<font face="Gill Sans,Helvetica,Arial">GAP</font> library such as the MeatAxe for matrix groups and 
+permutation group functions. 
+<p>
+The <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;4 package <font face="Gill Sans,Helvetica,Arial">ANUPQ</font>, which is an interface to most of
+the functionality of the ANU <code>pq</code> C program, uses the <font face="Gill Sans,Helvetica,Arial">AutPGrp</font> package
+to compute automorphism groups of <var>p</var>-groups.
+<p>
+We have compared our method to the others available in <font face="Gill Sans,Helvetica,Arial">GAP</font>.
+Our package usually out-performs all but the method designed 
+for finite abelian groups. We note that our method uses the 
+small groups library in certain cases and hence our algorithm
+is more effective if the small groups library is installed.
+<p>
+A <font face="Gill Sans,Helvetica,Arial">GAP</font>&nbsp;3 version of the methods implemented in this package 
+is available via 
+<a href="http://www-public.tu-bs.de:8080/~beick/so.html">http://www-public.tu-bs.de:8080/~beick/so.html</a>
+<p>
+<p>
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<address>AutPGrp manual<br>March 2018
+</address></body></html>

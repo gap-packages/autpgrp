@@ -1,48 +1,32 @@
-name: GitHubPagesForGAP
-version: 0.2
-date: 2017-02-04
+name: AutPGrp
+version: 1.8
+date: 2016-11-25
 description: |
-    A GitHub Pages generator for GAP packages
+    Computing the Automorphism Group of a p-Group
 
 authors:
-    - name: Max Horn
-      url: http://www.quendi.de/math
-    - name: A. U. Thor
+    - name: Bettina Eick
+      url: http://www.icm.tu-bs.de/~beick
+    - name: Eamonn O'Brien
+      url: http://www.math.auckland.ac.nz/~obrien
 
 maintainers:
-    - name: Max Horn
-      url: http://www.quendi.de/math
-    - name: Jan Itor
+    - name: Bettina Eick
+      url: http://www.icm.tu-bs.de/~beick
 
-GAP: ">=4.8.1"
+GAP: ">=4.4"
 
-needed-pkgs:
-    - name: "GAPDoc"
-      version: ">= 1.2"
-      url: "http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
-    - name: "IO"
-      version: ">= 4.1"
-      url: "https://gap-packages.github.io/io"
-
-suggested-pkgs:
-    - name: "orb"
-      version: ">= 4.2"
-      url: "https://gap-packages.github.io/orb"
-
-www: https://gap-system.github.io/GitHubPagesForGAP/
-readme: README.md
-packageinfo: https://gap-system.github.io/GitHubPagesForGAP/PackageInfo.g
-github: https://github.com/gap-system/GitHubPagesForGAP
+www: http://www.icm.tu-bs.de/~beick/so.html
+readme: README
+packageinfo: http://www.icm.tu-bs.de/~beick/soft/autpgrp/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-system/GitHubPagesForGAP/releases/download/v0.2/GitHubPagesForGAP-0.2.tar.gz
-    - name: .tar.bz2
-      url: https://github.com/gap-system/GitHubPagesForGAP/releases/download/v0.2/GitHubPagesForGAP-0.2.tar.bz2
+      url: http://www.icm.tu-bs.de/~beick/soft/autpgrp/autpgrp-1.8.tar.gz
 
 abstract: |
-    This is a pseudo package that contains no actual  <span class="pkgname">GAP</span> code. Instead, it is a template for other  GAP packages that allows to quickly setup GitHub Pages.
+    The <span class="pkgname">AutPGrp</span> package introduces a new function to compute the automorphism group of a finite $p$-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANUPQ method. Our package is written in GAP code and it makes use of a number of methods from the GAP library such as the MeatAxe for matrix groups and permutation group functions. We have compared our method to the others available in GAP. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.
 
-status: other
-doc-html: doc/chap0.html
+status: accepted
+doc-html: htm/chapters.htm
 doc-pdf: doc/manual.pdf
