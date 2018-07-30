@@ -1,6 +1,6 @@
 # CHANGES to the 'autpgrp' GAP package
 
-## unreleased
+## 1.10 (2018-07-30)
 
  - added Max Horn as package maintainer
  - added this file with overview of changes in each package release
