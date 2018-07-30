@@ -219,21 +219,6 @@ end;
 
 #############################################################################
 ##
-#F BlockPosition( orbit, pt )
-##
-## unused here, but polycyclic is using it, so keep this here
-## until polycyclic is updated
-BlockPosition := function( orbit, pt )
-    local h, j;
-    for j in [1..Length(orbit)] do
-        h := Position( orbit[j], pt );
-        if not IsBool( h ) then return [j, h]; fi;
-    od;
-    return false;
-end;
-
-#############################################################################
-##
 #F BlockOrbitStabilizer( B, oper, os, fpt, info )
 ##
 BlockOrbitStabilizer := function( B, oper, os, fpt, info )
