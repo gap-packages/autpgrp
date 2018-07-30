@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "AutPGrp",
 Subtitle := "Computing the Automorphism Group of a p-Group",
-Version := "1.9",
-Date := "07/03/2018",
+Version := "1.10",
+Date := "30/07/2018",
 
 Persons := [
   rec(
@@ -29,6 +29,24 @@ Persons := [
       Institution   := "TU Braunschweig"),
 
     rec(
+      LastName      := "Horn",
+      FirstNames    := "Max",
+      IsAuthor      := false,
+      IsMaintainer  := true,
+      Email         := "max.horn@math.uni-giessen.de",
+      WWWHome       := "http://www.quendi.de/math",
+      PostalAddress := Concatenation(
+                         "AG Algebra\n",
+                         "Mathematisches Institut\n",
+                         "Justus-Liebig-Universität Gießen\n",
+                         "Arndtstraße 2\n",
+                         "35392 Gießen\n",
+                         "Germany" ),
+      Place         := "Gießen",
+      Institution   := "Justus-Liebig-Universität Gießen"
+    ),
+
+    rec(
       LastName      := "O'Brien",
       FirstNames    := "Eamonn",
       IsAuthor      := true,
@@ -41,7 +59,7 @@ Persons := [
             "Private Bag 92019\n Auckland\n New Zealand\n" ),
       Place         := "Auckland",
       Institution   := "University of Auckland"
-    )
+    ),
 ],
 
 Status := "accepted",
