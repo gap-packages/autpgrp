@@ -12,9 +12,7 @@ gap> AutomorphismGroup(G);
 #I  step 3: 2^1 -- aut grp has size 32
 #I  final step: convert
 <group of size 64 with 6 generators>
-gap> G := DihedralGroup( IsPermGroup, 2^5 );
-Group([ (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16), (2,16)(3,15)(4,14)(5,13)
-(6,12)(7,11)(8,10) ])
+gap> G := DihedralGroup( IsPermGroup, 2^5 );;
 gap> IsPGroup(G);
 true
 gap> CanEasilyComputePcgs(G);
