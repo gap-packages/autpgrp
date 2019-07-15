@@ -1,5 +1,11 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## 1.10.1 (2019-07-15)
+
+ - fixed a manual example and the test derived from it to work
+   with both GAP 4.11 and older GAP versions
+ - made further janitorial changes
+
 ## 1.10 (2018-07-30)
 
  - added Max Horn as package maintainer
