@@ -26,7 +26,7 @@ Persons := [
                "D-38106 Braunschweig\n",
                "Germany" ),
       Place         := "Braunschweig",
-      Institution   := "TU Braunschweig") ],
+      Institution   := "TU Braunschweig"),
 
     rec(
       LastName      := "Horn",
