@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 PackageName := "AutPGrp",
 Subtitle := "Computing the Automorphism Group of a p-Group",
 Version := "1.10.2",
-Date := "10/11/2019", # dd/mm/yyyy format
+Date := "28/01/2020", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
