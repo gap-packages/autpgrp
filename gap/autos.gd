@@ -49,7 +49,6 @@ DeclareGlobalFunction( "ImageAutPGroup" );
 DeclareGlobalFunction( "InnerAutGroupPGroup" );
 DeclareGlobalFunction( "ConvertAutGroup" );
 DeclareGlobalFunction( "InduceAutGroup" );
-DeclareGlobalFunction( "EcheloniseMat" );
 DeclareGlobalFunction( "LinearActionAutGrp" );
 DeclareGlobalFunction( "AddInfoCover" );
 DeclareGlobalFunction( "InitAutomorphismGroupOver" );

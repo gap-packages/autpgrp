@@ -7,7 +7,7 @@
 ##
 #F CollectToWord( list )
 ##
-CollectToWord := function( list )
+BindGlobal( "CollectToWord", function( list )
     local coll, t, i;
     coll := [];
     t := [list[1], 1];
@@ -21,13 +21,13 @@ CollectToWord := function( list )
     od; 
     Add( coll, t );
     return coll;
-end;
+end );
 
 #############################################################################
 ##
 #F TransformPG( get, list, id )  . . . . . . . . . . . .convert get to element
 ##
-TransformPG := function( get, list, id )
+BindGlobal( "TransformPG", function( get, list, id )
     local coll, res, i;
 
     # catch the special case
@@ -49,13 +49,13 @@ TransformPG := function( get, list, id )
         fi;
     od;
     return PGMultList( res );
-end;
+end );
 
 #############################################################################
 ##
 #F Transform( get, list, id ) . . . . . . . . . . . . .convert get to element
 ##
-Transform := function( get, list, id )
+BindGlobal( "Transform", function( get, list, id )
     local res, i;
     if Length( get ) = 0 then return id; fi;
     if get[1] > 0 then res := list[get[1]];
@@ -67,13 +67,13 @@ Transform := function( get, list, id )
         fi;
     od;
     return res;
-end;
+end );
 
 #############################################################################
 ##
 #F ReduceGet( ords, get ) . . . . . . . . . . . . . . .reduce get with orders
 ##
-ReduceGet := function( ords, get )
+BindGlobal( "ReduceGet", function( ords, get )
     local found, i, j, o;
 
     found := true;
@@ -114,13 +114,13 @@ ReduceGet := function( ords, get )
         od;
     od;
     return Filtered( get, x -> not IsBool( x ) );
-end;
+end );
 
 #############################################################################
 ##
 #F OSTransversalInverse( j, trans, trels, id )
 ##
-OSTransversalInverse := function( j, trans, trels, id )
+BindGlobal( "OSTransversalInverse", function( j, trans, trels, id )
     local l, g, s, p, t;
     if j = 1 then return id; fi;
     l := Product( trels );
@@ -136,13 +136,13 @@ OSTransversalInverse := function( j, trans, trels, id )
         fi;
     od;
     return g;
-end;
+end );
 
 #############################################################################
 ##
 #F PcgsOrbitStabilizer( A, oper, pt, fpt, info ) 
 ##
-PcgsOrbitStabilizer := function( A, oper, pt, fpt, info )
+BindGlobal( "PcgsOrbitStabilizer", function( A, oper, pt, fpt, info )
     local pcgs, rels, stabl, srels, trans, trels, orbit, i, y, j, p, l, s, 
           k, t, h, g, dict;
 
@@ -215,13 +215,13 @@ PcgsOrbitStabilizer := function( A, oper, pt, fpt, info )
                 orbit := orbit,
                 trans := trans,
                 trels := trels );
-end;
+end );
 
 #############################################################################
 ##
 #F BlockOrbitStabilizer( B, oper, os, fpt, info )
 ##
-BlockOrbitStabilizer := function( B, oper, os, fpt, info )
+BindGlobal( "BlockOrbitStabilizer", function( B, oper, os, fpt, info )
     local bl, l, li, orbit, trans, stabl, pstab, mats, auts, ords, pers,
           k, pt, i, y, j, new, get, aut, g, per, s, dict, r, stabGrp;
 
@@ -307,13 +307,13 @@ BlockOrbitStabilizer := function( B, oper, os, fpt, info )
 
     return rec( stabl := stabl, pstab := pstab, 
                 length := Length(orbit) );
-end;
+end );
 
 #############################################################################
 ##
 #F PGHybridOrbitStabilizer( A, glMats, agMats, pt, oper, info )
 ##
-PGHybridOrbitStabilizer := function( A, glMats, agMats, pt, oper, info )
+BindGlobal( "PGHybridOrbitStabilizer", function( A, glMats, agMats, pt, oper, info )
     local os, OS, B;
 
     # compute ag orbit stabilizier
@@ -339,5 +339,5 @@ PGHybridOrbitStabilizer := function( A, glMats, agMats, pt, oper, info )
 
     # nice the glAutos if necessary
     if NICE_STAB and OS.length > 1 then NiceHybridGroup( A ); fi;
-end;
+end );
 

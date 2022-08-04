@@ -7,7 +7,7 @@
 ##
 #F LinearActionPGAut( <P>, <M>, <aut> )
 ##
-LinearActionPGAut := function( P, M, aut )
+BindGlobal( "LinearActionPGAut", function( P, M, aut )
     local p, gensP, pcgsM, gensG, defn, imgs, mat, d;
 
     # set up
@@ -34,7 +34,7 @@ LinearActionPGAut := function( P, M, aut )
         mat := ImmutableMatrix( M!.field, mat );
         aut!.mat :=  mat;
     fi;
-end;
+end );
 
 #############################################################################
 ##
@@ -60,7 +60,7 @@ InstallGlobalFunction( LinearActionAutGrp,
 ##
 #F CentralAutos( <G>, <N> )
 ##
-CentralAutos := function( G, N )
+BindGlobal( "CentralAutos", function( G, N )
     local base, pcgs, cent, b, i, imgs, aut;
 
     base := Pcgs(N);
@@ -75,13 +75,13 @@ CentralAutos := function( G, N )
         od;
     od;
     return cent;
-end;
+end );
 
 #############################################################################
 ##
 #F InduceAuto( <F>, <aut> )
 ##
-InduceAuto := function( F, aut )
+BindGlobal( "InduceAuto", function( F, aut )
     local pcgsF, baseF, imgsG, imgsF, hom;
     pcgsF := Pcgs( F );
     baseF := pcgsF{[1..RankPGroup(F)]};
@@ -96,7 +96,7 @@ InduceAuto := function( F, aut )
         fi;
     fi;
     return PGAutomorphism( F, baseF, imgsF );
-end;
+end );
 
 #############################################################################
 ##
@@ -151,7 +151,7 @@ InstallGlobalFunction( InduceAutGroup,
 ##
 #F ConvertAuto( <aut>, <iso> )
 ##
-ConvertAuto := function( aut, iso )
+BindGlobal( "ConvertAuto", function( aut, iso )
     local G, pcgs, imgs, auto;
     
     G := Source( iso );
@@ -173,7 +173,7 @@ ConvertAuto := function( aut, iso )
     fi;
 
     return auto;
-end;
+end );
 
 #############################################################################
 ##

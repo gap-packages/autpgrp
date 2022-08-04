@@ -7,7 +7,7 @@
 ##
 #F LabelOfBasis( base, info ) . . . . . . . . . . . . . . . . . label to basis
 ##
-LabelOfBasis := function( base, info )
+BindGlobal( "LabelOfBasis", function( base, info )
     local pt, j, i;
 
     # compute pt
@@ -22,13 +22,13 @@ LabelOfBasis := function( base, info )
 
     # create label
     return pt;
-end;
+end );
 
 #############################################################################
 ##
 #F CoeffsInt( int, d, power )
 ##
-CoeffsInt := function( int, d, power)
+BindGlobal( "CoeffsInt", function( int, d, power)
    local i, exp;
    i   := d;
    exp := List( power, y -> 0 );
@@ -38,46 +38,46 @@ CoeffsInt := function( int, d, power)
       i      := i - 1;
    od;
    return exp;
-end;
+end );
 
 #############################################################################
 ##
 #F BasisOfLabel( lab, info ) . . . . . . . . . . . . . . . . . basis of label
 ##
-BasisOfLabel := function ( lab, info )
+BindGlobal( "BasisOfLabel", function ( lab, info )
    return List( [1..info.l], x -> CoeffsInt( lab[x], info.d, info.power ) );
-end;
+end );
 
 #############################################################################
 ##
 #F OnLabel( lab, mat, info ) . . . . . . . . . . . . . . . .operation on label
 ##
-OnLabel := function( lab, mat, info )
+BindGlobal( "OnLabel", function( lab, mat, info )
     local v, w;
     v := BasisOfLabel( lab, info );
     w := v * mat;
     TriangulizeMat( w );
     return LabelOfBasis( w, info );
-end;
+end );
 
 #############################################################################
 ##
 #F OnBasis( base, mat, info ) . . . . . . . . . . . . . . .operation on basis
 ##
-OnBasis := function( base, mat, info )
+BindGlobal( "OnBasis", function( base, mat, info )
     base := base * mat;
     if not IsMutable(base) then
       base:=ShallowCopy(base);
     fi;
     TriangulizeMat( base );
     return base;
-end;
+end );
 
 #############################################################################
 ##
 #F InducedActionByHom( hom, mat )
 ##
-InducedActionByHom := function( hom, mat )
+BindGlobal( "InducedActionByHom", function( hom, mat )
     local ind, baseI, baseS, b, e, f, g;
 
     # catch special case for efficiency
@@ -99,24 +99,24 @@ InducedActionByHom := function( hom, mat )
 
     # otherwise return
     return ImmutableMatrix( Characteristic(ind[1][1]), ind);
-end;
+end );
 
 #############################################################################
 ##
 #F ActionOnDual( mat )
 ##
-ActionOnDual := function( mat )
+BindGlobal( "ActionOnDual", function( mat )
     local new;
     if mat = 1 then return 1; fi;
     new := TransposedMat( mat )^-1;
     return ImmutableMatrix( Characteristic(new[1][1]), new);
-end;
+end );
 
 #############################################################################
 ##
 #F PGMatrixOrbitStabilizer( A, V, W, R )
 ##
-PGMatrixOrbitStabilizer := function( A, V, W, R )
+BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
     local VS, WS, RS, hom, pt, glMats, agMats, lab, info, l, d, oper;
 
     # set up factor space
@@ -155,13 +155,13 @@ PGMatrixOrbitStabilizer := function( A, V, W, R )
         pt := ImmutableMatrix( A.field, pt );
         PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec() );
     fi;
-end;
+end );
 
 #############################################################################
 ##
 #F CheckStab(A, pt)
 ##
-CheckAgStab := function( A, pt )
+BindGlobal( "CheckAgStab", function( A, pt )
     local g, s, c;
     for g in A.agAutos do
         for s in pt do
@@ -170,9 +170,9 @@ CheckAgStab := function( A, pt )
         od;
     od;
     return true;
-end;
+end );
 
-CheckGlStab := function( A, pt )
+BindGlobal( "CheckGlStab", function( A, pt )
     local g, s, c;
     for g in A.glAutos do
         for s in pt do
@@ -181,13 +181,13 @@ CheckGlStab := function( A, pt )
         od;
     od;
     return true;
-end;
+end );
 
 #############################################################################
 ##
 #F PGOrbitStabilizerBySeries( A, baseU, chop )
 ##
-PGOrbitStabilizerBySeries := function( A, baseU, chop )
+BindGlobal( "PGOrbitStabilizerBySeries", function( A, baseU, chop )
     local s, U, T, i, S, R, j, V, W, B;
 
     s := Length(chop);
@@ -224,5 +224,5 @@ PGOrbitStabilizerBySeries := function( A, baseU, chop )
             od;
         fi;
     od;
-end;
+end );
 

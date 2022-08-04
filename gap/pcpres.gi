@@ -13,7 +13,7 @@
 ##
 #F PcgsInfoAutPGroup( A ) . . . . . . . . . . . . . . . set up info on layers
 ##
-PcgsInfoAutPGroup := function( A )
+BindGlobal( "PcgsInfoAutPGroup", function( A )
     local G, d, p, f, spec, gens, layer, bases, i, auto, imgs, base, j,
           s, n, B, P, M, pcgs, e;
 
@@ -73,13 +73,13 @@ PcgsInfoAutPGroup := function( A )
         B.agTopfc := pcgs;
     fi;
     return B;
-end;
+end );
 
 #############################################################################
 ##
 #F ExponentsAutPGroup( B, auto ) . . . . . . . . . . .compute exponent vector
 ##
-ExponentsAutPGroup := function( B, auto )
+BindGlobal( "ExponentsAutPGroup", function( B, auto )
     local exps, imgs, perm, news, tmpa, j, e, s, n, subs, base;
 
     exps := List( B.agAutos, x -> 0 );
@@ -124,7 +124,7 @@ ExponentsAutPGroup := function( B, auto )
         e := Minimum( List( imgs, PositionNonZero ) );
     od;
     return exps;
-end;
+end );
 
 #############################################################################
 ##

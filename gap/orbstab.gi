@@ -7,7 +7,7 @@
 ##
 #F BasesCompositionSeriesThrough( M, base )
 ##
-BasesCompositionSeriesThrough := function( M, base )
+BindGlobal( "BasesCompositionSeriesThrough", function( M, base )
     local full, chop, indu, smll, i, facb;
 
     full := IdentityMat( M.dimension, M.field );
@@ -37,7 +37,7 @@ BasesCompositionSeriesThrough := function( M, base )
     fi;
 
     return chop;
-end;
+end );
 
 #############################################################################
 ##

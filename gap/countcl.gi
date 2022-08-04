@@ -15,7 +15,7 @@
 ##
 #F InducedActionFactor( mats, fac, low )
 ##
-InducedActionFactor := function( mats, fac, low )
+BindGlobal( "InducedActionFactor", function( mats, fac, low )
     local sml, upp, d, i, b, t;
     sml := List( mats, x -> [] );
     upp := Concatenation( fac, low );
@@ -27,24 +27,24 @@ InducedActionFactor := function( mats, fac, low )
         od;
     od;
     return sml;
-end;
+end );
 
 #############################################################################
 ##
 #F SpinUpCyclic( v, mat, d )
 ##
-SpinUpCyclic := function( v, mat, d )
+BindGlobal( "SpinUpCyclic", function( v, mat, d )
     local b, i;
     b := [v]; for i in [1..d-1] do b[i+1] := b[i] * mat; od;
     TriangulizeMat(b);
     return b;
-end;
+end );
 
 #############################################################################
 ##
 #F JordanBlockLengths( mat, F )
 ##
-JordanBlockLengths := function( g, F )
+BindGlobal( "JordanBlockLengths", function( g, F )
     local chr, min, fc, fm, ns, V, W, U, i, f, e, h, k, v, t;
 
     # char poly 
@@ -86,25 +86,25 @@ JordanBlockLengths := function( g, F )
         od;
     od;
     return rec( blks := ns, degs := List(fc, x -> Degree(x[1])));
-end;
+end );
 
 #############################################################################
 ##
 #F Two small help functions
 ##
-WeightedSum := function(vec)
+BindGlobal( "WeightedSum", function(vec)
     return Sum(List( [1..Length(vec)], x -> x * vec[x] ));
-end;
+end );
 
-PartialSums := function(vec)
+BindGlobal( "PartialSums", function(vec)
     return List( [1..Length(vec)], x -> Sum(vec{[x..Length(vec)]}));
-end;
+end );
 
 #############################################################################
 ##
 #F Deltas( blls, degs, k )
 ##
-Deltas := function( ni, d, k )
+BindGlobal( "Deltas", function( ni, d, k )
     local ds, i, r, new, del, s, j, m;
     ds := [[]];
     i := 1;
@@ -130,13 +130,13 @@ Deltas := function( ni, d, k )
         i := i + 1;
     od;
     return ds;
-end;
+end );
 
 #############################################################################
 ##
 #F Gammas( deli, vis )
 ##
-Gammas := function( d, v )
+BindGlobal( "Gammas", function( d, v )
     local par, i;
     par := Partitions( d );
     for i in [1..Length(par)] do
@@ -148,13 +148,13 @@ Gammas := function( d, v )
         fi;
     od;
     return Filtered(par, x -> not IsBool(x));
-end;
+end );
 
 #############################################################################
 ##
 #F PChoose( n, k, q ) . . . . . . . . . .number of k-dim subspaces in GF(q)^n
 ##
-PChoose := function( n, k, q )
+BindGlobal( "PChoose", function( n, k, q )
     local qn, qd, i, size;
     if n / 2 < k then k:= n - k; fi;
     size:= 1;
@@ -167,13 +167,13 @@ PChoose := function( n, k, q )
     od;
     return size;
     #return Size(Subspaces(GF(q)^n, k));
-end;
+end );
 
 #############################################################################
 ##
 #F Feval(a, b, q ) . . . . . . . . . . . . . . . . . . .evaluate f on a, b, q
 ##
-Feval := function( a, b, q )
+BindGlobal( "Feval", function( a, b, q )
     local l, s, i;
     Add( b, 0 );
     l := Length(a);
@@ -183,13 +183,13 @@ Feval := function( a, b, q )
         s := s * PChoose(a[i]-b[i+1], b[i]-b[i+1], q);
     od;
     return s;
-end;
+end );
 
 #############################################################################
 ##
 #F FixedPointsByDecom( blocks, degs, p, k )
 ##
-FixedPointsByDecom := function( blks, degs, p, k )
+BindGlobal( "FixedPointsByDecom", function( blks, degs, p, k )
     local r, ni, ds, vi, t, td, tg, delta, gamma, i, gs;
 
     # set up
@@ -219,7 +219,7 @@ FixedPointsByDecom := function( blks, degs, p, k )
 
     # that's it
     return t;
-end;
+end );
 
 ############################################################################
 ##
@@ -276,15 +276,15 @@ end );
 ##
 #F Some Actions
 ##
-WedgeAction := function( mat, f )
+BindGlobal( "WedgeAction", function( mat, f )
     return WedgeGModule(GModuleByMats([mat], f)).generators[1];
-end;
+end );
 
-TensorAction := function( mat, f )
+BindGlobal( "TensorAction", function( mat, f )
     return KroneckerProduct( mat, mat );
-end;
+end );
 
-WedgePlusChar2Action := function( mat, f )
+BindGlobal( "WedgePlusChar2Action", function( mat, f )
     local d, e, M, i, j, l, k, a, b; 
 
     # set up
@@ -321,19 +321,19 @@ WedgePlusChar2Action := function( mat, f )
     od;
 
     return M * One(f);
-end;
+end );
 
-WedgePlusCharPAction := function( mat, f )
+BindGlobal( "WedgePlusCharPAction", function( mat, f )
     return DirectSumMat( WedgeAction(mat,f), mat );
-end;
+end );
 
-WedgePlusAction := function( mat, f )
+BindGlobal( "WedgePlusAction", function( mat, f )
     if Characteristic(f) = 2 then 
         return WedgePlusChar2Action(mat, f);
     else
         return WedgePlusCharPAction(mat, f);
     fi;
-end;
+end );
 
 ############################################################################
 ##
@@ -389,7 +389,7 @@ end );
 ##
 #F NumberOfClass2AssociativeAlgebras( n, p, [k] )
 ##
-NumberOfClass2AssocAlgebras := function( arg )
+BindGlobal( "NumberOfClass2AssocAlgebras", function( arg )
     local n, k, c, m;
     if Length(arg) = 3 then
         return CountOrbitsGL( arg[1], arg[2], arg[3], TensorAction );
@@ -406,9 +406,9 @@ NumberOfClass2AssocAlgebras := function( arg )
         return c;
     fi;
     Error("wrong input");
-end;
+end );
 
-NumberOfClass2AssocAlgebrasByDim := function( d, p )
+BindGlobal( "NumberOfClass2AssocAlgebrasByDim", function( d, p )
     local r, n, c;
     r := 2;
     for n in [2..d-1] do
@@ -416,5 +416,5 @@ NumberOfClass2AssocAlgebrasByDim := function( d, p )
         r := r+c;
     od;
     return r;
-end;
+end );
 
