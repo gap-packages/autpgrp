@@ -7,11 +7,11 @@
 ##
 #F Fingerprint( G, U )
 ##
-FingerprintSmall := function( G, U )
+BindGlobal( "FingerprintSmall@", function( G, U )
     return Flat( [IdGroup( U ), Size(CommutatorSubgroup( G, U )) ]);
-end;
+end );
 
-FingerprintMedium := function( G, U )
+BindGlobal( "FingerprintMedium@", function( G, U )
     local ranks, invs, comm, all, cls, fus, new;
 
     # some general stuff
@@ -26,27 +26,27 @@ FingerprintMedium := function( G, U )
     Sort( cls );
 
     return Concatenation( ranks, invs, [comm], cls );
-end;
+end );
 
-FingerprintLarge := function( G, U )
+BindGlobal( "FingerprintLarge@", function( G, U )
     return LGFirst( SpecialPcgs(U) );
-end;
+end );
 
-FingerprintHuge := function( G, U )
+BindGlobal( "FingerprintHuge@", function( G, U )
     return List( DerivedSeries(U), Size );
-end;
+end );
 
-PGFingerprint := function ( G, U )
+BindGlobal( "PGFingerprint", function ( G, U )
     if Size( U ) <= 256 and IsRecord( ID_AVAILABLE( Size(U) ) ) then
-        return FingerprintSmall( G, U );
+        return FingerprintSmall@( G, U );
     elif Size( U ) <= 1000 then
-        return FingerprintMedium( G, U );
+        return FingerprintMedium@( G, U );
     elif Size( U ) <= 2^21 then
-        return FingerprintLarge( G, U );
+        return FingerprintLarge@( G, U );
     else
-        return FingerprintHuge( G, U );
+        return FingerprintHuge@( G, U );
     fi;
-end;
+end );
 
 # FIXME: DualBasis is not used in autpgrp; it is however
 # used in the sophus package. The next sophus release won't use
@@ -64,7 +64,7 @@ end;
 ##
 #F PartitionMinimalOvergrps ( G, pcgs, norm )
 ##
-PartitionMinimalOvergrps := function( G, pcgs, norm )
+BindGlobal( "PartitionMinimalOvergrps", function( G, pcgs, norm )
     local min, done, part, i, tup, pos;
 
     Info( InfoAutGrp, 3, "  computing partition ");
@@ -84,13 +84,13 @@ PartitionMinimalOvergrps := function( G, pcgs, norm )
     od;
     Sort( part, function( x, y ) return Length(x) < Length(y); end );
     return part;
-end;
+end );
 
 #############################################################################
 ##
 #F PartitionStabilizer ( A, part, norm )
 ##
-PartitionStabilizer := function( A, part, norm )
+BindGlobal( "PartitionStabilizer", function( A, part, norm )
     local iso, P, sub, gens, n, q;
 
     Info( InfoAutGrp, 3, "  computing stabilizer of ", part);
@@ -122,19 +122,19 @@ PartitionStabilizer := function( A, part, norm )
     return rec( perm := gens,
                 mats := List( gens, x -> PreImagesRepresentative(iso,x) ),
                 size := Size(P) ); 
-end;
+end );
 
 #############################################################################
 ##
 #F AutoOfMat( mat, H )
 ##
-AutoOfMat := function( mat, H )
+BindGlobal( "AutoOfMat", function( mat, H )
     local img, aut, pcgs;
     pcgs := Pcgs(H);
     img := List( mat, x -> PcElementByExponentsNC(pcgs, x) );
     aut := PGAutomorphism( H, pcgs, img );
     return aut;
-end;
+end );
 
 #############################################################################
 ##

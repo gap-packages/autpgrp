@@ -9,7 +9,7 @@
 ##
 ## The two-step-centralizers of lower p-central series of G.
 ##
-TwoStepCentralizersByLcs := function( G )
+BindGlobal( "TwoStepCentralizersByLcs", function( G )
     local pcgs, first, p, field, list, i, f, m, n, max, pcgsN, pcgsM, 
           pcgsH, gensL, gensC, pcgsR, new;
 
@@ -39,7 +39,7 @@ TwoStepCentralizersByLcs := function( G )
         Add( list, SubgroupByPcgs( G, new ) );
     od;
     return list;
-end;
+end );
 
 #############################################################################
 ##
@@ -48,7 +48,7 @@ end;
 ## The preimages of Omega-subgroups of G_i for all factors  G_i of the lower
 ## p-central series of G. 
 ##
-OmegaSubgroupsByLcs := function( G )
+BindGlobal( "OmegaSubgroupsByLcs", function( G )
     local pcgs, first, p, field, list, max, i, pcgsN, N, hom, F, ser, specF;
 
     # catch the trivial case
@@ -76,13 +76,13 @@ OmegaSubgroupsByLcs := function( G )
         fi;
     od;
     return list;
-end;
+end );
 
 #############################################################################
 ##
 #F MaxSubIntersections(G)
 ##
-MaxSubIntersections := function(G)
+BindGlobal( "MaxSubIntersections", function(G)
     local max, fp, fpset, fpbin, i, j;
     max := MaximalSubgroups(G);
     fp := List(max, IdGroup);
@@ -93,13 +93,13 @@ MaxSubIntersections := function(G)
         Add(fpbin[j], max[i]);
     od;
     return List(fpbin, Intersection);
-end;
+end );
         
 #############################################################################
 ##
 #F PGCharSubgroups( G )
 ##
-PGCharSubgroups := function(G)
+BindGlobal( "PGCharSubgroups", function(G)
     local  cent, omega;
     cent := TwoStepCentralizersByLcs( G );
     omega := OmegaSubgroupsByLcs( G );
@@ -108,13 +108,13 @@ PGCharSubgroups := function(G)
     else
         return Union( cent, omega );
     fi;
-end;
+end );
 
 #############################################################################
 ##
 #F FrattiniQuotientBase( <spec>, <U> )
 ##
-FrattiniQuotientBase := function( spec, U )
+BindGlobal( "FrattiniQuotientBase", function( spec, U )
     local r, frat, pcgs, subU, base;
 
     r := LGFirst(spec)[2];
@@ -123,13 +123,13 @@ FrattiniQuotientBase := function( spec, U )
     subU := Filtered(InducedPcgs(spec, U), x -> DepthOfPcElement(spec,x)<r);
     base := List( subU, x -> ExponentsOfPcElement( pcgs, x ) );
     return base;
-end;
+end );
     
 #############################################################################
 ##
 #F InitAutomorphismGroupChar( G ) 
 ##
-InitAutomorphismGroupChar := function( G )
+BindGlobal( "InitAutomorphismGroupChar", function( G )
     local r, p, chars, bases, S, H, A, z, spec, kern;
 
     Info( InfoAutGrp, 2, "  init automorphism group : Char ");
@@ -168,13 +168,13 @@ InitAutomorphismGroupChar := function( G )
     # try to construct perm rep
     NiceInitGroup( A, true );
     return A;
-end;
+end );
 
 #############################################################################
 ##
 #F InitAutomorphismGroupFull( G )
 ##
-InitAutomorphismGroupFull := function( G )
+BindGlobal( "InitAutomorphismGroupFull", function( G )
     local r, p, S, H, A, kern;
 
     Info( InfoAutGrp, 2, "  init automorphism group : Full ");
@@ -201,4 +201,4 @@ InitAutomorphismGroupFull := function( G )
     # try to compute perm rep
     NiceInitGroup( A, false );
     return A;
-end;
+end );

@@ -7,7 +7,7 @@
 ##
 #F GLMatrix( aut )
 ##
-GLMatrix := function( aut )
+BindGlobal( "GLMatrix", function( aut )
     local G, r, pcgsG, pcgsN, pcgsF, mat;
     G := Source( aut );
     r := RankPGroup( G );
@@ -17,13 +17,13 @@ GLMatrix := function( aut )
     mat := List(pcgsF,
                 x->ExponentsOfPcElement(pcgsF,ImagesRepresentative(aut,x)));
     return mat;
-end;
+end );
 
 #############################################################################
 ##
 #F TryPermOperation( A ) . . . . . . . . resets A.glOper to perms or nothing
 ##
-TryPermOperation := function( A )
+BindGlobal( "TryPermOperation", function( A )
     local G, r, p, base, V, norm, f, M, iso, P;
 
     # if its too big, then don't try.
@@ -47,13 +47,13 @@ TryPermOperation := function( A )
 
     # and get images
     A.glOper := GeneratorsOfGroup( P );
-end;  
+end );  
 
 #############################################################################
 ##
 #F ReducePermOper( A )
 ##
-ReducePermOper := function(A)
+BindGlobal( "ReducePermOper", function(A)
     local P, B, phom, gens, auts;
     
     Info( InfoAutGrp, 4, "  reduce permutation operation");
@@ -73,13 +73,13 @@ ReducePermOper := function(A)
 
     Info( InfoAutGrp, 4, "  factor has size ",A.glOrder," and ",
                          Length(A.glAutos)," generators");
-end;
+end );
 
 #############################################################################
 ##
 #F TrySolvableSubgroup( A )
 ##
-TrySolvableSubgroup := function( A )
+BindGlobal( "TrySolvableSubgroup", function( A )
     local P, B, N, pcgs, phom, nhom, G, auts, gens;
 
     Info( InfoAutGrp, 4, "  try solvable normal subgroup");
@@ -118,7 +118,7 @@ TrySolvableSubgroup := function( A )
     Info( InfoAutGrp, 4, "  factor has size ",A.glOrder," and ", 
                          Length(A.glAutos)," generators");
 
-end;
+end );
 
 #############################################################################
 ##
@@ -126,7 +126,7 @@ end;
 ##
 ## try to compute a perm rep and, if successful, compute N.
 ##
-NiceInitGroup := function( A, flag )
+BindGlobal( "NiceInitGroup", function( A, flag )
 
     Info( InfoAutGrp, 3, "  nice init group");
 
@@ -150,13 +150,13 @@ NiceInitGroup := function( A, flag )
             TrySolvableSubgroup( A );
         fi;
     fi;
-end;
+end );
 
 #############################################################################
 ##
 #F NiceHybridGroup( A )
 ##
-NiceHybridGroup := function( A )
+BindGlobal( "NiceHybridGroup", function( A )
     local mats, done, auts, i, mat, aut, fac, rels, e, f; 
 
     # catch the trivial cases
@@ -210,5 +210,5 @@ NiceHybridGroup := function( A )
     fi;
     Info( InfoAutGrp, 4, "     factor has size ",A.glOrder," and");
     Info( InfoAutGrp, 4, Length(A.glAutos)," generators");
-end;
+end );
     

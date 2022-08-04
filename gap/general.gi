@@ -7,7 +7,7 @@
 ##
 #F Interrupt
 ##
-Interrupt := function(text)
+BindGlobal( "Interrupt", function(text)
     local str, ans;
     Print("\n",text);
     Print(": \c");
@@ -16,13 +16,13 @@ Interrupt := function(text)
     ans := ans{[1..Length(ans)-1]};
     Print("\n");
     return ans;
-end;
+end );
 
 #############################################################################
 ##
 #F RewriteDef( pcgs, defn, p )
 ##
-RewriteDef := function( pcgs, defn, p )
+BindGlobal( "RewriteDef", function( pcgs, defn, p )
     local words, i, d, e, w;
     words := [];
     for i in [1..Length(defn)] do
@@ -42,13 +42,13 @@ RewriteDef := function( pcgs, defn, p )
         fi;
     od;
     return words;
-end;
+end );
 
 #############################################################################
 ##
 #F SubstituteDef( def, gens, p )
 ##
-SubstituteDef := function( def, gens, p )
+BindGlobal( "SubstituteDef", function( def, gens, p )
    local i, e;
 
    # definition part
@@ -67,7 +67,7 @@ SubstituteDef := function( def, gens, p )
        fi;
    od;
    return e;
-end;
+end );
 
 #############################################################################
 ##
@@ -87,28 +87,28 @@ end;
 ##
 #F InducedPcgsByBasis( pcgs, basis )
 ##
-InducedPcgsByBasis := function( pcgs, basis )
+BindGlobal( "InducedPcgsByBasis", function( pcgs, basis )
     local pcgsN, pcgsM, seq, pcs;
     pcgsN := NumeratorOfModuloPcgs( pcgs );
     pcgsM := DenominatorOfModuloPcgs( pcgs );
     seq   := List( basis, b -> PcElementByExponents( pcgs, b ) );
     pcs   := InducedPcgsByPcSequenceAndGenerators( pcgsN, pcgsM, seq );
     return InducedPcgsByPcSequenceNC( pcgsN, pcs );
-end;
+end );
 
 #############################################################################
 ##
 #F IsHomoCyclic( G )
 ##
-IsHomoCyclic := function( G )
+BindGlobal( "IsHomoCyclic", function( G )
     return IsAbelian(G) and Length(Set(AbelianInvariants(G))) = 1;
-end;
+end );
 
 #############################################################################
 ##
 #F FrattiniQuotientPGroup( G )
 ##
-FrattiniQuotientPGroup := function( G )
+BindGlobal( "FrattiniQuotientPGroup", function( G )
     local spec, firs, frat, H;
     spec := SpecialPcgs(G);
     firs := LGFirst(spec);
@@ -119,24 +119,24 @@ FrattiniQuotientPGroup := function( G )
     SetRankPGroup( H, firs[2] - 1 );
     H!.definitions := List( [1..firs[2]-1], x -> -x );
     return H;
-end;
+end );
 
 #############################################################################
 ##
 #F InitGlAutos( H, mats )
 ##
-InitGlAutos := function( H, mats )
+BindGlobal( "InitGlAutos", function( H, mats )
     local pcgs;
     pcgs := Pcgs(H);
     return List( mats, x -> PGAutomorphism( H, pcgs, List( x, 
                        y -> PcElementByExponents( pcgs, y) ) ) );
-end;
+end );
 
 #############################################################################
 ##
 #F InitAgAutos( H, p )
 ##
-InitAgAutos := function( H, p )
+BindGlobal( "InitAgAutos", function( H, p )
     local pcgs, auts, alpha, fac, i, imgs;
     if p <> 2 then
         pcgs  := Pcgs(H);
@@ -152,13 +152,13 @@ InitAgAutos := function( H, p )
     else
         return rec( auts := [], rels := [] );
     fi;
-end;
+end );
 
 #############################################################################
 ##
 #F EcheloniseMat( mat )
 ##
-InstallGlobalFunction( EcheloniseMat,
+BindGlobal( "EcheloniseMat",
   function( mat )
     local ech, tmp, i;
 

@@ -7,7 +7,7 @@
 ##
 #F ChainByCollection( bases, full )
 ##
-ChainByCollection := function( bases, full )
+BindGlobal( "ChainByCollection", function( bases, full )
     local chain, base, tmp, i, V, W, int;
 
     chain := [ full, [] ];
@@ -29,14 +29,14 @@ ChainByCollection := function( bases, full )
         Sort( chain, function( x, y ) return Length(x)>Length(y); end );
     od;
     return chain;
-end;
+end );
 
 
 #############################################################################
 ##
 #F StabilizingMatrixGroup( list of bases ) . . . . . compute stabilizer in GL
 ##
-StabilizingMatrixGroup := function( bases, d, p  )
+BindGlobal( "StabilizingMatrixGroup", function( bases, d, p  )
     local full, chain, mats, l, size, i, j, n, mat, G, rel, field;
 
     # general set up
@@ -104,6 +104,6 @@ StabilizingMatrixGroup := function( bases, d, p  )
     SetSize( G, size );
 
     return G;
-end;
+end );
 
 
