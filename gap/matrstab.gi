@@ -185,6 +185,19 @@ end );
 
 #############################################################################
 ##
+#F SumMat( mat1, mat2 )
+##
+BindGlobal( "SumMat@" ,function( mat1, mat2 )
+    local tmp;
+    tmp := Concatenation( mat1, mat2 );
+    tmp := EcheloniseMat( tmp );
+    TriangulizeMat(tmp);
+    return tmp;
+end );
+
+
+#############################################################################
+##
 #F PGOrbitStabilizerBySeries( A, baseU, chop )
 ##
 BindGlobal( "PGOrbitStabilizerBySeries", function( A, baseU, chop )
@@ -204,9 +217,9 @@ BindGlobal( "PGOrbitStabilizerBySeries", function( A, baseU, chop )
             R := chop[i+1];
             for j in Reversed( [1..i] ) do
                 V := ShallowCopy( R );
-                R := SumMat( T, chop[j] );
+                R := SumMat@( T, chop[j] );
                 if Length( R ) < Length( V ) then
-                    W := SumMat( S, chop[j] );
+                    W := SumMat@( S, chop[j] );
                     if Length( R ) > Length( W ) then
                         PGMatrixOrbitStabilizer( A, V, W, R );
                         if CHECK then 

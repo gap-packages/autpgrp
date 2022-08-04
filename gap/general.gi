@@ -172,16 +172,3 @@ BindGlobal( "EcheloniseMat",
     od;
     return tmp;
   end);
-
-#############################################################################
-##
-#F SumMat( mat1, mat2 )
-##
-SumMat := function( mat1, mat2 )
-    local tmp;
-    tmp := Concatenation( mat1, mat2 );
-    tmp := EcheloniseMat( tmp );
-    TriangulizeMat(tmp);
-    return tmp;
-end;
-
