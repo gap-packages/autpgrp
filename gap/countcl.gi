@@ -15,7 +15,7 @@
 ##
 #F InducedActionFactor( mats, fac, low )
 ##
-BindGlobal( "InducedActionFactor", function( mats, fac, low )
+BindGlobal( "InducedActionFactor@", function( mats, fac, low )
     local sml, upp, d, i, b, t;
     sml := List( mats, x -> [] );
     upp := Concatenation( fac, low );
@@ -67,7 +67,7 @@ BindGlobal( "JordanBlockLengths", function( g, F )
         e := Length(Filtered(fm, x -> x = f)); 
         h := Value( f^e, g );
         W := TriangulizedNullspaceMat(h);
-        k := InducedActionFactor( [g], W, [] )[1];
+        k := InducedActionFactor@( [g], W, [] )[1];
 
         # split cyclic
         while not IsBool(k) do 
@@ -79,7 +79,7 @@ BindGlobal( "JordanBlockLengths", function( g, F )
                 v := First( k^0, x -> x*h <> 0*x );
                 W := SpinUpCyclic( v, k, e*Degree(f) );
                 U := BaseSteinitzVectors(k^0, W).factorspace;
-                k := InducedActionFactor( [k], U, W )[1];
+                k := InducedActionFactor@( [k], U, W )[1];
                 t := Collected(Factors(MinimalPolynomial( F, k )));
                 e := t[1][2];
             fi;
