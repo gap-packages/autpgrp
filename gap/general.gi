@@ -71,20 +71,6 @@ end );
 
 #############################################################################
 ##
-#F DepthVector( vec )
-##
-#DepthVector := function( vec )
-#    local i;
-#    for i in [1..Length(vec)] do
-#        if vec[i] <> 0 * vec[i] then
-#            return i;
-#        fi;
-#    od;
-#    return Length(vec) + 1;
-#end;
-
-#############################################################################
-##
 #F InducedPcgsByBasis( pcgs, basis )
 ##
 BindGlobal( "InducedPcgsByBasis", function( pcgs, basis )
