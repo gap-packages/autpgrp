@@ -86,13 +86,11 @@ the problem; so please include:
 
  * The version of GAP you are using; either look at  the  header  when
    you start up GAP, or at the gap> prompt type: VERSION;
- * The operating system you are using e.g. Linux, SunOS 5.8 =  Solaris
-   2.8, IRIX 6.5, ...
+ * The operating system you are using e.g. Linux, macOS, Windows, ...
  * A script in GAP that demonstrates the bug, along with a description
    of why it's a bug (e.g. by adding comments to the script -  recall,
    comments in GAP begin with a #).
 
   - Bettina Eick
     e-mail: b.eick@tu-bs.de 
-    www:    http://www.icm.tu-bs.de/~beick/so.html
-
+    www:    http://www.iaa.tu-bs.de/beick/so.html
