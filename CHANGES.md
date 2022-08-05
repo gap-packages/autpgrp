@@ -1,5 +1,11 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## 1.11 (2022-08-05)
+
+ - make global functions in this package read-only to prevent
+   accidents caused by overwriting them with different code
+ - update Max Horn's address
+
 ## 1.10.1 (2019-07-15)
 
  - fixed a manual example and the test derived from it to work
