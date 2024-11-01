@@ -88,7 +88,7 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Computing the Automorphism Group of a p-Group",
-  Autoload  := true),
+),
 
 Dependencies := rec(
   GAP := ">=4.7",
