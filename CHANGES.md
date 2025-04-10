@@ -1,5 +1,11 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## 1.11.1 (2025-04-10)
+
+ - Update an outdated statement in the install instructions (we don't
+   use ".zoo" files anymore)
+ - update Max Horn's contact details yet again
+
 ## 1.11 (2022-08-05)
 
  - make global functions in this package read-only to prevent
