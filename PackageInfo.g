@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "AutPGrp",
 Subtitle := "Computing the Automorphism Group of a p-Group",
-Version := "1.11",
-Date := "05/08/2022", # dd/mm/yyyy format
+Version := "1.11.1",
+Date := "10/04/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -33,16 +33,16 @@ Persons := [
       FirstNames    := "Max",
       IsAuthor      := false,
       IsMaintainer  := true,
-      Email         := "horn@mathematik.uni-kl.de",
+      Email         := "mhorn@rptu.de",
       WWWHome       := "https://www.quendi.de/math",
       PostalAddress := Concatenation(
                          "Fachbereich Mathematik\n",
-                         "TU Kaiserslautern\n",
+                         "RPTU Kaiserslautern-Landau\n",
                          "Gottlieb-Daimler-Straße 48\n",
                          "67663 Kaiserslautern\n",
                          "Germany" ),
       Place         := "Kaiserslautern, Germany",
-      Institution   := "TU Kaiserslautern"
+      Institution   := "RPTU Kaiserslautern-Landau"
     ),
 
     rec(
@@ -88,7 +88,7 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Computing the Automorphism Group of a p-Group",
-  Autoload  := true),
+),
 
 Dependencies := rec(
   GAP := ">=4.7",
