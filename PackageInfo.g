@@ -79,13 +79,10 @@ ArchiveURL      := Concatenation( ~.SourceRepository.URL,
                                  "/autpgrp-", ~.Version ),
 ArchiveFormats := ".tar.gz",
 
-AbstractHTML :=
-"The <span class=\"pkgname\">AutPGrp</span> package introduces a new function to compute the automorphism group of a finite $p$-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANUPQ method. Our package is written in GAP code and it makes use of a number of methods from the GAP library such as the MeatAxe for matrix groups and permutation group functions. We have compared our method to the others available in GAP. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.",
-
 PackageDoc := rec(
   BookName  := "AutPGrp",
-  ArchiveURLSubset := ["doc", "htm"],
-  HTMLStart := "htm/chapters.htm",
+  ArchiveURLSubset := ["doc"],
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Computing the Automorphism Group of a p-Group",
@@ -94,15 +91,45 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [],
-  SuggestedOtherPackages := [],
+  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
+                             ["AutoDoc", ">=2020.08.11"]],
   ExternalConditions := [] ),
 
 AvailabilityTest := ReturnTrue,
 
 TestFile := "tst/testall.g",
 
-Keywords := ["p-group", "automorphism group"]
+Keywords := ["p-group", "automorphism group"],
 
-));
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := """
+          Bettina Eick and Eamonn O'Brien.<P/>
 
+          AutPGrp is free software; you can redistribute it and/or modify
+          it under the terms of the <URL Text="GNU General Public License">
+          https://www.fsf.org/licenses/gpl.html</URL> as published by the
+          Free Software Foundation; either version 2 of the License, or (at
+          your option) any later version.""",
+        Abstract := """
+          The &AUTPGRP; package introduces a new
+          function to compute the automorphism group of a finite
+          <M>p</M>-group. The underlying algorithm is a refinement of the
+          methods described in O'Brien (1995). In particular, this
+          implementation is more efficient in both time and space requirements
+          and hence has a wider range of applications than the ANUPQ method.
+          Our package is written in &GAP; code and it makes use of a number of
+          methods from the &GAP; library such as the MeatAxe for matrix groups
+          and permutation group functions. We have compared our method to the
+          others available in &GAP;. Our package usually out-performs all but
+          the method designed for finite abelian groups. We note that our
+          method uses the small groups library in certain cases and hence our
+          algorithm is more effective if the small groups library is
+          installed.""",
+        Acknowledgements := """
+          We thank Alexander Hulpke for helping us with efficiency
+          problems. Werner Nickel provided some functions from
+          the &GAP; <C>PQuotient</C> which are used in this package.
+        """)),
 
+AbstractHTML := ~.AutoDoc.TitlePage.Abstract));

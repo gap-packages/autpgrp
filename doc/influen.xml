@@ -1,0 +1,261 @@
+<Chapter Label="Influencing the algorithm">
+<Heading>Influencing the algorithm</Heading>
+
+A number of choices can be made by the user to influence the performance of
+<C>AutomorphismGroupPGroup</C>. Below we identify these choices and their
+default values used in <Ref Oper="AutomorphismGroup"/>. We use the optional
+argument <A>flag</A> of <C>AutomorphismGroupPGroup</C> to invoke
+user-defined choices. The possible values for <A>flag</A> are
+<P/>
+<List>
+<Mark><C><A>flag</A> = false</C> </Mark>
+<Item>
+the user-defined defaults are employed in the algorithm.
+See below for a list of possibilities.
+</Item>
+<Mark><C><A>flag</A> = true</C>  </Mark>
+<Item>
+invokes the interactive version of the algorithm
+                 as described in Section <Ref Sect="An interactive version of
+                 the algorithm"/>.
+</Item>
+</List>
+<P/>
+In the next section we give a brief outline of the algorithm which is
+necessary to understand the possible choices. Then we introduce the
+choices the later sections of this chapter.
+
+<Section Label="Outline of the algorithm">
+<Heading>Outline of the algorithm</Heading>
+
+The basic algorithm proceeds by induction
+down the lower <M>p</M>-central series of a given <M>p</M>-group <M>G</M>; that is, it
+successively computes <M>Aut(G_i)</M> for the quotients <M>G_i = G / P_i(G)</M> of
+the descending sequence of subgroups defined by <M>P_1(G) = G</M> and
+<M>P_{i+1}(G)=[P_i(G),G] P_i(G)^p</M> for <M>i\geq 1</M>. Hence, in the initial
+step of the algorithm, <M>Aut(G_2) = GL(d,p)</M> where <M>d</M> is the rank of
+the elementary abelian group <M>G_2</M>. In the inductive step it determines
+<M>Aut(G_{i+1})</M> from <M>Aut(G_i)</M>. For this purpose we introduce
+an action of <M>Aut(G_i)</M> on a certain elementary abelian <M>p</M>-group <M>M</M>
+(the <E><M>p</M>-multiplicator</E> of <M>G_i</M>). The main computation of the inductive
+step is the determination of the stabiliser in <M>Aut(G_i)</M> of a subgroup
+<M>U</M> of <M>M</M> (the <E>allowable subgroup</E> for <M>G_{i+1}</M>). This stabiliser
+calculation is the bottle-neck of the algorithm.
+<P/>
+
+Our package incorporates a number of refinements designed to simplify
+this stabiliser computation. Some of these refinements incur overheads
+and hence they are not always invoked. The features outlined below
+allow the user to select them.
+<P/>
+
+Observe that the initial step of the algorithm returns <M>GL(d,p)</M>. But
+<M>Aut(G)</M> may induce on <M>G_2</M> a proper subgroup, say <M>K</M>, of <M>GL(d,p)</M>.
+Any intermediate subgroup of <M>GL(d,p)</M> which contains <M>K</M> suffices for
+the algorithm and we supply two methods to construct a suitable subgroup:
+these use characteristic subgroups or invariants of normal subgroups of <M>G</M>.
+(See Section <Ref Sect="The initialisation step"/>.)
+<P/>
+
+In the inductive step an action of <M>Aut(G_i)</M> on an elementary abelian
+group <M>M</M> is used. This action is computed as a matrix action on a vector
+space. To simplify the orbit-stabiliser computation of the subspace <M>U</M>
+of <M>M</M>, we can construct the stabiliser of <M>U</M> by iteration over a sequence
+of <M>Aut(G_i)</M>-invariant subspaces of <M>M</M>.
+(See Section <Ref Sect="Stabilisers in matrix groups"/>.)
+<P/>
+
+Orbit-stabiliser computations in finite solvable groups given by a
+polycyclic generating sequence are much more efficient than generic
+computations of this type. Thus our algorithm makes use of a large
+solvable normal subgroup <M>S</M> of <M>Aut(G_i)</M>. Further, it is useful if
+the generating set of <M>Aut(G_i)</M> outside <M>S</M> is as small as possible.
+To achieve this we determine a permutation representation of <M>Aut(G_i)/S</M>
+and use this to reduce the number of generators if possible. (See Section
+<Ref Sect="Searching for a small generating set"/>.)
+</Section>
+
+<Section Label="The initialisation step">
+  <Heading>The initialisation step</Heading>
+
+Assume  we seek to  compute the  automorphism group of a  <M>p</M>-group <M>G</M>
+having Frattini rank  <M>d</M>.  We first determine as small as possible a
+subgroup of <M>GL(d, p)</M> whose extension can act on <M>G</M>.
+<P/>
+
+The user can choose the initialisation routine by assigning
+<C>InitAutGroup</C> to any one of the following:
+
+<List>
+
+<Mark><C>InitAutomorphismGroupOver</C> </Mark>
+<Item>
+to use the minimal overgroups;
+We  determine the  minimal over-groups  of the Frattini subgroup of
+<M>G</M> and compute invariants of these which must be respected by the
+automorphism group  of <M>G</M>. We partition the minimal overgroups and
+compute the stabiliser in <M>GL(d, p)</M> of this partition.
+</Item>
+
+<Mark><C>InitAutomorphismGroupChar</C> </Mark>
+<Item>
+to use the characteristic subgroups;
+Compute  a  generating   set  for  the stabiliser in  <M>GL (d, p)</M> of
+a chain of  characteristic subgroups of <M>G</M>. In  practice, we construct
+a characteristic  chain by determining 2-step  centralisers  and omega
+subgroups  of  factors  of the  lower <M>p</M>-central series.
+<P/>
+However, there are often other characteristic subgroups which are not
+found by these approaches. The user can overwrite the function
+<C>PGCharSubgroups( G )</C> to supply a set of characteristic subgroups.
+<P/>
+</Item>
+
+<Mark><C>InitAutomorphismGroupFull</C> </Mark>
+<Item>
+to use the full <M>GL(d,p)</M>.
+In the method for <Ref Oper="AutomorphismGroup"/> we use a default strategy:
+if the value <M>\frac{p^d-1}{p-1}</M> is less than 1000, then we
+use the minimal overgroup approach, otherwise the characteristic
+subgroups are employed. An exception is made for homogeneous abelian
+groups where we initialise the algorithm with the full group <M>GL(d,p)</M>.
+</Item>
+</List>
+</Section>
+
+<Section Label="Stabilisers in matrix groups">
+<Heading>Stabilisers in matrix groups</Heading>
+
+Consider the <M>i</M>th inductive step of the algorithm. Here <M>A \leq
+Aut(G_i)</M> acts as matrix group on the elementary abelian <M>p</M>-group
+<M>M</M> and we want to determine the stabiliser of a subgroup <M>U \leq M</M>.
+<P/>
+
+We use the MeatAxe to compute a series of <M>A</M>-invariant subspaces
+through <M>M</M> such that each factor in the series is irreducible as
+<M>A</M>-module. Then we use this series to break the computation
+of <M>Stab_A(U)</M> into several smaller orbit-stabiliser calculations.
+<P/>
+
+Note that a theoretic argument yields an <M>A</M>-invariant subspace
+of <M>M</M> a priori: the nucleus <M>N</M>. This is always used to split
+the computation up. However, it may happen that <M>N = M</M> and hence
+results in no improvement.
+
+<ManSection>
+            <Var Name="CHOP_MULT"/>
+            <Description>
+The invariant series through <M>M</M> is computed and used if the
+global variable <C>CHOP_MULT</C> is set to <K>true</K>. Otherwise, the algorithm
+tries to determine <M>Stab_A(U)</M> in one step. By default, <C>CHOP_MULT</C>
+is <K>true</K>.
+            </Description>
+</ManSection>
+</Section>
+
+<Section Label="Searching for a small generating set">
+<Heading>Searching for a small generating set</Heading>
+
+After each step of the computation, we attempt to  find a nice generating
+set for the automorphism group of the current factor.
+<P/>
+
+If the automorphism group is soluble, we store a polycyclic generating
+set; otherwise,  we store  such a generating  set for a  large soluble
+normal  subgroup <M>S</M> of the automorphism group <M>A</M>, and as few generators
+outside  as  possible. If <M>S = A</M> and a polycyclic  generating set for
+<M>S</M> is known,  many steps  of  the algorithm proceed more rapidly.
+
+<ManSection>
+            <Var Name="NICE_STAB"/>
+            <Description>
+It may be both time-consuming and difficult to reduce the number of
+generators for <M>A</M> outside <M>S</M>. Note that if the initialisation of the
+algorithm is by <C>InitAutomorphismGroupOver</C>, then we always know a
+permutation representation for <M>A/S</M>. Occasionally the search for
+a small generating set is expensive.  If this is  observed, one
+could set the flag <C>NICE_STAB</C> to  <K>false</K>  and  the  algorithm  no
+longer  invokes this search.
+            </Description>
+</ManSection>
+</Section>
+
+<Section Label="An interactive version of the algorithm">
+<Heading>An interactive version of the algorithm</Heading>
+
+The choice of initialisation and the choice of chopping of the
+<M>p</M>-multiplicator can also be driven by an interactive version
+of the algorithm. We give an example.
+<P/>
+<Log><![CDATA[
+gap> G := PcGroupCode(2504972218445939562621471375, 256);;  # SmallGroup( 2^8, 1000 );
+gap> SetInfoLevel( InfoAutGrp, 3 );
+
+gap> AutomorphismGroupPGroup( G, true );
+#I  step 1: 2^3 -- init automorphisms
+
+choose initialisation (Over/Char/Full):     # we choose Full
+#I    init automorphism group : Full
+#I  step 2: 2^3 -- aut grp has size 168
+#I    computing cover
+#I    computing matrix action
+#I    computing stabilizer of U
+#I    dim U = 3  dim N = 6  dim M = 6
+
+chop M/N and N: (y/n):                      # we choose n
+#I    induce autos and add central autos
+#I  step 3: 2^2 -- aut grp has size 12288
+#I    computing cover
+#I    computing matrix action
+#I    computing stabilizer of U
+#I    dim U = 6  dim N = 5  dim M = 8
+
+chop M/N and N: (y/n):                      # we choose y
+#I    induce autos and add central autos
+#I  final step: convert
+rec(
+  glAutos := [ Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -> [ f1, f2*f3, f3,
+          f4, f5, f6*f7, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1*f3*f5*f6, f2*f3, f3, f4, f5*f8, f6*f7, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1*f3, f2*f4, f3, f4*f7, f5*f7, f6*f7*f8, f7, f8 ] ], glOrder := 4,
+  agAutos :=
+    [ Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -> [ f1*f4, f2, f3, f4*f8, f5,
+          f6, f7, f8 ], Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2*f4, f3, f4*f7, f5, f6*f7*f8, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1*f5, f2, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2*f5, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2, f3*f5, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1*f6, f2, f3, f4, f5*f7*f8, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2*f6, f3, f4*f7*f8, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1*f8, f2, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2*f8, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2, f3*f8, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1*f7, f2, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2*f7, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) ->
+        [ f1, f2, f3*f7, f4, f5, f6, f7, f8 ] ],
+  agOrder := [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],
+  one := IdentityMapping( <pc group of size 256 with 8 generators> ),
+  group := <pc group of size 256 with 8 generators>, size := 32768 )
+]]></Log>
+<P/>
+Two points are worthy of comment. First, the interactive version of the
+algorithm permits the user to make a suitable choice in each step of
+the algorithm instead of making one choice at the beginning. Secondly,
+the output of the <C>Info</C> function shows the ranks of the
+<M>p</M>-multiplicator and allowable subgroup, and thus allow the user
+to observe the scale of difficulty of the computation.
+</Section>
+</Chapter>

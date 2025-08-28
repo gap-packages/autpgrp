@@ -1,5 +1,12 @@
-/htm/
-
+/doc/*.css
+/doc/*.js
+/doc/_*.xml
+/doc/chap*.html
+/doc/chap*.txt
+/doc/chap*_mj.html
+/doc/chap*_mj.txt
+/doc/chooser.html
+/doc/main.*
 /doc/manual.aux
 /doc/manual.bbl
 /doc/manual.blg
@@ -14,9 +21,10 @@
 /doc/manual.ps
 /doc/manual.six
 /doc/manual.toc
+/doc/title.xml
 /doc/tthin
 /doc/tthmacros.tex
 /doc/tthout
-
 /gh-pages/
+/htm/
 /tmp/

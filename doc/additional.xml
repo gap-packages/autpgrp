@@ -1,0 +1,45 @@
+<Chapter Label="Additional features of the package">
+    <Heading>Additional features of the package</Heading>
+    <Section>
+    <Heading>Additional features of the package</Heading>
+
+As an additional feature of this package we provide some functions to
+count extensions of <M>p</M>-groups and Lie algebras over <M>GF(p)</M>. These
+functions have been used in counting the <M>2</M>-groups of size <M>2^{10}</M>.
+<P/>
+
+<ManSection>
+            <Oper Name="NumberOfPClass2PGroups" Arg="n, p, k" Label="for 3 arguments"/>
+            <Description>
+This function determines the number of <A>n</A>-generator <A>p</A>-groups of <A>p</A>-class 2 with
+Frattini subgroup of order <C>2^<A>k</A></C>.
+            </Description>
+</ManSection>
+
+<ManSection>
+            <Oper Name="NumberOfPClass2PGroups" Arg="n, p" Label="for 2 arguments"/>
+            <Description>
+This function returns a list of of numbers of <A>n</A>-generator <A>p</A>-groups of <A>p</A>-class 2
+with Frattini subgroup of order <C>2^k</C> for <C>k</C> in <M>1, \ldots, n(n+1)/2</M>.
+            </Description>
+</ManSection>
+
+<ManSection>
+            <Oper Name="NumberOfClass2LieAlgebras" Arg="n, p, k" Label="for 3 arguments"/>
+            <Description>
+This function determines the number of <A>n</A>-generator Lie algebras of class 2 over
+<A>GF(p)</A> with derived Lie subalgebra of dimension <A>k</A>.
+            </Description>
+</ManSection>
+
+
+<ManSection>
+            <Oper Name="NumberOfClass2LieAlgbras" Arg="n, p" Label="for 2 arguments"/>
+            <Description>
+This function returns a list of of numbers of <A>n</A>-generator Lie algebras
+of class 2 over <M>GF(p)</M> with derived Lie subalgebra of
+dimension <M>k</M> for <M>k</M> in <M>1, \ldots, n(n-1)/2</M>.
+            </Description>
+</ManSection>
+    </Section>
+</Chapter>
