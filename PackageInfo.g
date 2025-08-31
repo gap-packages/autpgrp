@@ -91,8 +91,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.7",
   NeededOtherPackages := [],
-  SuggestedOtherPackages := [["GAPDoc", ">=1.6.3"],
-                             ["AutoDoc", ">=2020.08.11"]],
+  SuggestedOtherPackages := [],
   ExternalConditions := [] ),
 
 AvailabilityTest := ReturnTrue,
