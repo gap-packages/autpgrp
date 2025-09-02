@@ -10,8 +10,7 @@
 #
 gap> START_TEST("autpgrp02.tst");
 
-# doc/underl.xml:90-124
-
+# doc/underl.xml:90-122
 gap> LoadPackage("autpgrp", false);
 true
 gap> H := PcGroupCode(297368117289422176, 729);  # SmallGroup (729, 34);
@@ -44,10 +43,7 @@ rec(
 gap> ConvertHybridAutGroup( A );
 <group of size 52488 with 11 generators>
 
-    
-
-# doc/underl.xml:134-148
-
+# doc/underl.xml:132-144
 gap> H := PcGroupCode(297368117289422176, 729);;  # SmallGroup (729, 34);
 gap> A := AutomorphismGroupPGroup(H);;
 #I  step 1: 3^2 -- init automorphisms
@@ -59,8 +55,6 @@ gap> B := PcGroupAutPGroup( A );
 <pc group of size 52488 with 11 generators>
 gap> I := InnerAutGroupPGroup( B );
 Group([ f5, f4^2*f8, f6^2*f9^2, f11^2, f10^2, <identity> of ... ])
-                
-    
 
 #
 gap> STOP_TEST("autpgrp02.tst", 1);

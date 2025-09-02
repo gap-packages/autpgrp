@@ -87,8 +87,7 @@
     centralizing the Frattini factor of
     <M>G</M>. The pc group facilitates various further computations
     with <A>A</A>.
-    <Example>
-<![CDATA[
+    <Example><![CDATA[
 gap> LoadPackage("autpgrp", false);
 true
 gap> H := PcGroupCode(297368117289422176, 729);  # SmallGroup (729, 34);
@@ -120,8 +119,7 @@ rec(
     6 generators> ), size := 52488 )
 gap> ConvertHybridAutGroup( A );
 <group of size 52488 with 11 generators>
-]]>
-    </Example></Description>
+]]></Example></Description>
   </ManSection>
   <ManSection>
     <Func Name="PcGroupAutPGroup" Arg="A" />
@@ -131,8 +129,7 @@ gap> ConvertHybridAutGroup( A );
     <A>A</A>.agGroup.
     <A>A</A>is the output of the function
     <C>AutomorphismGroupPGroup</C>.
-    <Example>
-<![CDATA[
+    <Example><![CDATA[
 gap> H := PcGroupCode(297368117289422176, 729);;  # SmallGroup (729, 34);
 gap> A := AutomorphismGroupPGroup(H);;
 #I  step 1: 3^2 -- init automorphisms
@@ -144,7 +141,6 @@ gap> B := PcGroupAutPGroup( A );
 <pc group of size 52488 with 11 generators>
 gap> I := InnerAutGroupPGroup( B );
 Group([ f5, f4^2*f8, f6^2*f9^2, f11^2, f10^2, <identity> of ... ])
-                ]]>
-    </Example></Description>
+]]></Example></Description>
   </ManSection></Section>
 </Chapter>
