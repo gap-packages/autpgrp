@@ -101,6 +101,9 @@ TestFile := "tst/testall.g",
 Keywords := ["p-group", "automorphism group"],
 
 AutoDoc := rec(
+    entities := rec(
+      AUTPGRP := "<Package>AutPGrp</Package>",
+    ),
     TitlePage := rec(
         Copyright := """
           Bettina Eick and Eamonn O'Brien.<P/>
