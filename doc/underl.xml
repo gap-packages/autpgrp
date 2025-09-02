@@ -1,23 +1,23 @@
 <Chapter Label="The underlying function">
   <Heading>The underlying function</Heading>
   <Section>
-  <Heading>The underlying function</Heading>Underlying the method
-  installation for
-  <C>AutomorphismGroup</C>is the function
+  <Heading>The underlying function</Heading>
+  Underlying the method installation for
+  <C>AutomorphismGroup</C> is the function
   <C>AutomorphismGroupPGroup</C>. This function is intended for
   expert users who wish to influence the steps of the algorithm.
   Note also that
-  <C>AutomorphismGroup</C>will always choose default values.
+  <C>AutomorphismGroup</C> will always choose default values.
   <ManSection>
     <Func Name="AutomorphismGroupPGroup" Arg="G [,flag]" />
     <Description>The input is a finite
     <M>p</M>-group as above and an optional
-    <A>flag</A>which can be true or false. Here the filters for
-    <A>G</A>need not be set, but they should be true for
+    <A>flag</A> which can be true or false. Here the filters for
+    <A>G</A> need not be set, but they should be true for
     <A>G</A>. The possible values for
-    <A>flag</A>are considered later in Chapter
+    <A>flag</A> are considered later in Chapter
     <Ref Chap="Influencing the algorithm" />. If
-    <A>flag</A>is not supplied, the algorithm proceeds similarly to
+    <A>flag</A> is not supplied, the algorithm proceeds similarly to
     the method installed for
     <C>AutomorphismGroup</C>, but it produces slightly more
     detailed output. The output of the function is a record which
@@ -28,12 +28,12 @@
         <C>glAutos</C>
       </Mark>
       <Item>a set of automorphisms which together with
-      <C>agAutos</C>generate the automorphism group;</Item>
+      <C>agAutos</C> generate the automorphism group;</Item>
       <Mark>
         <C>glOrder</C>
       </Mark>
       <Item>an integer whose product with the
-      <C>agOrders</C>gives the size of the automorphism
+      <C>agOrders</C> gives the size of the automorphism
       group;</Item>
       <Mark>
         <C>agAutos</C>
@@ -61,13 +61,13 @@
     </List>
     <P />We do not return an automorphism group in the standard
     form because we wish to distinguish between
-    <C>agAutos</C>and
+    <C>agAutos</C> and
     <C>glAutos</C>; the latter act non-trivially on the Frattini
     quotient of
     <A>G</A>. This hybrid-group description of the automorphism
     group permits more efficient computations with it. The
     following function converts the output of
-    <C>AutomorphismGroupPGroup</C>to the output of
+    <C>AutomorphismGroupPGroup</C> to the output of
                 <C>AutomorphismGroup</C>.
             </Description>
   </ManSection>
@@ -75,14 +75,14 @@
     <Func Name="ConvertHybridAutGroup" Arg="A" />
     <Returns>A record.</Returns>
     <Description>Let
-    <A>A</A>be the automorphism group of a
+    <A>A</A> be the automorphism group of a
     <M>p</M>-group
-    <M>G</M>as computed by
+    <M>G</M> as computed by
     <C>AutomorphismGroupPGroup</C>. Then
     <Ref Func="ConvertHybridAutGroup" /> can compute a pc group
     isomorphic to the solvable part of
-    <A>A</A>stored in the record component
-    <A>A</A>.agGroup. This solvable part forms a subgroup of the
+    <A>A</A> stored in the record component
+    <C><A>A</A>.agGroup</C>. This solvable part forms a subgroup of the
     automorphism group which contains at least the automorphisms
     centralizing the Frattini factor of
     <M>G</M>. The pc group facilitates various further computations
@@ -125,9 +125,9 @@ gap> ConvertHybridAutGroup( A );
     <Func Name="PcGroupAutPGroup" Arg="A" />
     <Description>This function computes a pc presentation for the
     solvable part of the automorphism group
-    <A>A</A>defined by
-    <A>A</A>.agGroup.
-    <A>A</A>is the output of the function
+    <A>A</A> defined by
+    <C><A>A</A>.agGroup</C>.
+    <A>A</A> is the output of the function
     <C>AutomorphismGroupPGroup</C>.
     <Example><![CDATA[
 gap> H := PcGroupCode(297368117289422176, 729);;  # SmallGroup (729, 34);
