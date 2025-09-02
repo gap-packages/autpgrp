@@ -90,16 +90,21 @@ The user can choose the initialisation routine by assigning
 
 <Mark><C>InitAutomorphismGroupOver</C> </Mark>
 <Item>
-to use the minimal overgroups;
+to use the minimal overgroups:
 We  determine the  minimal over-groups  of the Frattini subgroup of
 <M>G</M> and compute invariants of these which must be respected by the
 automorphism group  of <M>G</M>. We partition the minimal overgroups and
 compute the stabiliser in <M>GL(d, p)</M> of this partition.
+<P/>
+The partition of the minimal overgroups is computed using the
+function <C>PGFingerprint( G, U )</C>. This is the time-consuming
+part of this initialisation method. The user can
+overwrite the function <C>PGFingerprint</C>.
 </Item>
 
 <Mark><C>InitAutomorphismGroupChar</C> </Mark>
 <Item>
-to use the characteristic subgroups;
+to use the characteristic subgroups:
 Compute  a  generating   set  for  the stabiliser in  <M>GL (d, p)</M> of
 a chain of  characteristic subgroups of <M>G</M>. In  practice, we construct
 a characteristic  chain by determining 2-step  centralisers  and omega
