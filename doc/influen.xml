@@ -113,19 +113,19 @@ subgroups  of  factors  of the  lower <M>p</M>-central series.
 However, there are often other characteristic subgroups which are not
 found by these approaches. The user can overwrite the function
 <C>PGCharSubgroups( G )</C> to supply a set of characteristic subgroups.
-<P/>
 </Item>
 
 <Mark><C>InitAutomorphismGroupFull</C> </Mark>
 <Item>
 to use the full <M>GL(d,p)</M>.
+</Item>
+</List>
+
 In the method for <Ref Oper="AutomorphismGroup"/> we use a default strategy:
 if the value <M>\frac{p^d-1}{p-1}</M> is less than 1000, then we
 use the minimal overgroup approach, otherwise the characteristic
 subgroups are employed. An exception is made for homogeneous abelian
 groups where we initialise the algorithm with the full group <M>GL(d,p)</M>.
-</Item>
-</List>
 </Section>
 
 <Section Label="Stabilisers in matrix groups">
