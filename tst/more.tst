@@ -4,7 +4,7 @@ gap> SetInfoLevel( InfoAutGrp, 1 );
 #
 #
 #
-gap> G:=SmallGroup(16,2);
+gap> G:= PcGroupCode(9219, 16);  # SmallGroup(16,2);
 <pc group of size 16 with 4 generators>
 gap> StructureDescription(G);
 "C4 x C4"
@@ -60,7 +60,7 @@ gap> ConvertHybridAutGroup( A );
 #
 #
 #
-gap> G:=SmallGroup(32,50);
+gap> G:= PcGroupCode(17734058326, 32);  # SmallGroup(32,50);
 <pc group of size 32 with 5 generators>
 
 #
@@ -114,7 +114,7 @@ gap> ConvertHybridAutGroup( A );
 #
 #
 #
-gap> G := SmallGroup(3^5, 61);
+gap> G := PcGroupCode(16385, 3 ^ 5);  # SmallGroup(3^5, 61);
 <pc group of size 243 with 5 generators>
 gap> StructureDescription(G);
 "C9 x C3 x C3 x C3"
@@ -170,7 +170,7 @@ gap> ConvertHybridAutGroup( A );
 #
 #
 #
-gap> G := SmallGroup(11^5, 81);
+gap> G := PcGroupCode(16400, 11 ^ 5);  # SmallGroup(11^5, 81);
 <pc group of size 161051 with 5 generators>
 gap> StructureDescription(G);
 "C11 x C11 x ((C11 x C11) : C11)"

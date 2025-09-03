@@ -4,7 +4,7 @@ gap> START_TEST("");
 gap> SetInfoLevel( InfoAutGrp, 1 );
 
 #
-gap> H := SmallGroup (729, 34);
+gap> H := PcGroupCode(297368117289422176, 729);  # SmallGroup(729, 34);
 <pc group of size 729 with 6 generators>
 gap> A := AutomorphismGroupPGroup(H);
 #I  step 1: 3^2 -- init automorphisms 
@@ -33,7 +33,7 @@ rec(
     6 generators> ), size := 52488 )
 gap> ConvertHybridAutGroup( A );
 <group of size 52488 with 11 generators>
-gap> H := SmallGroup (729, 34);;
+gap> H := PcGroupCode(297368117289422176, 729);;  # SmallGroup(729, 34);
 gap> A := AutomorphismGroupPGroup(H);;
 #I  step 1: 3^2 -- init automorphisms 
 #I  step 2: 3^1 -- aut grp has size 8

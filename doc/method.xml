@@ -1,0 +1,88 @@
+<Chapter Label="The automorphism group method">
+    <Heading>The automorphism group method</Heading>
+    <Section>
+    <Heading>The automorphism group method</Heading>
+
+The &AUTPGRP; package installs a method for <C>AutomorphismGroup</C> for a
+finite <M>p</M>-group (see also
+Section&nbsp;<Ref Sect="Groups of Automorphisms" BookName="ref"/>
+in the &GAP; Reference Manual).
+
+<ManSection>
+  <Oper Name="AutomorphismGroup" Arg="G"/>
+
+    <Returns>The automorphism group of <A>G</A>. </Returns>
+  <Description>
+    The input is a finite <M>p</M>-group <A>G</A>. If the filters <C>IsPGroup</C>,
+    <C>IsFinite</C> and <C>CanEasilyComputePcgs</C> are set and true for <A>G</A>,
+    the method selection of &GAP;&nbsp;4 invokes this algorithm.
+    <P/>
+
+    The output of the method is an automorphism group, whose generators
+    are given in <C>GroupHomomorphismByImages</C> format in terms of their action
+    on the underlying group <A>G</A>.
+  </Description>
+</ManSection>
+
+<ManSection>
+<InfoClass Name="InfoAutGrp"/>
+    <Description>
+        This is a &GAP; <Ref InfoClass="InfoClass" BookName="ref"/>. By
+        assigning an <C>level</C> in the range 1 to 4 via
+        <Log>SetInfoLevel(InfoAutGrp, level);</Log>
+varying levels of information on the progress of
+the computation, will be obtained.
+<P/>
+<Example><![CDATA[
+gap> LoadPackage("autpgrp", false);
+true
+gap> G := PcGroupCode(619031068735, 32);  # SmallGroup( 32, 15 );
+<pc group of size 32 with 5 generators>
+gap> SetInfoLevel( InfoAutGrp, 1 );
+gap> AutomorphismGroup(G);
+#I  step 1: 2^2 -- init automorphisms
+#I  step 2: 2^2 -- aut grp has size 2
+#I  step 3: 2^1 -- aut grp has size 32
+#I  final step: convert
+<group of size 64 with 6 generators>
+]]></Example>
+<P/>
+The algorithm proceeds by induction down the lower <M>p</M>-central
+series of <C>G</C> and the information corresponds
+to the steps of this induction. In the following example we observe
+that the method also accepts permutation groups as input, provided
+they satisfy the required filters.
+<P/>
+<Example><![CDATA[
+gap> G := DihedralGroup( IsPermGroup, 2^5 );;
+gap> IsPGroup(G);
+true
+gap> CanEasilyComputePcgs(G);
+true
+gap> IsFinite(G);
+true
+gap> A := AutomorphismGroup(G);
+#I  step 1: 2^2 -- init automorphisms
+#I  step 2: 2^1 -- aut grp has size 2
+#I  step 3: 2^1 -- aut grp has size 8
+#I  step 4: 2^1 -- aut grp has size 32
+#I  final step: convert
+<group of size 128 with 7 generators>
+gap> A.1;
+Pcgs([ ( 2,16)( 3,15)( 4,14)( 5,13)( 6,12)( 7,11)( 8,10),
+  ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16),
+  ( 1, 3, 5, 7, 9,11,13,15)( 2, 4, 6, 8,10,12,14,16),
+  ( 1, 5, 9,13)( 2, 6,10,14)( 3, 7,11,15)( 4, 8,12,16),
+  ( 1, 9)( 2,10)( 3,11)( 4,12)( 5,13)( 6,14)( 7,15)( 8,16) ]) ->
+[ ( 1, 2)( 3,16)( 4,15)( 5,14)( 6,13)( 7,12)( 8,11)( 9,10),
+  ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16),
+  ( 1, 3, 5, 7, 9,11,13,15)( 2, 4, 6, 8,10,12,14,16),
+  ( 1, 5, 9,13)( 2, 6,10,14)( 3, 7,11,15)( 4, 8,12,16),
+  ( 1, 9)( 2,10)( 3,11)( 4,12)( 5,13)( 6,14)( 7,15)( 8,16) ]
+gap> Order(A.1);
+16
+]]></Example>
+      </Description>
+    </ManSection>
+  </Section>
+</Chapter>

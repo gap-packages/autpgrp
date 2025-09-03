@@ -4,7 +4,7 @@ gap> START_TEST("");
 gap> SetInfoLevel( InfoAutGrp, 1 );
 
 #
-gap> G := SmallGroup( 32, 15 );
+gap> G := PcGroupCode(619031068735, 32);  # SmallGroup( 32, 15 );
 <pc group of size 32 with 5 generators>
 gap> AutomorphismGroup(G);
 #I  step 1: 2^2 -- init automorphisms 
