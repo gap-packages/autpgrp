@@ -22,7 +22,7 @@ includes := [
 
 AutoDoc("AutPGrp", rec(
     autodoc := rec(scan_dirs := []),
-    gapdoc  := rec(main := "main", files := []),
+    gapdoc  := rec(main := "main.xml", files := []),
     extract_examples := true,
     scaffold := rec(includes := includes)
 ));
