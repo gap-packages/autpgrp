@@ -20,7 +20,7 @@ includes := [
 
 # The actual call to AutoDoc
 
-AutoDoc("AutPGrp", rec(
+AutoDoc(rec(
     autodoc := rec(scan_dirs := []),
     gapdoc  := rec(main := "main.xml", files := []),
     extract_examples := true,
