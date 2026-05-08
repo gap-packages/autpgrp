@@ -11,7 +11,7 @@
 LoadPackage("AutoDoc");
 
 includes := [
-    "autpgrp.xml",
+    "intro.xml",
     "method.xml",
     "underl.xml",
     "influen.xml",
@@ -22,7 +22,7 @@ includes := [
 
 AutoDoc(rec(
     autodoc := rec(scan_dirs := []),
-    gapdoc  := rec(main := "main.xml", files := []),
+    gapdoc  := rec(files := []),
     extract_examples := true,
     scaffold := rec(includes := includes)
 ));

@@ -1,12 +1,12 @@
 /doc/*.css
 /doc/*.js
-/doc/_*.xml
+/doc/_*
 /doc/chap*.html
 /doc/chap*.txt
 /doc/chap*_mj.html
 /doc/chap*_mj.txt
 /doc/chooser.html
-/doc/main.*
+/doc/AutPGrp.*
 /doc/manual.aux
 /doc/manual.bbl
 /doc/manual.blg
