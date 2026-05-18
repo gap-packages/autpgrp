@@ -1,8 +1,9 @@
 # CHANGES to the 'autpgrp' GAP package
 
-## 1.12.0 (YYYY-MM-DD)
+## 1.12.0 (2026-05-18)
 
  - converted the manual to GAPDoc
+ - minor janitorial changes
 
 ## 1.11.1 (2025-04-10)
 
