@@ -1,106 +1,102 @@
 #############################################################################
-##
-##  PackageInfo.g for the package `AutPGrp'                      Bettina Eick
+##  
+##  Demo PackageInfo.g for the GitHubPagesForGAP
 ##
 
 SetPackageInfo( rec(
 
-PackageName := "AutPGrp",
-Subtitle := "Computing the Automorphism Group of a p-Group",
-Version := "1.11.1",
-Date := "10/04/2024", # dd/mm/yyyy format
-License := "GPL-2.0-or-later",
+PackageName := "GitHubPagesForGAP",
+
+Subtitle := "A GitHub Pages generator for GAP packages",
+Version := "0.4",
+Date := "10/04/2025", # dd/mm/yyyy format
+License := "0BSD",
 
 Persons := [
   rec(
-      LastName      := "Eick",
-      FirstNames    := "Bettina",
-      IsAuthor      := true,
-      IsMaintainer  := true,
-      Email         := "beick@tu-bs.de",
-      WWWHome       := "http://www.iaa.tu-bs.de/beick",
-      PostalAddress := Concatenation(
-               "Institut Analysis und Algebra\n",
-               "TU Braunschweig\n",
-               "Universitätsplatz 2\n",
-               "D-38106 Braunschweig\n",
-               "Germany" ),
-      Place         := "Braunschweig",
-      Institution   := "TU Braunschweig"),
+    LastName      := "Horn",
+    FirstNames    := "Max",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "mhorn@rptu.de",
+    WWWHome       := "https://www.quendi.de/math",
+    GitHubUsername:= "fingolfin",
+    PostalAddress := Concatenation(
+                       "Fachbereich Mathematik\n",
+                       "RPTU Kaiserslautern-Landau\n",
+                       "Gottlieb-Daimler-Straße 48\n",
+                       "67663 Kaiserslautern\n",
+                       "Germany" ),
+    Place         := "Kaiserslautern, Germany",
+    Institution   := "RPTU Kaiserslautern-Landau"
+  ),
 
-    rec(
-      LastName      := "Horn",
-      FirstNames    := "Max",
-      IsAuthor      := false,
-      IsMaintainer  := true,
-      Email         := "mhorn@rptu.de",
-      WWWHome       := "https://www.quendi.de/math",
-      PostalAddress := Concatenation(
-                         "Fachbereich Mathematik\n",
-                         "RPTU Kaiserslautern-Landau\n",
-                         "Gottlieb-Daimler-Straße 48\n",
-                         "67663 Kaiserslautern\n",
-                         "Germany" ),
-      Place         := "Kaiserslautern, Germany",
-      Institution   := "RPTU Kaiserslautern-Landau"
-    ),
+  rec(
+    LastName      := "Thor",
+    FirstNames    := "A. U.",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    #Email         := "author@example.com",
+  ),
 
-    rec(
-      LastName      := "O'Brien",
-      FirstNames    := "Eamonn",
-      IsAuthor      := true,
-      IsMaintainer  := false,
-      Email         := "obrien@math.auckland.ac.nz",
-      WWWHome       := "http://www.math.auckland.ac.nz/~obrien",
-      PostalAddress := Concatenation(
-            "Department of Mathematics\n",
-            "University of Auckland\n",
-            "Private Bag 92019\n Auckland\n New Zealand\n" ),
-      Place         := "Auckland",
-      Institution   := "University of Auckland"
-    ),
+  rec(
+    LastName      := "Itor",
+    FirstNames    := "Jan",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    #Email         := "janitor@example.com",
+  ),
 ],
 
-Status := "accepted",
-CommunicatedBy := "Derek F. Holt (Warwick)",
-AcceptDate := "09/2000",
+Status := "other",
 
-PackageWWWHome  := "https://gap-packages.github.io/autpgrp/",
-README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-SourceRepository := rec(
-    Type := "git",
-    URL := "https://github.com/gap-packages/autpgrp",
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/autpgrp-", ~.Version ),
-ArchiveFormats := ".tar.gz",
+# The following are not strictly necessary in your own PackageInfo.g
+# (in the sense that update.g only looks at the usual fields
+# like PackageWWWHome, ArchiveURL etc.). But they are convenient
+# if you use exactly the scheme for your package website that we propose.
+GithubUser := "gap-system",
+GithubRepository := ~.PackageName,
+GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
 
-AbstractHTML :=
-"The <span class=\"pkgname\">AutPGrp</span> package introduces a new function to compute the automorphism group of a finite $p$-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANUPQ method. Our package is written in GAP code and it makes use of a number of methods from the GAP library such as the MeatAxe for matrix groups and permutation group functions. We have compared our method to the others available in GAP. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.",
+PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
+README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+# The following assumes you are using the Github releases system. If not, adjust
+# it accordingly.
+ArchiveURL     := Concatenation(~.GithubWWW,
+                    "/releases/download/v", ~.Version, "/",
+                    ~.GithubRepository, "-", ~.Version),
+
+ArchiveFormats := ".tar.gz .tar.bz2",
+
+AbstractHTML := 
+  "This is a pseudo package that contains no actual\
+  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
+  GAP packages that allows to quickly setup GitHub Pages.",
 
 PackageDoc := rec(
-  BookName  := "AutPGrp",
-  ArchiveURLSubset := ["doc", "htm"],
-  HTMLStart := "htm/chapters.htm",
+  BookName  := "GitHubPagesForGAP",
+  ArchiveURLSubset := ["doc"],
+  HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Computing the Automorphism Group of a p-Group",
+  LongTitle := "A GitHub Pages generator for GAP packages",
 ),
 
+# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.7",
-  NeededOtherPackages := [],
-  SuggestedOtherPackages := [],
-  ExternalConditions := [] ),
+  GAP := ">=4.8.1",
+  NeededOtherPackages := [
+    ["GAPDoc", ">= 1.2"],
+    ["IO", ">= 4.1"],
+  ],
+  SuggestedOtherPackages := [["orb", ">= 4.2"]],
+  ExternalConditions := []
+),
 
 AvailabilityTest := ReturnTrue,
 
-TestFile := "tst/testall.g",
-
-Keywords := ["p-group", "automorphism group"]
+Keywords := ["GitHub Pages", "GAP"]
 
 ));
 
