@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (AutPGrp) - Chapter 3: The underlying function</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap3"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap3.html">[MathJax off]</a></p>
+<p><a id="X79DCF7D9853381F3" name="X79DCF7D9853381F3"></a></p>
+<div class="ChapSects"><a href="chap3_mj.html#X79DCF7D9853381F3">3 <span class="Heading">The underlying function</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X79DCF7D9853381F3">3.1 <span class="Heading">The underlying function</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X83ABE66C83446A0B">3.1-1 AutomorphismGroupPGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7DEE06CF79DC7A7C">3.1-2 ConvertHybridAutGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7ED1F7C6849CA658">3.1-3 PcGroupAutPGroup</a></span>
+</div></div>
+</div>
+
+<h3>3 <span class="Heading">The underlying function</span></h3>
+
+<p><a id="X79DCF7D9853381F3" name="X79DCF7D9853381F3"></a></p>
+
+<h4>3.1 <span class="Heading">The underlying function</span></h4>
+
+<p>Underlying the method installation for <code class="code">AutomorphismGroup</code> is the function <code class="code">AutomorphismGroupPGroup</code>. This function is intended for expert users who wish to influence the steps of the algorithm. Note also that <code class="code">AutomorphismGroup</code> will always choose default values.</p>
+
+<p><a id="X83ABE66C83446A0B" name="X83ABE66C83446A0B"></a></p>
+
+<h5>3.1-1 AutomorphismGroupPGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AutomorphismGroupPGroup</code>( <var class="Arg">G</var>[, <var class="Arg">flag</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>The input is a finite <span class="SimpleMath">\(p\)</span>-group as above and an optional <var class="Arg">flag</var> which can be true or false. Here the filters for <var class="Arg">G</var> need not be set, but they should be true for <var class="Arg">G</var>. The possible values for <var class="Arg">flag</var> are considered later in Chapter <a href="chap4_mj.html#X86240F237D909E1C"><span class="RefLink">4</span></a>. If <var class="Arg">flag</var> is not supplied, the algorithm proceeds similarly to the method installed for <code class="code">AutomorphismGroup</code>, but it produces slightly more detailed output. The output of the function is a record which contains the following fields:</p>
+
+
+<dl>
+<dt><strong class="Mark">
+        <code class="code">glAutos</code>
+      </strong></dt>
+<dd><p>a set of automorphisms which together with <code class="code">agAutos</code> generate the automorphism group;</p>
+
+</dd>
+<dt><strong class="Mark">
+        <code class="code">glOrder</code>
+      </strong></dt>
+<dd><p>an integer whose product with the <code class="code">agOrders</code> gives the size of the automorphism group;</p>
+
+</dd>
+<dt><strong class="Mark">
+        <code class="code">agAutos</code>
+      </strong></dt>
+<dd><p>a polycyclic generating sequence for a soluble normal subgroup of the automorphism group;</p>
+
+</dd>
+<dt><strong class="Mark">
+        <code class="code">agOrder</code>
+      </strong></dt>
+<dd><p>the relative orders corresponding to <code class="code">agAutos</code>;</p>
+
+</dd>
+<dt><strong class="Mark">
+        <code class="code">one</code>
+      </strong></dt>
+<dd><p>the identity element of the automorphism group;</p>
+
+</dd>
+<dt><strong class="Mark">
+        <code class="code">group</code>
+      </strong></dt>
+<dd><p>the underlying group <var class="Arg">G</var>;</p>
+
+</dd>
+<dt><strong class="Mark">
+        <code class="code">size</code>
+      </strong></dt>
+<dd><p>the size of the automorphism group.</p>
+
+</dd>
+</dl>
+<p>We do not return an automorphism group in the standard form because we wish to distinguish between <code class="code">agAutos</code> and <code class="code">glAutos</code>; the latter act non-trivially on the Frattini quotient of <var class="Arg">G</var>. This hybrid-group description of the automorphism group permits more efficient computations with it. The following function converts the output of <code class="code">AutomorphismGroupPGroup</code> to the output of <code class="code">AutomorphismGroup</code>.</p>
+
+<p><a id="X7DEE06CF79DC7A7C" name="X7DEE06CF79DC7A7C"></a></p>
+
+<h5>3.1-2 ConvertHybridAutGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertHybridAutGroup</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: A record.</p>
+
+<p>Let <var class="Arg">A</var> be the automorphism group of a <span class="SimpleMath">\(p\)</span>-group <span class="SimpleMath">\(G\)</span> as computed by <code class="code">AutomorphismGroupPGroup</code>. Then <code class="func">ConvertHybridAutGroup</code> can compute a pc group isomorphic to the solvable part of <var class="Arg">A</var> stored in the record component <code class="code"><var class="Arg">A</var>.agGroup</code>. This solvable part forms a subgroup of the automorphism group which contains at least the automorphisms centralizing the Frattini factor of <span class="SimpleMath">\(G\)</span>. The pc group facilitates various further computations with <var class="Arg">A</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("autpgrp", false);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := PcGroupCode(297368117289422176, 729);  # SmallGroup (729, 34);</span>
+&lt;pc group of size 729 with 6 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AutomorphismGroupPGroup(H);</span>
+#I  step 1: 3^2 -- init automorphisms
+#I  step 2: 3^1 -- aut grp has size 8
+#I  step 3: 3^2 -- aut grp has size 72
+#I  step 4: 3^1 -- aut grp has size 5832
+#I  final step: convert
+rec(
+  agAutos :=
+    [ Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f2, f1, f3^2, f5^2, f4^2, f6^2 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1, f2^2, f3^2*f5, f4^2*f6, f5,
+          f6 ], Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt;
+        [ f1^2, f2^2, f3*f4^2*f5^2*f6, f4^2*f6, f5^2*f6, f6 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1*f3, f2, f3*f5^2, f4*f6^2, f5,
+          f6 ], Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt;
+        [ f1, f2*f3, f3*f4, f4, f5*f6, f6 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1*f4, f2, f3*f6^2, f4, f5, f6 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1, f2*f4, f3, f4, f5, f6 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1*f5, f2, f3, f4, f5, f6 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1, f2*f5, f3*f6, f4, f5, f6 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1*f6, f2, f3, f4, f5, f6 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6 ]) -&gt; [ f1, f2*f6, f3, f4, f5, f6 ] ],
+  agOrder := [ 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3 ], glAutos := [  ],
+  glOper := [  ], glOrder := 1, group := &lt;pc group of size 729 with
+    6 generators&gt;, one := IdentityMapping( &lt;pc group of size 729 with
+    6 generators&gt; ), size := 52488 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConvertHybridAutGroup( A );</span>
+&lt;group of size 52488 with 11 generators&gt;
+</pre></div>
+
+<p><a id="X7ED1F7C6849CA658" name="X7ED1F7C6849CA658"></a></p>
+
+<h5>3.1-3 PcGroupAutPGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcGroupAutPGroup</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function computes a pc presentation for the solvable part of the automorphism group <var class="Arg">A</var> defined by <code class="code"><var class="Arg">A</var>.agGroup</code>. <var class="Arg">A</var> is the output of the function <code class="code">AutomorphismGroupPGroup</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := PcGroupCode(297368117289422176, 729);;  # SmallGroup (729, 34);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := AutomorphismGroupPGroup(H);;</span>
+#I  step 1: 3^2 -- init automorphisms
+#I  step 2: 3^1 -- aut grp has size 8
+#I  step 3: 3^2 -- aut grp has size 72
+#I  step 4: 3^1 -- aut grp has size 5832
+#I  final step: convert
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := PcGroupAutPGroup( A );</span>
+&lt;pc group of size 52488 with 11 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := InnerAutGroupPGroup( B );</span>
+Group([ f5, f4^2*f8, f6^2*f9^2, f11^2, f10^2, &lt;identity&gt; of ... ])
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

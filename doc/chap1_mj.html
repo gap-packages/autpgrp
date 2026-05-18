@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (AutPGrp) - Chapter 1: Introduction</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap1"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+<div class="ChapSects"><a href="chap1_mj.html#X7DFB63A97E67C0A1">1 <span class="Heading">Introduction</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7DFB63A97E67C0A1">1.1 <span class="Heading">Introduction</span></a>
+</span>
+</div>
+</div>
+
+<h3>1 <span class="Heading">Introduction</span></h3>
+
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+
+<h4>1.1 <span class="Heading">Introduction</span></h4>
+
+<p>Given an arbitrary finite group, the computation of its automorphism group is a very difficult task. Pioneer work in this area was carried out by Felsch and Neubueser (1970), whose algorithm used the output of their subgroup lattice program. A technique developed by Neubueser in the early 1970s sought to compute the automorphism group viewed as a permutation group acting on unions of certain conjugacy classes of the group. A similar method was implemented by Hulpke (1997) in the <strong class="pkg">GAP</strong> 4 library. Recently, Cannon and Holt (1999) presented a new algorithm which uses a <em>hybrid group</em> approach.</p>
+
+<p>More efficient approaches are available to determine the automorphism group for groups satisfying certain properties. Following the work of Shoda (1928), Hulpke in 1997 implemented a practical method for finite abelian groups in the <strong class="pkg">GAP</strong> 4 library. Wursthorn (1993) adapted modular group algebra techniques to compute the automorphism groups of <span class="SimpleMath">\(p\)</span>-groups; the <strong class="pkg">GAP</strong> 3 share package <strong class="pkg">Sisyphos</strong> includes an implementation. Smith (1994) introduced an algorithm for finite solvable groups which is available in the <strong class="pkg">AutAg</strong> share package of <strong class="pkg">GAP</strong> 3.</p>
+
+<p>Moreover, the <span class="SimpleMath">\(p\)</span>-group generation method of Newman (1977) and O'Brien (1990) can be modified to compute the automorphism group of a finite <span class="SimpleMath">\(p\)</span>-group as outlined in O'Brien (1995). This algorithm is implemented in the ANU <code class="code">pq</code> C program.</p>
+
+<p>Here we introduce a new function to compute the automorphism group of a finite <span class="SimpleMath">\(p\)</span>-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANU <code class="code">pq</code> method. Our package is written in <strong class="pkg">GAP</strong> code and it makes use of a number of methods from the <strong class="pkg">GAP</strong> library such as the MeatAxe for matrix groups and permutation group functions.</p>
+
+<p>The <strong class="pkg">GAP</strong> 4 package <strong class="pkg">ANUPQ</strong>, which is an interface to most of the functionality of the ANU <code class="code">pq</code> C program, uses the <strong class="pkg">AutPGrp</strong> package to compute automorphism groups of <span class="SimpleMath">\(p\)</span>-groups.</p>
+
+<p>We have compared our method to the others available in <strong class="pkg">GAP</strong>. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

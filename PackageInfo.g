@@ -1,103 +1,140 @@
 #############################################################################
-##  
-##  Demo PackageInfo.g for the GitHubPagesForGAP
+##
+##  PackageInfo.g for the package `AutPGrp'                      Bettina Eick
 ##
 
 SetPackageInfo( rec(
 
-PackageName := "GitHubPagesForGAP",
-
-Subtitle := "A GitHub Pages generator for GAP packages",
-Version := "0.4",
-Date := "10/04/2025", # dd/mm/yyyy format
-License := "0BSD",
+PackageName := "AutPGrp",
+Subtitle := "Computing the Automorphism Group of a p-Group",
+Version := "1.12.0",
+Date := "17/05/2026", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
-    LastName      := "Horn",
-    FirstNames    := "Max",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "mhorn@rptu.de",
-    WWWHome       := "https://www.quendi.de/math",
-    GitHubUsername:= "fingolfin",
-    PostalAddress := Concatenation(
-                       "Fachbereich Mathematik\n",
-                       "RPTU Kaiserslautern-Landau\n",
-                       "Gottlieb-Daimler-Straße 48\n",
-                       "67663 Kaiserslautern\n",
-                       "Germany" ),
-    Place         := "Kaiserslautern, Germany",
-    Institution   := "RPTU Kaiserslautern-Landau"
-  ),
+      LastName      := "Eick",
+      FirstNames    := "Bettina",
+      IsAuthor      := true,
+      IsMaintainer  := true,
+      Email         := "beick@tu-bs.de",
+      WWWHome       := "http://www.iaa.tu-bs.de/beick",
+      PostalAddress := Concatenation(
+               "Institut Analysis und Algebra\n",
+               "TU Braunschweig\n",
+               "Universitätsplatz 2\n",
+               "D-38106 Braunschweig\n",
+               "Germany" ),
+      Place         := "Braunschweig",
+      Institution   := "TU Braunschweig"),
 
-  rec(
-    LastName      := "Thor",
-    FirstNames    := "A. U.",
-    IsAuthor      := true,
-    IsMaintainer  := false,
-    #Email         := "author@example.com",
-  ),
+    rec(
+      LastName      := "Horn",
+      FirstNames    := "Max",
+      IsAuthor      := false,
+      IsMaintainer  := true,
+      Email         := "mhorn@rptu.de",
+      WWWHome       := "https://www.quendi.de/math",
+      GitHubUsername := "fingolfin",
+      PostalAddress := Concatenation(
+                         "Fachbereich Mathematik\n",
+                         "RPTU Kaiserslautern-Landau\n",
+                         "Gottlieb-Daimler-Straße 48\n",
+                         "67663 Kaiserslautern\n",
+                         "Germany" ),
+      Place         := "Kaiserslautern, Germany",
+      Institution   := "RPTU Kaiserslautern-Landau"
+    ),
 
-  rec(
-    LastName      := "Itor",
-    FirstNames    := "Jan",
-    IsAuthor      := false,
-    IsMaintainer  := true,
-    #Email         := "janitor@example.com",
-  ),
+    rec(
+      LastName      := "O'Brien",
+      FirstNames    := "Eamonn",
+      IsAuthor      := true,
+      IsMaintainer  := false,
+      Email         := "obrien@math.auckland.ac.nz",
+      WWWHome       := "http://www.math.auckland.ac.nz/~obrien",
+      PostalAddress := Concatenation(
+            "Department of Mathematics\n",
+            "University of Auckland\n",
+            "Private Bag 92019\n Auckland\n New Zealand\n" ),
+      Place         := "Auckland",
+      Institution   := "University of Auckland"
+    ),
 ],
 
-Status := "other",
+Status := "accepted",
+CommunicatedBy := "Derek F. Holt (Warwick)",
+AcceptDate := "09/2000",
 
-# The following are not strictly necessary in your own PackageInfo.g
-# (in the sense that update.g only looks at the usual fields
-# like PackageWWWHome, ArchiveURL etc.). But they are convenient
-# if you use exactly the scheme for your package website that we propose.
-GithubUser := "gap-system",
-GithubRepository := ~.PackageName,
-GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
+PackageWWWHome  := "https://gap-packages.github.io/autpgrp/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/autpgrp",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/autpgrp-", ~.Version ),
+ArchiveFormats := ".tar.gz",
 
-PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-# The following assumes you are using the Github releases system. If not, adjust
-# it accordingly.
-ArchiveURL     := Concatenation(~.GithubWWW,
-                    "/releases/download/v", ~.Version, "/",
-                    ~.GithubRepository, "-", ~.Version),
-
-ArchiveFormats := ".tar.gz .tar.bz2",
-
-AbstractHTML := 
-  "This is a pseudo package that contains no actual\
-  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
-  GAP packages that allows to quickly setup GitHub Pages.",
+AbstractHTML :=
+"The <span class=\"pkgname\">AutPGrp</span> package introduces a new function to compute the automorphism group of a finite $p$-group. The underlying algorithm is a refinement of the methods described in O'Brien (1995). In particular, this implementation is more efficient in both time and space requirements and hence has a wider range of applications than the ANUPQ method. Our package is written in GAP code and it makes use of a number of methods from the GAP library such as the MeatAxe for matrix groups and permutation group functions. We have compared our method to the others available in GAP. Our package usually out-performs all but the method designed for finite abelian groups. We note that our method uses the small groups library in certain cases and hence our algorithm is more effective if the small groups library is installed.",
 
 PackageDoc := rec(
-  BookName  := "GitHubPagesForGAP",
+  BookName  := "AutPGrp",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A GitHub Pages generator for GAP packages",
+  LongTitle := "Computing the Automorphism Group of a p-Group",
 ),
 
-# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.8.1",
-  NeededOtherPackages := [
-    ["GAPDoc", ">= 1.2"],
-    ["IO", ">= 4.1"],
-  ],
-  SuggestedOtherPackages := [["orb", ">= 4.2"]],
-  ExternalConditions := []
-),
+  GAP := ">=4.7",
+  NeededOtherPackages := [],
+  SuggestedOtherPackages := [],
+  ExternalConditions := [] ),
 
 AvailabilityTest := ReturnTrue,
 
-Keywords := ["GitHub Pages", "GAP"]
+TestFile := "tst/testall.g",
+
+Keywords := ["p-group", "automorphism group"],
+
+AutoDoc := rec(
+    entities := rec(
+      AUTPGRP := "<Package>AutPGrp</Package>",
+    ),
+    TitlePage := rec(
+        Copyright := """
+          Bettina Eick and Eamonn O'Brien.<P/>
+
+          AutPGrp is free software; you can redistribute it and/or modify
+          it under the terms of the <URL Text="GNU General Public License">
+          https://www.fsf.org/licenses/gpl.html</URL> as published by the
+          Free Software Foundation; either version 2 of the License, or (at
+          your option) any later version.""",
+        Abstract := """
+          The &AUTPGRP; package introduces a new
+          function to compute the automorphism group of a finite
+          <M>p</M>-group. The underlying algorithm is a refinement of the
+          methods described in O'Brien (1995). In particular, this
+          implementation is more efficient in both time and space requirements
+          and hence has a wider range of applications than the ANUPQ method.
+          Our package is written in &GAP; code and it makes use of a number of
+          methods from the &GAP; library such as the MeatAxe for matrix groups
+          and permutation group functions. We have compared our method to the
+          others available in &GAP;. Our package usually out-performs all but
+          the method designed for finite abelian groups. We note that our
+          method uses the small groups library in certain cases and hence our
+          algorithm is more effective if the small groups library is
+          installed.""",
+        Acknowledgements := """
+          We thank Alexander Hulpke for helping us with efficiency
+          problems. Werner Nickel provided some functions from
+          the &GAP; <C>PQuotient</C> which are used in this package.
+        """)),
 
 ));
-
-

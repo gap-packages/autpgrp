@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (AutPGrp) - Chapter 5: Additional features of the package</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap5"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap5_mj.html">[MathJax on]</a></p>
+<p><a id="X7C0BF58A85D48781" name="X7C0BF58A85D48781"></a></p>
+<div class="ChapSects"><a href="chap5.html#X7C0BF58A85D48781">5 <span class="Heading">Additional features of the package</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C0BF58A85D48781">5.1 <span class="Heading">Additional features of the package</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E472D2579705246">5.1-1 NumberOfPClass2PGroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X825FC0D9796B0D97">5.1-2 NumberOfPClass2PGroups</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8399B9137982EBAC">5.1-3 NumberOfClass2LieAlgebras</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X824DFC307CA9626E">5.1-4 NumberOfClass2LieAlgbras</a></span>
+</div></div>
+</div>
+
+<h3>5 <span class="Heading">Additional features of the package</span></h3>
+
+<p><a id="X7C0BF58A85D48781" name="X7C0BF58A85D48781"></a></p>
+
+<h4>5.1 <span class="Heading">Additional features of the package</span></h4>
+
+<p>As an additional feature of this package we provide some functions to count extensions of <span class="SimpleMath">p</span>-groups and Lie algebras over <span class="SimpleMath">GF(p)</span>. These functions have been used in counting the <span class="SimpleMath">2</span>-groups of size <span class="SimpleMath">2^10</span>.</p>
+
+<p><a id="X7E472D2579705246" name="X7E472D2579705246"></a></p>
+
+<h5>5.1-1 NumberOfPClass2PGroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberOfPClass2PGroups</code>( <var class="Arg">n</var>, <var class="Arg">p</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This function determines the number of <var class="Arg">n</var>-generator <var class="Arg">p</var>-groups of <var class="Arg">p</var>-class 2 with Frattini subgroup of order <code class="code">2^<var class="Arg">k</var></code>.</p>
+
+<p><a id="X825FC0D9796B0D97" name="X825FC0D9796B0D97"></a></p>
+
+<h5>5.1-2 NumberOfPClass2PGroups</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberOfPClass2PGroups</code>( <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This function returns a list of of numbers of <var class="Arg">n</var>-generator <var class="Arg">p</var>-groups of <var class="Arg">p</var>-class 2 with Frattini subgroup of order <code class="code">2^k</code> for <code class="code">k</code> in <span class="SimpleMath">1, ..., n(n+1)/2</span>.</p>
+
+<p><a id="X8399B9137982EBAC" name="X8399B9137982EBAC"></a></p>
+
+<h5>5.1-3 NumberOfClass2LieAlgebras</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberOfClass2LieAlgebras</code>( <var class="Arg">n</var>, <var class="Arg">p</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This function determines the number of <var class="Arg">n</var>-generator Lie algebras of class 2 over <var class="Arg">GF(p)</var> with derived Lie subalgebra of dimension <var class="Arg">k</var>.</p>
+
+<p><a id="X824DFC307CA9626E" name="X824DFC307CA9626E"></a></p>
+
+<h5>5.1-4 NumberOfClass2LieAlgbras</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberOfClass2LieAlgbras</code>( <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This function returns a list of of numbers of <var class="Arg">n</var>-generator Lie algebras of class 2 over <span class="SimpleMath">GF(p)</span> with derived Lie subalgebra of dimension <span class="SimpleMath">k</span> for <span class="SimpleMath">k</span> in <span class="SimpleMath">1, ..., n(n-1)/2</span>.</p>
+
+<p> </p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

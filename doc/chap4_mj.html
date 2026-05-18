@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (AutPGrp) - Chapter 4: Influencing the algorithm</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap4"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap4.html">[MathJax off]</a></p>
+<p><a id="X86240F237D909E1C" name="X86240F237D909E1C"></a></p>
+<div class="ChapSects"><a href="chap4_mj.html#X86240F237D909E1C">4 <span class="Heading">Influencing the algorithm</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X85D2ECC779E3CF7D">4.1 <span class="Heading">Outline of the algorithm</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X87B27C1F810822F3">4.2 <span class="Heading">The initialisation step</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X869B678180AD5E21">4.3 <span class="Heading">Stabilisers in matrix groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X86529C2080159D8A">4.3-1 CHOP_MULT</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X859CF9757A1F51EB">4.4 <span class="Heading">Searching for a small generating set</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X83C095D17D35A8DE">4.4-1 NICE_STAB</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X81A0235D7E15DFBD">4.5 <span class="Heading">An interactive version of the algorithm</span></a>
+</span>
+</div>
+</div>
+
+<h3>4 <span class="Heading">Influencing the algorithm</span></h3>
+
+<p>A number of choices can be made by the user to influence the performance of <code class="code">AutomorphismGroupPGroup</code>. Below we identify these choices and their default values used in <code class="func">AutomorphismGroup</code> (<a href="chap2_mj.html#X87677B0787B4461A"><span class="RefLink">2.1-1</span></a>). We use the optional argument <var class="Arg">flag</var> of <code class="code">AutomorphismGroupPGroup</code> to invoke user-defined choices. The possible values for <var class="Arg">flag</var> are</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code"><var class="Arg">flag</var> = false</code> </strong></dt>
+<dd><p>the user-defined defaults are employed in the algorithm. See below for a list of possibilities.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code"><var class="Arg">flag</var> = true</code>  </strong></dt>
+<dd><p>invokes the interactive version of the algorithm as described in Section <a href="chap4_mj.html#X81A0235D7E15DFBD"><span class="RefLink">4.5</span></a>.</p>
+
+</dd>
+</dl>
+<p>In the next section we give a brief outline of the algorithm which is necessary to understand the possible choices. Then we introduce the choices the later sections of this chapter.</p>
+
+<p><a id="X85D2ECC779E3CF7D" name="X85D2ECC779E3CF7D"></a></p>
+
+<h4>4.1 <span class="Heading">Outline of the algorithm</span></h4>
+
+<p>The basic algorithm proceeds by induction down the lower <span class="SimpleMath">\(p\)</span>-central series of a given <span class="SimpleMath">\(p\)</span>-group <span class="SimpleMath">\(G\)</span>; that is, it successively computes <span class="SimpleMath">\(Aut(G_i)\)</span> for the quotients <span class="SimpleMath">\(G_i = G / P_i(G)\)</span> of the descending sequence of subgroups defined by <span class="SimpleMath">\(P_1(G) = G\)</span> and <span class="SimpleMath">\(P_{i+1}(G)=[P_i(G),G] P_i(G)^p\)</span> for <span class="SimpleMath">\(i\geq 1\)</span>. Hence, in the initial step of the algorithm, <span class="SimpleMath">\(Aut(G_2) = GL(d,p)\)</span> where <span class="SimpleMath">\(d\)</span> is the rank of the elementary abelian group <span class="SimpleMath">\(G_2\)</span>. In the inductive step it determines <span class="SimpleMath">\(Aut(G_{i+1})\)</span> from <span class="SimpleMath">\(Aut(G_i)\)</span>. For this purpose we introduce an action of <span class="SimpleMath">\(Aut(G_i)\)</span> on a certain elementary abelian <span class="SimpleMath">\(p\)</span>-group <span class="SimpleMath">\(M\)</span> (the <em><span class="SimpleMath">\(p\)</span>-multiplicator</em> of <span class="SimpleMath">\(G_i\)</span>). The main computation of the inductive step is the determination of the stabiliser in <span class="SimpleMath">\(Aut(G_i)\)</span> of a subgroup <span class="SimpleMath">\(U\)</span> of <span class="SimpleMath">\(M\)</span> (the <em>allowable subgroup</em> for <span class="SimpleMath">\(G_{i+1}\)</span>). This stabiliser calculation is the bottle-neck of the algorithm.</p>
+
+<p>Our package incorporates a number of refinements designed to simplify this stabiliser computation. Some of these refinements incur overheads and hence they are not always invoked. The features outlined below allow the user to select them.</p>
+
+<p>Observe that the initial step of the algorithm returns <span class="SimpleMath">\(GL(d,p)\)</span>. But <span class="SimpleMath">\(Aut(G)\)</span> may induce on <span class="SimpleMath">\(G_2\)</span> a proper subgroup, say <span class="SimpleMath">\(K\)</span>, of <span class="SimpleMath">\(GL(d,p)\)</span>. Any intermediate subgroup of <span class="SimpleMath">\(GL(d,p)\)</span> which contains <span class="SimpleMath">\(K\)</span> suffices for the algorithm and we supply two methods to construct a suitable subgroup: these use characteristic subgroups or invariants of normal subgroups of <span class="SimpleMath">\(G\)</span>. (See Section <a href="chap4_mj.html#X87B27C1F810822F3"><span class="RefLink">4.2</span></a>.)</p>
+
+<p>In the inductive step an action of <span class="SimpleMath">\(Aut(G_i)\)</span> on an elementary abelian group <span class="SimpleMath">\(M\)</span> is used. This action is computed as a matrix action on a vector space. To simplify the orbit-stabiliser computation of the subspace <span class="SimpleMath">\(U\)</span> of <span class="SimpleMath">\(M\)</span>, we can construct the stabiliser of <span class="SimpleMath">\(U\)</span> by iteration over a sequence of <span class="SimpleMath">\(Aut(G_i)\)</span>-invariant subspaces of <span class="SimpleMath">\(M\)</span>. (See Section <a href="chap4_mj.html#X869B678180AD5E21"><span class="RefLink">4.3</span></a>.)</p>
+
+<p>Orbit-stabiliser computations in finite solvable groups given by a polycyclic generating sequence are much more efficient than generic computations of this type. Thus our algorithm makes use of a large solvable normal subgroup <span class="SimpleMath">\(S\)</span> of <span class="SimpleMath">\(Aut(G_i)\)</span>. Further, it is useful if the generating set of <span class="SimpleMath">\(Aut(G_i)\)</span> outside <span class="SimpleMath">\(S\)</span> is as small as possible. To achieve this we determine a permutation representation of <span class="SimpleMath">\(Aut(G_i)/S\)</span> and use this to reduce the number of generators if possible. (See Section <a href="chap4_mj.html#X859CF9757A1F51EB"><span class="RefLink">4.4</span></a>.)</p>
+
+<p><a id="X87B27C1F810822F3" name="X87B27C1F810822F3"></a></p>
+
+<h4>4.2 <span class="Heading">The initialisation step</span></h4>
+
+<p>Assume we seek to compute the automorphism group of a <span class="SimpleMath">\(p\)</span>-group <span class="SimpleMath">\(G\)</span> having Frattini rank <span class="SimpleMath">\(d\)</span>. We first determine as small as possible a subgroup of <span class="SimpleMath">\(GL(d, p)\)</span> whose extension can act on <span class="SimpleMath">\(G\)</span>.</p>
+
+<p>The user can choose the initialisation routine by assigning <code class="code">InitAutGroup</code> to any one of the following:</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">InitAutomorphismGroupOver</code> </strong></dt>
+<dd><p>to use the minimal overgroups: We determine the minimal over-groups of the Frattini subgroup of <span class="SimpleMath">\(G\)</span> and compute invariants of these which must be respected by the automorphism group of <span class="SimpleMath">\(G\)</span>. We partition the minimal overgroups and compute the stabiliser in <span class="SimpleMath">\(GL(d, p)\)</span> of this partition.</p>
+
+<p>The partition of the minimal overgroups is computed using the function <code class="code">PGFingerprint( G, U )</code>. This is the time-consuming part of this initialisation method. The user can overwrite the function <code class="code">PGFingerprint</code>.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">InitAutomorphismGroupChar</code> </strong></dt>
+<dd><p>to use the characteristic subgroups: Compute a generating set for the stabiliser in <span class="SimpleMath">\(GL (d, p)\)</span> of a chain of characteristic subgroups of <span class="SimpleMath">\(G\)</span>. In practice, we construct a characteristic chain by determining 2-step centralisers and omega subgroups of factors of the lower <span class="SimpleMath">\(p\)</span>-central series.</p>
+
+<p>However, there are often other characteristic subgroups which are not found by these approaches. The user can overwrite the function <code class="code">PGCharSubgroups( G )</code> to supply a set of characteristic subgroups.</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">InitAutomorphismGroupFull</code> </strong></dt>
+<dd><p>to use the full <span class="SimpleMath">\(GL(d,p)\)</span>.</p>
+
+</dd>
+</dl>
+<p>In the method for <code class="func">AutomorphismGroup</code> (<a href="chap2_mj.html#X87677B0787B4461A"><span class="RefLink">2.1-1</span></a>) we use a default strategy: if the value <span class="SimpleMath">\(\frac{p^d-1}{p-1}\)</span> is less than 1000, then we use the minimal overgroup approach, otherwise the characteristic subgroups are employed. An exception is made for homogeneous abelian groups where we initialise the algorithm with the full group <span class="SimpleMath">\(GL(d,p)\)</span>.</p>
+
+<p><a id="X869B678180AD5E21" name="X869B678180AD5E21"></a></p>
+
+<h4>4.3 <span class="Heading">Stabilisers in matrix groups</span></h4>
+
+<p>Consider the <span class="SimpleMath">\(i\)</span>th inductive step of the algorithm. Here <span class="SimpleMath">\(A \leq Aut(G_i)\)</span> acts as matrix group on the elementary abelian <span class="SimpleMath">\(p\)</span>-group <span class="SimpleMath">\(M\)</span> and we want to determine the stabiliser of a subgroup <span class="SimpleMath">\(U \leq M\)</span>.</p>
+
+<p>We use the MeatAxe to compute a series of <span class="SimpleMath">\(A\)</span>-invariant subspaces through <span class="SimpleMath">\(M\)</span> such that each factor in the series is irreducible as <span class="SimpleMath">\(A\)</span>-module. Then we use this series to break the computation of <span class="SimpleMath">\(Stab_A(U)\)</span> into several smaller orbit-stabiliser calculations.</p>
+
+<p>Note that a theoretic argument yields an <span class="SimpleMath">\(A\)</span>-invariant subspace of <span class="SimpleMath">\(M\)</span> a priori: the nucleus <span class="SimpleMath">\(N\)</span>. This is always used to split the computation up. However, it may happen that <span class="SimpleMath">\(N = M\)</span> and hence results in no improvement.</p>
+
+<p><a id="X86529C2080159D8A" name="X86529C2080159D8A"></a></p>
+
+<h5>4.3-1 CHOP_MULT</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CHOP_MULT</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>The invariant series through <span class="SimpleMath">\(M\)</span> is computed and used if the global variable <code class="code">CHOP_MULT</code> is set to <code class="keyw">true</code>. Otherwise, the algorithm tries to determine <span class="SimpleMath">\(Stab_A(U)\)</span> in one step. By default, <code class="code">CHOP_MULT</code> is <code class="keyw">true</code>.</p>
+
+<p><a id="X859CF9757A1F51EB" name="X859CF9757A1F51EB"></a></p>
+
+<h4>4.4 <span class="Heading">Searching for a small generating set</span></h4>
+
+<p>After each step of the computation, we attempt to find a nice generating set for the automorphism group of the current factor.</p>
+
+<p>If the automorphism group is soluble, we store a polycyclic generating set; otherwise, we store such a generating set for a large soluble normal subgroup <span class="SimpleMath">\(S\)</span> of the automorphism group <span class="SimpleMath">\(A\)</span>, and as few generators outside as possible. If <span class="SimpleMath">\(S = A\)</span> and a polycyclic generating set for <span class="SimpleMath">\(S\)</span> is known, many steps of the algorithm proceed more rapidly.</p>
+
+<p><a id="X83C095D17D35A8DE" name="X83C095D17D35A8DE"></a></p>
+
+<h5>4.4-1 NICE_STAB</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NICE_STAB</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<p>It may be both time-consuming and difficult to reduce the number of generators for <span class="SimpleMath">\(A\)</span> outside <span class="SimpleMath">\(S\)</span>. Note that if the initialisation of the algorithm is by <code class="code">InitAutomorphismGroupOver</code>, then we always know a permutation representation for <span class="SimpleMath">\(A/S\)</span>. Occasionally the search for a small generating set is expensive. If this is observed, one could set the flag <code class="code">NICE_STAB</code> to <code class="keyw">false</code> and the algorithm no longer invokes this search.</p>
+
+<p><a id="X81A0235D7E15DFBD" name="X81A0235D7E15DFBD"></a></p>
+
+<h4>4.5 <span class="Heading">An interactive version of the algorithm</span></h4>
+
+<p>The choice of initialisation and the choice of chopping of the <span class="SimpleMath">\(p\)</span>-multiplicator can also be driven by an interactive version of the algorithm. We give an example.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := PcGroupCode(2504972218445939562621471375, 256);;  # SmallGroup( 2^8, 1000 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoAutGrp, 3 );</span>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AutomorphismGroupPGroup( G, true );</span>
+#I  step 1: 2^3 -- init automorphisms
+
+choose initialisation (Over/Char/Full):     # we choose Full
+#I    init automorphism group : Full
+#I  step 2: 2^3 -- aut grp has size 168
+#I    computing cover
+#I    computing matrix action
+#I    computing stabilizer of U
+#I    dim U = 3  dim N = 6  dim M = 6
+
+chop M/N and N: (y/n):                      # we choose n
+#I    induce autos and add central autos
+#I  step 3: 2^2 -- aut grp has size 12288
+#I    computing cover
+#I    computing matrix action
+#I    computing stabilizer of U
+#I    dim U = 6  dim N = 5  dim M = 8
+
+chop M/N and N: (y/n):                      # we choose y
+#I    induce autos and add central autos
+#I  final step: convert
+rec(
+  glAutos := [ Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt; [ f1, f2*f3, f3,
+          f4, f5, f6*f7, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1*f3*f5*f6, f2*f3, f3, f4, f5*f8, f6*f7, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1*f3, f2*f4, f3, f4*f7, f5*f7, f6*f7*f8, f7, f8 ] ], glOrder := 4,
+  agAutos :=
+    [ Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt; [ f1*f4, f2, f3, f4*f8, f5,
+          f6, f7, f8 ], Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2*f4, f3, f4*f7, f5, f6*f7*f8, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1*f5, f2, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2*f5, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2, f3*f5, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1*f6, f2, f3, f4, f5*f7*f8, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2*f6, f3, f4*f7*f8, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1*f8, f2, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2*f8, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2, f3*f8, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1*f7, f2, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2*f7, f3, f4, f5, f6, f7, f8 ],
+      Pcgs([ f1, f2, f3, f4, f5, f6, f7, f8 ]) -&gt;
+        [ f1, f2, f3*f7, f4, f5, f6, f7, f8 ] ],
+  agOrder := [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ],
+  one := IdentityMapping( &lt;pc group of size 256 with 8 generators&gt; ),
+  group := &lt;pc group of size 256 with 8 generators&gt;, size := 32768 )
+</pre></div>
+
+<p>Two points are worthy of comment. First, the interactive version of the algorithm permits the user to make a suitable choice in each step of the algorithm instead of making one choice at the beginning. Secondly, the output of the <code class="code">Info</code> function shows the ranks of the <span class="SimpleMath">\(p\)</span>-multiplicator and allowable subgroup, and thus allow the user to observe the scale of difficulty of the computation.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
