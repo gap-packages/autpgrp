@@ -80,7 +80,7 @@ end );
 #F TrySolvableSubgroup( A )
 ##
 BindGlobal( "TrySolvableSubgroup", function( A )
-    local P, B, N, pcgs, phom, nhom, G, auts, gens;
+    local P, B, N, pcgs, phom, nhom, G, auts, gens, phominv;
 
     Info( InfoAutGrp, 4, "  try solvable normal subgroup");
 
@@ -103,7 +103,8 @@ BindGlobal( "TrySolvableSubgroup", function( A )
     G := ImagesSource( nhom );
 
     # get ag part
-    auts := List( pcgs, x -> PreImagesRepresentative( phom,x ) );
+    phominv := InverseGeneralMapping( phom) ;
+    auts := List(pcgs, x -> ImagesRepresentative( phominv, x ) );
     A.agAutos := Concatenation( auts, A.agAutos );
     A.agOrder := Concatenation( RelativeOrders( pcgs ), A.agOrder );
 
