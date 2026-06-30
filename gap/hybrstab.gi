@@ -287,8 +287,10 @@ BindGlobal( "BlockOrbitStabilizer", function( B, oper, os, fpt, info )
                     g := Transform( get, pers, () );
                     if not g in stabGrp then
                         stabGrp := ClosureGroup( stabGrp, g );
-                        Add( pstab, g );
-                        Add( stabl, aut );
+                        if not IsOne( aut ) then
+                            Add( pstab, g );
+                            Add( stabl, aut );
+                        fi;
                     fi;
                 else
                     Add( stabl, aut );
