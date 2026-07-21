@@ -100,10 +100,11 @@ end );
 #F PGCharSubgroups( G )
 ##
 BindGlobal( "PGCharSubgroups", function(G)
-    local  cent, omega;
+    local  cent, omega, size;
     cent := TwoStepCentralizersByLcs( G );
     omega := OmegaSubgroupsByLcs( G );
-    if Size(G) <= 512 then 
+    size := Size( G );
+    if size <= 512 and ID_AVAILABLE( size ) <> fail then 
         return Union(cent, omega, MaxSubIntersections(G));
     else
         return Union( cent, omega );
