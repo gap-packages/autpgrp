@@ -117,7 +117,7 @@ end );
 #F PGMatrixOrbitStabilizer( A, V, W, R )
 ##
 BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
-    local VS, WS, RS, hom, pt, glMats, agMats, lab, info, l, d, oper;
+    local VS, WS, RS, hom, pt, glMats, agMats, lab, info, l, d, oper, induce;
 
     # set up factor space
     VS := VectorSpace( A.field, V, "basis" );
@@ -130,7 +130,8 @@ BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
     # set up action 
     glMats := List( A.glAutos, x -> InducedActionByHom( hom, x!.mat ) );
     agMats := List( A.agAutos, x -> InducedActionByHom( hom, x!.mat ) );
-    
+    induce := x -> InducedActionByHom( hom, x );
+
     # check if the dual is better
     if Length(pt) > Length(pt[1])/2 then
         pt := VectorSpace( A.field, pt, "basis" );
@@ -139,6 +140,7 @@ BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
         TriangulizeMat( pt );
         glMats := List( glMats, x -> ActionOnDual( x ) );
         agMats := List( agMats, x -> ActionOnDual( x ) );
+        induce := x -> ActionOnDual( InducedActionByHom( hom, x ) );
     fi;
 
     # use labels - if desired
@@ -150,10 +152,12 @@ BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
                      l     := l,
                      d     := d );
         lab := LabelOfBasis( pt, info );
-        return PGHybridOrbitStabilizer( A, glMats, agMats, lab, OnLabel, info );
+        return PGHybridOrbitStabilizer( A, glMats, agMats, lab, OnLabel, info,
+                                        induce );
     else
         pt := ImmutableMatrix( A.field, pt );
-        return PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec() );
+        return PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec(),
+                                        induce );
     fi;
 end );
 

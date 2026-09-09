@@ -18,6 +18,7 @@ ReadPackage( "autpgrp", "gap/initperm.gi");
 
 ReadPackage( "autpgrp", "gap/hybrstab.gi");
 ReadPackage( "autpgrp", "gap/matrstab.gi");
+ReadPackage( "autpgrp", "gap/permstab.gi");
 ReadPackage( "autpgrp", "gap/orbstab.gi");
 
 ReadPackage( "autpgrp", "gap/autos.gi");
