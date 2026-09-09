@@ -149,6 +149,23 @@ end );
 
 #############################################################################
 ##
+#F PGSchreierWord( parent, gen, k ) . . . . . . . . . word for orbit block k
+##
+## The transversal of BlockOrbitStabilizer is a Schreier vector: block k
+## was obtained from block parent[k] by generator gen[k].
+##
+BindGlobal( "PGSchreierWord", function( parent, gen, k )
+    local word;
+    word := [];
+    while k > 1 do
+        Add( word, gen[k] );
+        k := parent[k];
+    od;
+    return Reversed( word );
+end );
+
+#############################################################################
+##
 #F PcgsOrbitStabilizer( A, oper, pt, fpt, info, limit )
 ##
 ## Returns fail if the orbit would exceed <limit> points.
@@ -237,21 +254,22 @@ end );
 ## the orbit has more than <limit> blocks.
 ##
 BindGlobal( "BlockOrbitStabilizer", function( B, oper, os, fpt, info, limit )
-    local bl, l, li, orbit, trans, stabl, pstab, mats, auts, ords, pers,
-          k, pt, i, y, j, new, get, aut, g, per, s, dict, r, stabGrp;
+    local bl, l, li, orbit, parent, gen, stabl, pstab, mats, auts, ords,
+          pers, k, pt, i, y, j, new, get, aut, g, per, s, dict, r, stabGrp;
 
     # the block and limit for orbit length
     bl := os.orbit;
     l  := Length( bl );
     li := B.glOrder / Factors( B.glOrder )[1];
 
-    # set up orbit, transversal and stab
+    # set up orbit, transversal (Schreier vector) and stab
     orbit := [ bl ];
     dict := NewDictionary( bl[1], true );
     for j in [1..l] do
         AddDictionary( dict, bl[j], [1,j] );
     od;
-    trans := [ [] ];
+    parent := [ 0 ];
+    gen := [ 0 ];
     stabl := [];
     pstab := [];
 
@@ -283,12 +301,13 @@ BindGlobal( "BlockOrbitStabilizer", function( B, oper, os, fpt, info, limit )
                     AddDictionary( dict, new[s], [Length(orbit)+1, s] );
                 od;
                 Add( orbit, new );
-                get := Concatenation( trans[k], [i] );
-                Add( trans, get );
+                Add( parent, k );
+                Add( gen, i );
             else
 
                 # enlarge stabilizer
-                get := Concatenation(trans[k], [i], Reversed(-trans[j[1]])); 
+                get := Concatenation( PGSchreierWord( parent, gen, k ), [i],
+                           Reversed( -PGSchreierWord( parent, gen, j[1] ) ) );
                 get := ReduceGet( ords, get );
                 aut := TransformPG( get, auts, B.one );
 

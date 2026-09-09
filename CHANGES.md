@@ -5,6 +5,8 @@
  - added the option `OrbitLimit` to `AutomorphismGroupPGroup`, which
    returns `fail` once an orbit exceeds the given length
  - `InfoAutGrp` level 2 reports orbit lengths, method and time per step
+ - store the transversal of the orbit enumeration as a Schreier vector
+   instead of one word per orbit point
 
 ## 1.12.0 (2026-05-18)
 
