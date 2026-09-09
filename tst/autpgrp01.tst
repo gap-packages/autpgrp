@@ -10,7 +10,7 @@
 #
 gap> START_TEST("autpgrp01.tst");
 
-# doc/method.xml:36-48
+# doc/method.xml:39-51
 gap> LoadPackage("autpgrp", false);
 true
 gap> G := PcGroupCode(619031068735, 32);  # SmallGroup( 32, 15 );
@@ -23,7 +23,7 @@ gap> AutomorphismGroup(G);
 #I  final step: convert
 <group of size 64 with 6 generators>
 
-# doc/method.xml:56-84
+# doc/method.xml:59-87
 gap> G := DihedralGroup( IsPermGroup, 2^5 );;
 gap> IsPGroup(G);
 true
