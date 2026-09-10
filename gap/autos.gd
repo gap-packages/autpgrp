@@ -47,6 +47,8 @@ DeclareOperation( "PGMultList", [IsList] );
 ##
 DeclareGlobalFunction( "ImageAutPGroup" );
 DeclareGlobalFunction( "InnerAutGroupPGroup" );
+DeclareGlobalFunction( "EmbeddingPcGroupAutPGroup" );
+DeclareGlobalFunction( "AutomorphismGroupByHybrid" );
 DeclareGlobalFunction( "ConvertAutGroup" );
 DeclareGlobalFunction( "InduceAutGroup" );
 DeclareGlobalFunction( "LinearActionAutGrp" );

@@ -7,6 +7,9 @@
  - `InfoAutGrp` level 2 reports orbit lengths, method and time per step
  - store the transversal of the orbit enumeration as a Schreier vector
    instead of one word per orbit point
+ - added `EmbeddingPcGroupAutPGroup`, the homomorphism from the pc group
+   of the solvable part of the automorphism group into the automorphism
+   group; subgroups of the solvable part are transported by `PreImage`
 
 ## 1.12.0 (2026-05-18)
 
