@@ -31,7 +31,10 @@ in the &GAP; Reference Manual).
         assigning an <C>level</C> in the range 1 to 4 via
         <Log>SetInfoLevel(InfoAutGrp, level);</Log>
 varying levels of information on the progress of
-the computation, will be obtained.
+the computation, will be obtained. Level 2 reports, for each step of
+the lower exponent-<M>p</M> central series, the orbit lengths of the
+stabiliser computations, whether they were enumerated or found by
+backtrack, and the time spent.
 <P/>
 <Example><![CDATA[
 gap> LoadPackage("autpgrp", false);

@@ -43,6 +43,9 @@ end );
 ##
 #F PGOrbitStabilizer( <A>, <baseU>, <baseN>, <interrupt> )
 ##
+## Replaces A by the stabilizer of U.  Returns fail if the orbit budget
+## A.orbitLimit is exceeded, true otherwise.
+##
 InstallGlobalFunction( PGOrbitStabilizer, 
     function( A, baseU, baseN, interrupt )
     local u, n, l, baseM, str, glMats, agMats, mats, modu, chop;
@@ -51,12 +54,12 @@ InstallGlobalFunction( PGOrbitStabilizer,
     u := Length( baseU );
     n := Length( baseN );
     if u = 0 or ( A.glOrder = 1 and Length( A.agOrder ) = 0 ) then
-        return; 
+        return true;
     fi;
 
     l := Length( baseU[1] );
     baseM := IdentityMat( l, A.field );
-    if l = u then return; fi;
+    if l = u then return true; fi;
 
     # print some info
     Info( InfoAutGrp, 3, "  dim U = ",u, "  dim N = ",n, "  dim M = ",l );
@@ -70,7 +73,7 @@ InstallGlobalFunction( PGOrbitStabilizer,
             CHOP_MULT := false;
         else
             Print("not a valid argument");
-            return;
+            return true;
         fi;
     fi;
 
@@ -85,5 +88,5 @@ InstallGlobalFunction( PGOrbitStabilizer,
         chop := BasesCompositionSeriesThrough( modu, chop[2] );
     fi;
 
-    PGOrbitStabilizerBySeries( A, baseU, chop );
+    return PGOrbitStabilizerBySeries( A, baseU, chop );
 end );

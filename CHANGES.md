@@ -1,5 +1,11 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## 1.13.0 (unreleased)
+
+ - added the option `OrbitLimit` to `AutomorphismGroupPGroup`, which
+   returns `fail` once an orbit exceeds the given length
+ - `InfoAutGrp` level 2 reports orbit lengths, method and time per step
+
 ## 1.12.0 (2026-05-18)
 
  - converted the manual to GAPDoc

@@ -140,10 +140,21 @@ end );
 
 #############################################################################
 ##
-#F PcgsOrbitStabilizer( A, oper, pt, fpt, info ) 
+#F PGOrbitLimit( A ) . . . . . . . . . . . . . . user budget for orbit lengths
 ##
-BindGlobal( "PcgsOrbitStabilizer", function( A, oper, pt, fpt, info )
-    local pcgs, rels, stabl, srels, trans, trels, orbit, i, y, j, p, l, s, 
+BindGlobal( "PGOrbitLimit", function( A )
+    if IsBound( A.orbitLimit ) then return A.orbitLimit; fi;
+    return infinity;
+end );
+
+#############################################################################
+##
+#F PcgsOrbitStabilizer( A, oper, pt, fpt, info, limit )
+##
+## Returns fail if the orbit would exceed <limit> points.
+##
+BindGlobal( "PcgsOrbitStabilizer", function( A, oper, pt, fpt, info, limit )
+    local pcgs, rels, stabl, srels, trans, trels, orbit, i, y, j, p, l, s,
           k, t, h, g, dict;
 
     pcgs := A.agAutos;
@@ -185,6 +196,7 @@ BindGlobal( "PcgsOrbitStabilizer", function( A, oper, pt, fpt, info )
                 # enlarge orbit
                 p := rels[i];
                 l := Length( orbit );
+                if p * l > limit then return fail; fi;
                 orbit[p*l] := true;
                 s := 0;
                 for k  in [ 1 .. p - 1 ]  do
@@ -219,9 +231,12 @@ end );
 
 #############################################################################
 ##
-#F BlockOrbitStabilizer( B, oper, os, fpt, info )
+#F BlockOrbitStabilizer( B, oper, os, fpt, info, limit )
 ##
-BindGlobal( "BlockOrbitStabilizer", function( B, oper, os, fpt, info )
+## Orbit of the block os.orbit under the gl part.  Returns fail as soon as
+## the orbit has more than <limit> blocks.
+##
+BindGlobal( "BlockOrbitStabilizer", function( B, oper, os, fpt, info, limit )
     local bl, l, li, orbit, trans, stabl, pstab, mats, auts, ords, pers,
           k, pt, i, y, j, new, get, aut, g, per, s, dict, r, stabGrp;
 
@@ -261,6 +276,7 @@ BindGlobal( "BlockOrbitStabilizer", function( B, oper, os, fpt, info )
             if IsBool( j ) then
 
                 # enlarge orbit and transversal
+                if Length( orbit ) >= limit then return fail; fi;
                 new := List( [1..l], x -> true );
                 for s in [1..l] do
                     new[s] := fpt( orbit[k][s], oper[i], info );
@@ -313,12 +329,21 @@ end );
 ##
 #F PGHybridOrbitStabilizer( A, glMats, agMats, pt, oper, info )
 ##
+## Replaces A by the stabilizer of pt.  Returns fail if the orbit budget
+## of A (see PGOrbitLimit) is exceeded, true otherwise.
+##
 BindGlobal( "PGHybridOrbitStabilizer", function( A, glMats, agMats, pt, oper, info )
-    local os, OS, B;
+    local os, OS, limit, blocks, time;
 
     # compute ag orbit stabilizier
-    if Length( glMats ) = 0 and Length( agMats ) = 0 then return; fi;
-    os := PcgsOrbitStabilizer( A, agMats, pt, oper, info );
+    if Length( glMats ) = 0 and Length( agMats ) = 0 then return true; fi;
+    time := Runtime();
+    limit := PGOrbitLimit( A );
+    os := PcgsOrbitStabilizer( A, agMats, pt, oper, info, limit );
+    if os = fail then
+        Info( InfoAutGrp, 2, "    ag-orbit exceeds limit ", limit );
+        return fail;
+    fi;
     Info( InfoAutGrp, 4, "    ag-orbit -- length ",Length(os.orbit));
 
     # add info to A
@@ -326,18 +351,32 @@ BindGlobal( "PGHybridOrbitStabilizer", function( A, glMats, agMats, pt, oper, in
     A.agOrder := os.srels;
 
     # compute block orbit and stabiliser
-    if Length( glMats ) = 0 then return; fi;
-    OS := BlockOrbitStabilizer( A, glMats, os, oper, info );
-    Info( InfoAutGrp, 4, "    gl-orbit -- length ", OS.length, 
+    if Length( glMats ) = 0 then return true; fi;
+    if limit = infinity then
+        blocks := infinity;
+    else
+        blocks := QuoInt( limit, Length( os.orbit ) );
+    fi;
+    OS := BlockOrbitStabilizer( A, glMats, os, oper, info, blocks );
+    if OS = fail then
+        Info( InfoAutGrp, 2, "    gl-orbit exceeds limit ", limit );
+        return fail;
+    fi;
+    Info( InfoAutGrp, 4, "    gl-orbit -- length ", OS.length,
                          " -- gens ",Length(OS.stabl));
-  
+
     # set up new aut grp
     A.glAutos := OS.stabl;
     A.glOrder := A.glOrder / OS.length;
     Assert(1,IsInt(A.glOrder));
     if IsBound( A.glOper ) then A.glOper := OS.pstab; fi;
 
+    Info( InfoAutGrp, 2, "    stabilizer: ag-orbit ", Length( os.orbit ),
+          ", gl-orbit ", OS.length, ", gl part ", A.glOrder,
+          ", ", Runtime() - time, " ms" );
+
     # nice the glAutos if necessary
     if NICE_STAB and OS.length > 1 then NiceHybridGroup( A ); fi;
+    return true;
 end );
 

@@ -150,10 +150,10 @@ BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
                      l     := l,
                      d     := d );
         lab := LabelOfBasis( pt, info );
-        PGHybridOrbitStabilizer( A, glMats, agMats, lab, OnLabel, info );
+        return PGHybridOrbitStabilizer( A, glMats, agMats, lab, OnLabel, info );
     else
         pt := ImmutableMatrix( A.field, pt );
-        PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec() );
+        return PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec() );
     fi;
 end );
 
@@ -221,7 +221,9 @@ BindGlobal( "PGOrbitStabilizerBySeries", function( A, baseU, chop )
                 if Length( R ) < Length( V ) then
                     W := SumMat@( S, chop[j] );
                     if Length( R ) > Length( W ) then
-                        PGMatrixOrbitStabilizer( A, V, W, R );
+                        if PGMatrixOrbitStabilizer( A, V, W, R ) = fail then
+                            return fail;
+                        fi;
                         if CHECK then 
                             if not CheckAgStab(A, R) then 
                                 Error("ag stab wrong ");
@@ -237,5 +239,6 @@ BindGlobal( "PGOrbitStabilizerBySeries", function( A, baseU, chop )
             od;
         fi;
     od;
+    return true;
 end );
 

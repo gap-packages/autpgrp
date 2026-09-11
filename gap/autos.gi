@@ -142,6 +142,7 @@ InstallGlobalFunction( InduceAutGroup,
 
     # if possible add projective operation
     if IsBound( A.glOper ) then B.glOper := A.glOper; fi;
+    if IsBound( A.orbitLimit ) then B.orbitLimit := A.orbitLimit; fi;
 
     # and return
     return B;
@@ -255,9 +256,12 @@ InstallGlobalFunction( AddInfoCover,
 ##
 #F AutomorphismGroupPGroup( <G>, <flag> ) . . . .automorphisms in hybird form
 ##
+## Option OrbitLimit: give up and return fail once an orbit in a stabilizer
+## computation exceeds this many points.
+##
 InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     local p, r, G, pcgs, first, n, str, A, F, Q, i, s, t, P, N, M, U, B,
-          baseU, baseN, epi, f;
+          baseU, baseN, epi, f, limit, time;
 
     # catch the trivial case
     G := arg[1];
@@ -320,6 +324,8 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
           "step 1: ",p,"^", first[2]-1, " -- init automorphisms ");
 
     A := InitAutGroup( G );
+    limit := ValueOption( "OrbitLimit" );
+    if IsPosInt( limit ) then A.orbitLimit := limit; fi;
 
     # loop over remaining steps
     F := Range( IsomorphismFpGroupByPcgs( pcgs, "f" ) );
@@ -331,6 +337,7 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
         t := first[i+1];
         Info( InfoAutGrp, 1, 
               "step ",i,": ",p,"^", t-s, " -- aut grp has size ", A.size );
+        time := Runtime();
 
         # the cover
         Info( InfoAutGrp, 2, "  computing cover");
@@ -351,7 +358,10 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
         baseN := List(baseN, x -> ExponentsOfPcElement(Pcgs(M), x)) * One(f);
         baseU := List(baseU, x -> ExponentsOfPcElement(Pcgs(M), x)) * One(f);
         baseU := EcheloniseMat( baseU );
-        PGOrbitStabilizer( A, baseU, baseN, false );
+        if PGOrbitStabilizer( A, baseU, baseN, false ) = fail then
+            Info( InfoAutGrp, 1, "step ",i,": orbit limit exceeded" );
+            return fail;
+        fi;
 
         # next step of p-quotient
         IncorporateCentralRelations( Q );
@@ -360,6 +370,8 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
         # induce to next factor
         Info( InfoAutGrp, 2, "  induce autos and add central autos");
         A := InduceAutGroup( A, Q, P, M, U );
+        Info( InfoAutGrp, 2, "  step ", i, " done: aut grp has size ",
+              A.size, ", ", Runtime() - time, " ms" );
     od;
 
     # now get a real automorphism group
@@ -403,6 +415,9 @@ function( G )
 
     # compute
     A :=  AutomorphismGroupPGroup( G );
+    if A = fail then
+        Error( "AutomorphismGroup: orbit limit exceeded" );
+    fi;
 
     # translate and return
     A:=ConvertHybridAutGroup( A );
