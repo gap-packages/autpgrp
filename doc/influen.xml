@@ -28,6 +28,11 @@ choices the later sections of this chapter.
 <Section Label="Outline of the algorithm">
 <Heading>Outline of the algorithm</Heading>
 
+The algorithm and its refinements are described in
+<Cite Key="ELO02"/>; the basic algorithm goes back to
+<Cite Key="OBr95"/>. Here we give a brief outline.
+<P/>
+
 The basic algorithm proceeds by induction
 down the lower <M>p</M>-central series of a given <M>p</M>-group <M>G</M>; that is, it
 successively computes <M>Aut(G_i)</M> for the quotients <M>G_i = G / P_i(G)</M> of
@@ -66,8 +71,8 @@ of <M>Aut(G_i)</M>-invariant subspaces of <M>M</M>.
 <P/>
 
 Orbit-stabiliser computations in finite solvable groups given by a
-polycyclic generating sequence are much more efficient than generic
-computations of this type. Thus our algorithm makes use of a large
+polycyclic generating sequence <Cite Key="LNS84"/> are much more
+efficient than generic computations of this type. Thus our algorithm makes use of a large
 solvable normal subgroup <M>S</M> of <M>Aut(G_i)</M>. Further, it is useful if
 the generating set of <M>Aut(G_i)</M> outside <M>S</M> is as small as possible.
 To achieve this we determine a permutation representation of <M>Aut(G_i)/S</M>
@@ -136,7 +141,8 @@ Aut(G_i)</M> acts as matrix group on the elementary abelian <M>p</M>-group
 <M>M</M> and we want to determine the stabiliser of a subgroup <M>U \leq M</M>.
 <P/>
 
-We use the MeatAxe to compute a series of <M>A</M>-invariant subspaces
+We use the MeatAxe <Cite Key="HR94"/> to compute a series of
+<M>A</M>-invariant subspaces
 through <M>M</M> such that each factor in the series is irreducible as
 <M>A</M>-module. Then we use this series to break the computation
 of <M>Stab_A(U)</M> into several smaller orbit-stabiliser calculations.

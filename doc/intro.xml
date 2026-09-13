@@ -5,34 +5,39 @@
 
 Given an arbitrary finite group, the computation of its automorphism group is a
 very difficult task. Pioneer work in this area was carried out by Felsch
-and Neubueser (1970), whose algorithm used the output of their
-subgroup lattice program. A technique developed by Neubueser in
-the early 1970s sought to compute the automorphism group viewed as a
-permutation group acting on unions of certain conjugacy classes of the
-group. A similar method was implemented by Hulpke (1997) in the &GAP; 4
-library. Recently, Cannon and Holt (1999) presented a new algorithm which
-uses a <E>hybrid group</E> approach.
+and Neubüser <Cite Key="FN68"/>, <Cite Key="FN70"/>, whose algorithm used
+the output of their subgroup lattice program. A technique developed by
+Neubüser in the early 1970s sought to compute the automorphism group
+viewed as a permutation group acting on unions of certain conjugacy
+classes of the group. A similar method was implemented by Hulpke
+<Cite Key="Hul96"/> in the &GAP; 4 library. Cannon and Holt
+<Cite Key="CH03"/> presented a new algorithm which uses a <E>hybrid
+group</E> approach.
 <P/>
 
 More efficient approaches are available to determine the automorphism
 group for groups satisfying certain properties. Following the work of
-Shoda (1928), Hulpke in 1997 implemented a practical method for finite
-abelian groups in the &GAP; 4 library. Wursthorn (1993) adapted modular
-group algebra techniques to compute the automorphism groups of <M>p</M>-groups;
-the &GAP; 3 share package <Package>Sisyphos</Package> includes an implementation. Smith
-(1994) introduced an algorithm for finite solvable groups which is
-available in the <Package>AutAg</Package> share package of &GAP; 3.
+Shoda <Cite Key="Sho28"/>, Hulpke in 1997 implemented a practical method
+for finite abelian groups in the &GAP; 4 library. Wursthorn
+<Cite Key="Wur93"/> adapted modular group algebra techniques to compute
+the automorphism groups of <M>p</M>-groups; the &GAP; 3 share package
+<Package>Sisyphos</Package> includes an implementation. Smith
+<Cite Key="Smi94"/> introduced an algorithm for finite solvable groups
+which is available in the <Package>AutAg</Package> share package of
+&GAP; 3.
 <P/>
 
-Moreover, the <M>p</M>-group generation method of Newman (1977) and O'Brien
-(1990) can be modified to compute the automorphism group of a finite
-<M>p</M>-group as outlined in O'Brien (1995). This algorithm is implemented
-in the ANU <C>pq</C> C program.
+Moreover, the <M>p</M>-group generation method of Newman
+<Cite Key="New77"/> and O'Brien <Cite Key="OBr90"/> can be modified to
+compute the automorphism group of a finite <M>p</M>-group as outlined in
+<Cite Key="OBr95"/>. This algorithm is implemented in the ANU <C>pq</C>
+C program.
 <P/>
 
 Here we introduce a new function to compute the automorphism group of
-a finite <M>p</M>-group. The underlying algorithm is a refinement of the
-methods described in O'Brien (1995). In particular, this implementation
+a finite <M>p</M>-group. The underlying algorithm, described in
+<Cite Key="ELO02"/>, is a refinement of the methods described in
+<Cite Key="OBr95"/>. In particular, this implementation
 is more efficient in both time and space requirements and hence has a
 wider range of applications than the ANU <C>pq</C> method. Our package is
 written in &GAP; code and it makes use of a number of methods from the

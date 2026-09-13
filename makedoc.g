@@ -24,7 +24,10 @@ AutoDoc(rec(
     autodoc := rec(scan_dirs := []),
     gapdoc  := rec(files := []),
     extract_examples := true,
-    scaffold := rec(includes := includes)
+    scaffold := rec(
+        includes := includes,
+        bib := "references.bib",
+    ),
 ));
 
 QuitGap();
