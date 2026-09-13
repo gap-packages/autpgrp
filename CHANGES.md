@@ -11,6 +11,10 @@
  - `InfoAutGrp` level 2 reports orbit lengths, method and time per step
  - store the transversal of the orbit enumeration as a Schreier vector
    instead of one word per orbit point
+ - a hybrid record passed to `PGOrbitStabilizer` may carry `agOper`, the
+   permutations of its soluble part, which is then turned into the
+   required representation of `A/S`; inconsistent records raise an
+   error instead of hanging or returning a wrong stabiliser (anupq#67)
 
 ## 1.12.0 (2026-05-18)
 

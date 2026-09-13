@@ -41,14 +41,50 @@ end );
 
 #############################################################################
 ##
+#F PGNormalisePermOper( A ) . . . . . . . . . . . .  make glOper a rep of A/S
+##
+## The hybrid record must satisfy: S = <agAutos> is a normal subgroup with
+## pcgs agAutos and relative orders agOrder; glOper is a faithful
+## permutation representation of A/S restricted to glAutos, with
+## |<glOper>| = glOrder.  In particular every ag automorphism acts trivially
+## in glOper.
+##
+## A caller (ANUPQ) that has a perm rep of the whole of A instead passes
+## the perms of the ag automorphisms as A.agOper; here it is turned into
+## the rep of A/S.  An inconsistent record is an error: continuing would
+## silently return a wrong stabilizer.
+##
+BindGlobal( "PGNormalisePermOper", function( A )
+    local P, S, hom;
+
+    P := Group( Concatenation( A.glOper, A.agOper ), () );
+    S := Subgroup( P, A.agOper );
+    if not IsNormal( P, S ) then
+        Error( "hybrid record: the ag part <agAutos> is not normal in A" );
+    fi;
+    if Index( P, S ) <> A.glOrder then
+        Error( "hybrid record: |A/S| = ", Index( P, S ),
+               " differs from glOrder = ", A.glOrder );
+    fi;
+
+    hom := NaturalHomomorphismByNormalSubgroupNC( P, S );
+    A.glOper := List( A.glOper, x -> ImagesRepresentative( hom, x ) );
+    Unbind( A.agOper );
+end );
+
+#############################################################################
+##
 #F PGOrbitStabilizer( <A>, <baseU>, <baseN>, <interrupt> )
 ##
 ## Replaces A by the stabilizer of U.  Returns fail if the orbit budget
-## A.orbitLimit is exceeded, true otherwise.
+## A.orbitLimit is exceeded, true otherwise.  See PGNormalisePermOper for
+## the invariants of the record A.
 ##
 InstallGlobalFunction( PGOrbitStabilizer, 
     function( A, baseU, baseN, interrupt )
     local u, n, l, baseM, str, glMats, agMats, mats, modu, chop;
+
+    if IsBound( A.agOper ) then PGNormalisePermOper( A ); fi;
 
     # set up and catch some trivial cases 
     u := Length( baseU );
