@@ -56,5 +56,23 @@ gap> B := PcGroupAutPGroup( A );
 gap> I := InnerAutGroupPGroup( B );
 Group([ f5, f4^2*f8, f6^2*f9^2, f11^2, f10^2, <identity> of ... ])
 
+# doc/underl.xml:157-174
+gap> SetInfoLevel( InfoAutGrp, 0 );
+gap> hom := EmbeddingPcGroupAutPGroup( H );;
+gap> Size( Source( hom ) ); Size( Range( hom ) );
+52488
+52488
+gap> inn := Group( List( Pcgs( H ), x -> InnerAutomorphism( H, x ) ) );;
+gap> PreImage( hom, inn ) = InnerAutGroupPGroup( Source( hom ) );
+true
+gap> G := PcGroupCode( 17734058326, 32 );;  # SmallGroup( 32, 50 )
+gap> hom := EmbeddingPcGroupAutPGroup( G );;
+gap> Size( Source( hom ) ); Size( Range( hom ) );
+16
+1920
+gap> inn := Group( List( Pcgs( G ), x -> InnerAutomorphism( G, x ) ) );;
+gap> Size( PreImage( hom, inn ) );
+16
+
 #
 gap> STOP_TEST("autpgrp02.tst", 1);

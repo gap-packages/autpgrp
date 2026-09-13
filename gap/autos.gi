@@ -400,6 +400,18 @@ end );
 
 #############################################################################
 ##
+#F AutomorphismGroupByHybrid( <A> ) . . . the group AutomorphismGroup returns
+##
+InstallGlobalFunction( AutomorphismGroupByHybrid, function( A )
+    local B;
+    B := ConvertHybridAutGroup( A );
+    SetIsAutomorphismGroup( B, true );
+    SetIsGroupOfAutomorphismsFiniteGroup( B, true );
+    return B;
+end );
+
+#############################################################################
+##
 #M AutomorphismGroup
 ##
 InstallMethod( AutomorphismGroup,
@@ -418,14 +430,7 @@ function( G )
     if A = fail then
         Error( "AutomorphismGroup: orbit limit exceeded" );
     fi;
-
-    # translate and return
-    A:=ConvertHybridAutGroup( A );
-    SetIsAutomorphismGroup(A,true);
-    if IsFinite(G) then
-      SetIsGroupOfAutomorphismsFiniteGroup(A,true);
-    fi;
-    return A;
+    return AutomorphismGroupByHybrid( A );
 end );
 
                

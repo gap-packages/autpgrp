@@ -142,5 +142,35 @@ gap> B := PcGroupAutPGroup( A );
 gap> I := InnerAutGroupPGroup( B );
 Group([ f5, f4^2*f8, f6^2*f9^2, f11^2, f10^2, <identity> of ... ])
 ]]></Example></Description>
+  </ManSection>
+  <ManSection>
+    <Func Name="EmbeddingPcGroupAutPGroup" Arg="G" />
+    <Description>For a finite <M>p</M>-group <A>G</A> this function returns
+    an injective homomorphism from the pc group of the solvable part of the
+    automorphism group, as computed by <C>PcGroupAutPGroup</C>, into
+    <C>AutomorphismGroup( <A>G</A> )</C>. Subgroups of the automorphism
+    group that lie in the solvable part are transported into the pc group
+    by <C>PreImage</C>; the preimage of an automorphism outside the
+    solvable part is <K>fail</K>, and <C>PreImage</C> is only meant for
+    subgroups of the solvable part. If the automorphism group of <A>G</A> is
+    not yet known, it is computed here and stored.
+    <Example><![CDATA[
+gap> SetInfoLevel( InfoAutGrp, 0 );
+gap> hom := EmbeddingPcGroupAutPGroup( H );;
+gap> Size( Source( hom ) ); Size( Range( hom ) );
+52488
+52488
+gap> inn := Group( List( Pcgs( H ), x -> InnerAutomorphism( H, x ) ) );;
+gap> PreImage( hom, inn ) = InnerAutGroupPGroup( Source( hom ) );
+true
+gap> G := PcGroupCode( 17734058326, 32 );;  # SmallGroup( 32, 50 )
+gap> hom := EmbeddingPcGroupAutPGroup( G );;
+gap> Size( Source( hom ) ); Size( Range( hom ) );
+16
+1920
+gap> inn := Group( List( Pcgs( G ), x -> InnerAutomorphism( G, x ) ) );;
+gap> Size( PreImage( hom, inn ) );
+16
+]]></Example></Description>
   </ManSection></Section>
 </Chapter>

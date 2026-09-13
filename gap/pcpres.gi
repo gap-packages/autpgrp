@@ -79,6 +79,9 @@ end );
 ##
 #F ExponentsAutPGroup( B, auto ) . . . . . . . . . . .compute exponent vector
 ##
+## Exponent vector of auto with respect to B.agAutos, or fail if auto does
+## not lie in the group they generate.
+##
 BindGlobal( "ExponentsAutPGroup", function( B, auto )
     local exps, imgs, perm, news, tmpa, j, e, s, n, subs, base;
 
@@ -89,6 +92,9 @@ BindGlobal( "ExponentsAutPGroup", function( B, auto )
     # if base <> idmat, then the FrattiniFactor is permuted
     if base <> IdentityMat(B.rank) then
         base := base * One(B.field);
+        if not IsBound( B.agHomom ) or not base in Source( B.agHomom ) then
+            return fail;
+        fi;
         perm := Image( B.agHomom, base );
         news := ExponentsOfPcElement( B.agTopfc, perm );
         exps{[1..Length(news)]} := news; 
@@ -113,7 +119,10 @@ BindGlobal( "ExponentsAutPGroup", function( B, auto )
         subs := B.bases{[s..n-1]};
 
         # solve and set exponents
-        news := IntVecFFE( SolutionMat( subs, base ) );
+        if s = n then return fail; fi;
+        news := SolutionMat( subs, base );
+        if news = fail then return fail; fi;
+        news := IntVecFFE( news );
         exps{[s..n-1]} := news; 
 
         # divide off and reset
@@ -130,10 +139,14 @@ end );
 ##
 #F ImageAutPGroup( B, G, auto ) . . . . . . . . . . . . . . image in pc group
 ##
+## fail if auto does not lie in the soluble part represented by G.
+##
 InstallGlobalFunction( ImageAutPGroup,
   function( B, G, auto )
     local exp;
     exp := ExponentsAutPGroup( B, auto );
+    if exp = fail then return fail; fi;
+    if IsEmpty( exp ) then return One( G ); fi;
     return MappedVector( exp, GeneratorsOfGroup( G ) );
   end);
 
@@ -183,3 +196,37 @@ InstallGlobalFunction( InnerAutGroupPGroup,
     I := Subgroup(C, imgs );
     return I;
   end);
+
+#############################################################################
+##
+#F EmbeddingPcGroupAutPGroup( G ) . . . . . pc group of soluble part into Aut
+##
+## Injective homomorphism from the pc group PcGroupAutPGroup( A ), A the
+## hybrid record of AutomorphismGroupPGroup( G ), into AutomorphismGroup( G ).
+## Preimages of automorphisms outside the image are fail.  The automorphism
+## group is stored in G if it was not known before, so it is computed once.
+##
+InstallGlobalFunction( EmbeddingPcGroupAutPGroup, function( G )
+    local A, aut, C, B, pcgs, hom;
+
+    A := AutomorphismGroupPGroup( G );
+    if HasAutomorphismGroup( G ) then
+        aut := AutomorphismGroup( G );
+    else
+        aut := AutomorphismGroupByHybrid( A );
+        SetAutomorphismGroup( G, aut );
+    fi;
+
+    C := PcGroupAutPGroup( A );
+    B := C!.autrec;
+    pcgs := Pcgs( C );
+    hom := GroupHomomorphismByFunction( C, aut,
+        function( c )
+            if IsEmpty( B.agAutos ) then return A.one; fi;
+            return MappedVector( ExponentsOfPcElement( pcgs, c ), B.agAutos );
+        end,
+        false,
+        auto -> ImageAutPGroup( B, C, auto ) );
+    SetIsInjective( hom, true );
+    return hom;
+end );
