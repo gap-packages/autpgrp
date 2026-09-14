@@ -4,7 +4,8 @@
     <Heading>Additional features of the package</Heading>
 
 As an additional feature of this package we provide some functions to
-count extensions of <M>p</M>-groups and Lie algebras over <M>GF(p)</M>. These
+count extensions of <M>p</M>-groups and Lie algebras over <M>GF(p)</M>,
+following the enumeration method of <Cite Key="EO99"/>. These
 functions have been used in counting the <M>2</M>-groups of size <M>2^{10}</M>.
 <P/>
 
