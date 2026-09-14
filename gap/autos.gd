@@ -26,8 +26,8 @@ BindGlobal( "PG_ESCALATE_BLOCKS", 2000 );
 BindGlobal( "PG_ESCALATE_GROWTH", 4 );
 ## Sections with at most this many lines are used whole as permutation
 ## domain; for larger ones only the lines in the orbits of the subspace's
-## lines are computed, at most this many, and taking at most as long as the
-## enumeration has run so far.
+## lines are computed, at most this many, and with at most as many
+## vector-matrix products as the enumeration has done so far.
 BindGlobal( "PG_PERM_FULL_LIMIT", 10^5 );
 BindGlobal( "PG_PERM_DOMAIN_LIMIT", 10^6 );
 
