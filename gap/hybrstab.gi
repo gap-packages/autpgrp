@@ -369,10 +369,12 @@ end );
 ##
 ## The gl orbit is enumerated in rounds of geometrically growing length.
 ## After each round the set stabilizer method (PGPermStabilizer) is
-## attempted, allowed to spend on its permutation domain at most the time
-## the enumeration has taken so far, so failed attempts cost at most as
-## much as the enumeration they try to replace.  The domain built so far
-## is kept between attempts.
+## attempted, allowed to spend on its permutation domain at most as many
+## vector-matrix products as the enumeration has done so far, so failed
+## attempts cost at most as much as the enumeration they try to replace.
+## The domain built so far is kept between attempts.  The bound counts
+## work, not time, so the computation takes the same path on every
+## machine.
 ##
 BindGlobal( "PGHybridOrbitStabilizer",
   function( A, glMats, agMats, pt, oper, info, induce )
@@ -417,11 +419,12 @@ BindGlobal( "PGHybridOrbitStabilizer",
         exhausted := round >= blocks;
         if PERM_STAB and IsBound( A.glOper ) then
             # once the orbit budget is spent, one last attempt without a
-            # time bound
+            # work bound; otherwise the enumeration has applied each gl
+            # generator to about every point of every block
             if exhausted then
                 budget := infinity;
             else
-                budget := Runtime() - time;
+                budget := Length( state.orbit ) * l * Length( glMats );
             fi;
             OS := PGPermStabilizer( A, glMats, agMats, agAutos, os, pt,
                                     oper, info, induce, budget, dstate );
