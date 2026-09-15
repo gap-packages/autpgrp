@@ -46,8 +46,6 @@ groups. We note that our method uses the small groups library in  certain
 cases and hence our algorithm is  more  effective  if  the  small  groups
 library is installed.
 
-Note that since version 1.1 of AutPGrp, at least GAP 4.3fix4 is required.
-
                                  Authors
                                  -------
 

@@ -1,6 +1,6 @@
 # CHANGES to the 'autpgrp' GAP package
 
-## 1.13.0 (unreleased)
+## 1.13.0 (2026-09-15)
 
  - much faster automorphism groups for p-groups whose automorphism group
    is small compared to the general linear group of the Frattini quotient;
@@ -11,6 +11,7 @@
  - `InfoAutGrp` level 2 reports orbit lengths, method and time per step
  - store the transversal of the orbit enumeration as a Schreier vector
    instead of one word per orbit point
+ - various janitorial changes
 
 ## 1.12.0 (2026-05-18)
 
