@@ -187,6 +187,24 @@ enumeration.
             </Description>
 </ManSection>
 
+The solvable part <M>S</M> contains the kernel <M>K</M> of <M>A</M> on the
+Frattini quotient, a normal <M>p</M>-subgroup, whose orbits on subspaces
+can be very long. Once the <M>K</M>-orbit of the subspace has more than 1000
+points, it is not enumerated: the algorithm computes canonical forms of
+subspaces under <M>K</M>, and the stabiliser in <M>K</M> of the canonical
+form, in polynomial time <Cite Key="Sch00"/>, <Cite Key="ELO02"/>, and
+enumerates only the orbit of <M>A</M> on these canonical forms. The
+implementation is taken from the <Package>ModIsom</Package> package.
+
+<ManSection>
+            <Var Name="AUTPGRP_CANON_FORM"/>
+            <Description>
+Canonical forms under the kernel are used if the global variable
+<C>AUTPGRP_CANON_FORM</C> is <K>true</K>, the default. Setting it to <K>false</K>
+forces orbit enumeration.
+            </Description>
+</ManSection>
+
 <Subsection Label="The option OrbitLimit">
 <Heading>The option OrbitLimit</Heading>
 <C>AutomorphismGroupPGroup( G : OrbitLimit := n )</C> returns

@@ -10,7 +10,7 @@
 #
 gap> START_TEST("autpgrp03.tst");
 
-# doc/influen.xml:198-208
+# doc/influen.xml:216-226
 gap> G := PcGroupCode( 103045690560068391423508120999240094531550914947096312619671359, 512 );;
 gap> SetInfoLevel( InfoAutGrp, 0 );
 gap> AUTPGRP_PERM_STAB := false;;
