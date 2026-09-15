@@ -143,6 +143,7 @@ InstallGlobalFunction( InduceAutGroup,
     # if possible add projective operation
     if IsBound( A.glOper ) then B.glOper := A.glOper; fi;
     if IsBound( A.orbitLimit ) then B.orbitLimit := A.orbitLimit; fi;
+    if IsBound( A.kernelIsTail ) then B.kernelIsTail := true; fi;
 
     # and return
     return B;
@@ -324,6 +325,7 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
           "step 1: ",p,"^", first[2]-1, " -- init automorphisms ");
 
     A := InitAutGroup( G );
+    A.kernelIsTail := true;   # see PGKernelTail
     limit := ValueOption( "OrbitLimit" );
     if IsPosInt( limit ) then A.orbitLimit := limit; fi;
 

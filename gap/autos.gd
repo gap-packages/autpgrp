@@ -13,6 +13,7 @@ if not IsBound( NICE_STAB ) then NICE_STAB := true; fi;
 if not IsBound( REDU_OPER ) then REDU_OPER := false; fi;
 if not IsBound( USE_LABEL ) then USE_LABEL := false; fi;
 if not IsBound( PERM_STAB ) then PERM_STAB := true; fi;
+if not IsBound( CANON_FORM ) then CANON_FORM := true; fi;
 if not IsBound( CHECK ) then CHECK := false; fi;
 
 #############################################################################
@@ -24,6 +25,9 @@ if not IsBound( CHECK ) then CHECK := false; fi;
 ## grows between attempts.
 BindGlobal( "PG_ESCALATE_BLOCKS", 2000 );
 BindGlobal( "PG_ESCALATE_GROWTH", 4 );
+## Canonical forms under the kernel on the Frattini quotient are used once
+## the kernel orbit of the point is longer than this.
+BindGlobal( "PG_CANON_MIN_ORBIT", 1000 );
 ## Sections with at most this many lines are used whole as permutation
 ## domain; for larger ones only the lines in the orbits of the subspace's
 ## lines are computed, at most this many, and with at most as many
