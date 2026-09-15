@@ -6,6 +6,10 @@
    to `AUTPGRP_CHOP_MULT`, `AUTPGRP_NICE_STAB` and `AUTPGRP_PERM_STAB`, so
    that they cannot clash with those of other packages; `PERM_STAB` is no
    longer documented, it is only of use in tests
+ - faster automorphism groups when the automorphisms acting trivially on
+   the Frattini quotient have long orbits on subspaces of the
+   multiplicator; these orbits are no longer enumerated (algorithm by
+   Schwingel, code from the ModIsom package by Bettina Eick)
 
 ## 1.13.0 (2026-09-22)
 

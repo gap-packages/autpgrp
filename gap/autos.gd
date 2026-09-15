@@ -12,6 +12,7 @@ if not IsBound( AUTPGRP_CHOP_MULT ) then AUTPGRP_CHOP_MULT := true; fi;
 if not IsBound( AUTPGRP_NICE_STAB ) then AUTPGRP_NICE_STAB := true; fi;
 if not IsBound( AUTPGRP_REDU_OPER ) then AUTPGRP_REDU_OPER := false; fi;
 if not IsBound( AUTPGRP_PERM_STAB ) then AUTPGRP_PERM_STAB := true; fi;
+if not IsBound( AUTPGRP_CANON_FORM ) then AUTPGRP_CANON_FORM := true; fi;
 if not IsBound( AUTPGRP_CHECK ) then AUTPGRP_CHECK := false; fi;
 
 # the Sophus package reads this name
@@ -26,6 +27,9 @@ if not IsBound( REDU_OPER ) then REDU_OPER := false; fi;
 ## grows between attempts.
 BindGlobal( "AUTPGRP_ESCALATE_BLOCKS", 2000 );
 BindGlobal( "AUTPGRP_ESCALATE_GROWTH", 4 );
+## Canonical forms under the kernel on the Frattini quotient are used once
+## the kernel orbit of the point is longer than this.
+BindGlobal( "AUTPGRP_CANON_MIN_ORBIT", 1000 );
 ## Sections with at most this many lines are used whole as permutation
 ## domain; for larger ones only the lines in the orbits of the subspace's
 ## lines are computed, at most this many, and with at most as many
