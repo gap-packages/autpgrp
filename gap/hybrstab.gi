@@ -402,7 +402,8 @@ end );
 ##     correct  g -> g * n, n in K, stabilizing cano, for g mapping cano
 ##              into its K-orbit
 ##
-BindGlobal( "PGCanonicalFormSetup", function( A, agMats, pt, fpt, info, induce )
+BindGlobal( "PGCanonicalFormSetup",
+  function( A, agMats, pt, fpt, info, induce )
     local k, nmats, F, d, I, B, Bi, conv, toNew, toOld, fpairs, fone, C, e,
           lpairs, lone, res;
 
@@ -427,8 +428,9 @@ BindGlobal( "PGCanonicalFormSetup", function( A, agMats, pt, fpt, info, induce )
     toOld := U -> ImmutableMatrix( F, PGTriangulizedBaseMat( U * B ) );
 
     # canonise pt carrying the automorphisms along
-    fpairs := List( [k..Length( agMats )], i ->
-                    DirectProductElement( [ A.agAutos[i], conv( agMats[i] ) ] ) );
+    fpairs := List( [k..Length( agMats )],
+                    i -> DirectProductElement(
+                             [ A.agAutos[i], conv( agMats[i] ) ] ) );
     fone := DirectProductElement( [ A.one, I ] );
     C := PGSubspaceCanonicalForm( fpairs, fone, toNew( pt ), F );
     e := Length( fpairs ) - Length( C.stab );
@@ -443,7 +445,8 @@ BindGlobal( "PGCanonicalFormSetup", function( A, agMats, pt, fpt, info, induce )
     res.fpt := function( x, mat, inf )
         local y;
         y := fpt( x, mat, inf );
-        return toOld( PGSubspaceCanonicalForm( lpairs, lone, toNew( y ), F ).cano );
+        return toOld( PGSubspaceCanonicalForm( lpairs, lone,
+                                               toNew( y ), F ).cano );
     end;
     res.correct := function( g )
         local D;
@@ -543,9 +546,10 @@ BindGlobal( "PGHybridOrbitStabilizer",
     A.agAutos := os.stabl;
     A.agOrder := os.srels;
     if canon <> fail then
-        A.agAutos := Concatenation( List( os.stabl, canon.correct ), canon.stab );
+        A.agAutos := Concatenation( List( os.stabl, canon.correct ),
+                                    canon.stab );
         A.agOrder := Concatenation( os.srels,
-                         List( canon.stab, x -> Characteristic( A.field ) ) );
+                        List( canon.stab, x -> Characteristic( A.field ) ) );
     fi;
 
     # compute block orbit and stabiliser

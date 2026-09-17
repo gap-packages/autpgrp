@@ -15,7 +15,7 @@
 
 #############################################################################
 ##
-#F PGTriangulizedBaseMat( mat ) . . . . . . reduced echelon basis of row space
+#F PGTriangulizedBaseMat( mat ) . . . . . reduced echelon basis of row space
 ##
 BindGlobal( "PGTriangulizedBaseMat", function( mat )
     local new, j;
@@ -28,7 +28,7 @@ end );
 
 #############################################################################
 ##
-#F PGSolutionMatInt( mat, vec ) . . . . . .integer coefficients of vec, or fail
+#F PGSolutionMatInt( mat, vec ) . . . . integer coefficients of vec, or fail
 ##
 BindGlobal( "PGSolutionMatInt", function( mat, vec )
     local s;
@@ -43,8 +43,8 @@ end );
 ##
 #F PGCoeffsMinimalElement( vec, base ) . . . .least element of vec + <base>
 ##
-## Integer coefficients c with vec + c * <base> the least element of the coset
-## in the order used by the canonical form.
+## Integer coefficients c with vec + c * <base> the least element of the
+## coset in the order used by the canonical form.
 ##
 BindGlobal( "PGCoeffsMinimalElement", function( vec, base )
     local mat, cof, d;
@@ -71,7 +71,7 @@ end );
 
 #############################################################################
 ##
-#F PGUnipotentFlagBasis( mats, d, F ) . . . . . basis making a p-group triangular
+#F PGUnipotentFlagBasis( mats, d, F ) . . . basis making a p-group triangular
 ##
 ## <mats> generate a p-group acting on F^<d>.  The rows of the result are
 ## adapted to the flag W_1 = F^d > W_2 > ... > 0 with W_{k+1} the sum of
@@ -161,11 +161,13 @@ BindGlobal( "PGVectorCanonicalForm", function( pcgs, one, v, F, l, base )
         fi;
         if Length( b ) > 0 then
             stab := stab{ Difference( [1..Length( e )], b ) };
-            tail := List( stab, x -> PGIndVector( cano * ( x[2] - o ), l, base ) );
+            tail := List( stab,
+                          x -> PGIndVector( cano * ( x[2] - o ), l, base ) );
         fi;
     od;
 
-    Assert( 2, ForAll( stab, x -> PGIndVector( cano * x[2], l, base ) = indu ) );
+    Assert( 2, ForAll( stab,
+                       x -> PGIndVector( cano * x[2], l, base ) = indu ) );
     return rec( cano := cano, stab := stab, tran := tran );
 end );
 
@@ -208,6 +210,7 @@ BindGlobal( "PGSubspaceCanonicalForm", function( pcgs, one, base, F )
         cano := PGTriangulizedBaseMat( base * tran[2] );
     od;
 
-    Assert( 2, ForAll( stab, x -> cano = PGTriangulizedBaseMat( cano * x[2] ) ) );
+    Assert( 2, ForAll( stab,
+                       x -> cano = PGTriangulizedBaseMat( cano * x[2] ) ) );
     return rec( cano := cano, stab := stab, tran := tran );
 end );
