@@ -28,19 +28,6 @@ end );
 
 #############################################################################
 ##
-#F PGSolutionMatInt( mat, vec ) . . . . integer coefficients of vec, or fail
-##
-BindGlobal( "PGSolutionMatInt", function( mat, vec )
-    local s;
-    if IsZero( vec ) then return List( mat, x -> 0 ); fi;
-    if Length( mat ) = 0 then return fail; fi;
-    s := SolutionMat( mat, vec );
-    if s = fail then return fail; fi;
-    return IntVecFFE( s );
-end );
-
-#############################################################################
-##
 #F PGCoeffsMinimalElement( vec, base ) . . . .least element of vec + <base>
 ##
 ## Integer coefficients c with vec + c * <base> the least element of the
@@ -67,6 +54,21 @@ end );
 BindGlobal( "PGIndVector", function( v, l, base )
     if base = fail then return v; fi;
     return SolutionMat( base, v ){[1..l]};
+end );
+
+#############################################################################
+##
+#F PGIndVectorMatrix( l, base, F ) . . . . . PGIndVector as a matrix, or fail
+##
+## <base> is a basis of the whole space, so the coordinates with respect to
+## it are given by its inverse, of which only the first <l> columns are
+## needed.  fail if PGIndVector has nothing to do.
+##
+BindGlobal( "PGIndVectorMatrix", function( l, base, F )
+    if base = fail or Length( base ) <> Length( base[1] ) then
+        return fail;
+    fi;
+    return ImmutableMatrix( F, List( base^-1, r -> r{[1..l]} ) );
 end );
 
 #############################################################################
@@ -108,8 +110,9 @@ end );
 ## a pcgs of its stabilizer, and tran with <v> * tran = cano.
 ##
 BindGlobal( "PGVectorCanonicalForm", function( pcgs, one, v, F, l, base )
-    local p, d, o, B, stab, tran, cano, indu, tail, i, j, k, e, ec, w, wc,
-          b, s, t;
+    local p, d, o, B, zero, im, ind, stab, tran, cano, indu, tail, act,
+          dead, hit, moved, piv, vecs, cf, u, c, a, r, n, i, j, k, e, ec,
+          w, wc, b, bi, s, t;
 
     if Length( pcgs ) = 0 then return fail; fi;
 
@@ -117,57 +120,116 @@ BindGlobal( "PGVectorCanonicalForm", function( pcgs, one, v, F, l, base )
     d := Length( v );
     o := IdentityMat( d, F );
     B := Basis( F );
+    zero := Zero( GF(p) );
+
+    # PGIndVector is applied to every tail in every round; as a matrix it
+    # costs a vector by matrix product instead of solving a linear system
+    im := PGIndVectorMatrix( l, base, F );
+    if im = fail then
+        ind := x -> PGIndVector( x, l, base );
+    else
+        ind := x -> x * im;
+    fi;
 
     stab := ShallowCopy( pcgs );
     tran := one;
     cano := ShallowCopy( v );
-    indu := PGIndVector( cano, l, base );
-    tail := List( stab, x -> PGIndVector( cano * ( x[2] - o ), l, base ) );
+    indu := ind( cano );
+    tail := List( stab, x -> ind( cano * ( x[2] - o ) ) );
+
+    # an element with a zero tail has a zero entry in every coordinate, so
+    # it is neither a pivot nor reduced by one; such elements are skipped
+    # until cano moves, and are nearly all of them
+    dead := BlistList( [1..Length( stab )], [] );
+    act := Filtered( [1..Length( stab )], j -> not IsZero( tail[j] ) );
 
     # coordinate i of the tail is additive on the stabilizer of v modulo
     # coordinates >= i; its kernel is that stabilizer one step further
     for i in [2..l] do
-        e  := List( tail, x -> x[i] );
+        e  := List( act, j -> tail[j][i] );
         ec := List( e, x -> Coefficients( B, x ) );
         w  := indu[i];
         wc := Coefficients( B, w );
 
-        # choose pivots b and reduce the other elements into the kernel
+        # choose pivots b and reduce the other elements into the kernel;
+        # the pivot entries are kept echelonised, each as a combination of
+        # the entries chosen before it, so that no linear system is solved
         b := [];
-        for j in Reversed( [1..Length( e )] ) do
-            s := PGSolutionMatInt( ec{b}, ec[j] );
-            if s = fail then
-                Add( b, j );
-                continue;
-            fi;
-            for k in Reversed( [1..Length( s )] ) do
-                if s[k] <> 0 then
-                    stab[j] := stab[j] * stab[b[k]]^( -s[k] mod p );
+        bi := [];
+        piv := [];
+        vecs := [];
+        cf := [];
+        hit := [];
+        for n in Reversed( [1..Length( act )] ) do
+            j := act[n];
+            u := ec[n];
+            c := ListWithIdenticalEntries( Length( b ), zero );
+            for k in [1..Length( vecs )] do
+                a := u[piv[k]];
+                if a <> zero then
+                    u := u - a * vecs[k];
+                    c := c + a * cf[k];
                 fi;
             od;
+            r := PositionNonZero( u );
+
+            # the entry is reached by the pivots
+            if r > Length( u ) then
+                s := List( c, IntFFE );
+                for k in Reversed( [1..Length( s )] ) do
+                    if s[k] <> 0 then
+                        stab[j] := stab[j] * stab[b[k]]^( -s[k] mod p );
+                        AddSet( hit, j );
+                    fi;
+                od;
+                continue;
+            fi;
+
+            # it is a new pivot
+            a := u[r];
+            Add( b, j );
+            Add( bi, n );
+            Add( piv, r );
+            Add( vecs, u / a );
+            cf := List( cf, x -> Concatenation( x, [zero] ) );
+            Add( cf, Concatenation( List( c, x -> -x/a ), [a^-1] ) );
         od;
 
         # move coordinate i to the least value reachable by the pivots
-        t := PGCoeffsMinimalElement( wc, ec{b} );
+        t := PGCoeffsMinimalElement( wc, ec{bi} );
         for k in Reversed( [1..Length( t )] ) do
             if t[k] <> 0 then
                 tran := tran * stab[b[k]]^t[k];
             fi;
         od;
 
-        if ForAny( t, x -> x <> 0 ) then
+        moved := ForAny( t, x -> x <> 0 );
+        if moved then
             cano := v * tran[2];
-            indu := PGIndVector( cano, l, base );
+            indu := ind( cano );
         fi;
-        if Length( b ) > 0 then
-            stab := stab{ Difference( [1..Length( e )], b ) };
-            tail := List( stab,
-                          x -> PGIndVector( cano * ( x[2] - o ), l, base ) );
+        for j in b do dead[j] := true; od;
+
+        # a tail changes with cano or with its own element
+        if moved then
+            act := [];
+            for j in [1..Length( stab )] do
+                if dead[j] then continue; fi;
+                tail[j] := ind( cano * ( stab[j][2] - o ) );
+                if not IsZero( tail[j] ) then Add( act, j ); fi;
+            od;
+        else
+            for j in hit do
+                tail[j] := ind( cano * ( stab[j][2] - o ) );
+            od;
+            act := Filtered( act,
+                             j -> not dead[j] and not IsZero( tail[j] ) );
         fi;
     od;
 
-    Assert( 2, ForAll( stab,
-                       x -> PGIndVector( cano * x[2], l, base ) = indu ) );
+    stab := stab{ Filtered( [1..Length( stab )], j -> not dead[j] ) };
+
+    Assert( 2, ForAll( stab, x -> ind( cano * x[2] ) = indu ) );
     return rec( cano := cano, stab := stab, tran := tran );
 end );
 
