@@ -25,7 +25,7 @@ end );
 
 #############################################################################
 ##
-#F TransformPG( get, list, id )  . . . . . . . . . . . .convert get to element
+#F TransformPG( get, list, id ) . . . . . . . . . . . .convert get to element
 ##
 BindGlobal( "TransformPG", function( get, list, id )
     local coll, res, i;
@@ -140,7 +140,7 @@ end );
 
 #############################################################################
 ##
-#F PGOrbitLimit( A ) . . . . . . . . . . . . . . user budget for orbit lengths
+#F PGOrbitLimit( A ) . . . . . . . . . . . . . user budget for orbit lengths
 ##
 BindGlobal( "PGOrbitLimit", function( A )
     if IsBound( A.orbitLimit ) then return A.orbitLimit; fi;

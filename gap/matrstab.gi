@@ -5,7 +5,7 @@
 
 #############################################################################
 ##
-#F LabelOfBasis( base, info ) . . . . . . . . . . . . . . . . . label to basis
+#F LabelOfBasis( base, info ) . . . . . . . . . . . . . . . . label to basis
 ##
 BindGlobal( "LabelOfBasis", function( base, info )
     local pt, j, i;
@@ -50,7 +50,7 @@ end );
 
 #############################################################################
 ##
-#F OnLabel( lab, mat, info ) . . . . . . . . . . . . . . . .operation on label
+#F OnLabel( lab, mat, info ) . . . . . . . . . . . . . . . operation on label
 ##
 BindGlobal( "OnLabel", function( lab, mat, info )
     local v, w;

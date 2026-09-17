@@ -122,7 +122,7 @@ end );
 
 #############################################################################
 ##
-#F NiceInitGroup( A, "init" ) . . . . . . . .  flag indicates the init method 
+#F NiceInitGroup( A, "init" ) . . . . . . . . flag indicates the init method
 ##
 ## try to compute a perm rep and, if successful, compute N.
 ##

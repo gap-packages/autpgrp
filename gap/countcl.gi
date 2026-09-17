@@ -3,7 +3,7 @@
 #W  countcl.gi                                                   Bettina Eick
 ##
 #W  Let GL(n,p) act linearly on some space V. The function in this file can 
-#W  be used to count the number of orbits of subspaces of dimension k arising 
+#W  be used to count the number of orbits of subspaces of dimension k arising
 #W  in this action.
 ##
 #W  As an application, the function in this file can be used to count the 
