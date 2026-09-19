@@ -49,30 +49,6 @@ end );
 
 #############################################################################
 ##
-#F PGIndVector( v, l, base ) . . . . . . . . . first l coordinates in <base>
-##
-BindGlobal( "PGIndVector", function( v, l, base )
-    if base = fail then return v; fi;
-    return SolutionMat( base, v ){[1..l]};
-end );
-
-#############################################################################
-##
-#F PGIndVectorMatrix( l, base, F ) . . . . . PGIndVector as a matrix, or fail
-##
-## <base> is a basis of the whole space, so the coordinates with respect to
-## it are given by its inverse, of which only the first <l> columns are
-## needed.  fail if PGIndVector has nothing to do.
-##
-BindGlobal( "PGIndVectorMatrix", function( l, base, F )
-    if base = fail or Length( base ) <> Length( base[1] ) then
-        return fail;
-    fi;
-    return ImmutableMatrix( F, List( base^-1, r -> r{[1..l]} ) );
-end );
-
-#############################################################################
-##
 #F PGUnipotentFlagBasis( mats, d, F ) . . . basis making a p-group triangular
 ##
 ## <mats> generate a p-group acting on F^<d>.  The rows of the result are
@@ -105,9 +81,10 @@ end );
 ##
 #F PGVectorCanonicalForm( pcgs, one, v, F, l, base )
 ##
-## Canonical form of <v> modulo the span of <base>{[l+1..]} (modulo nothing
-## if <base> = fail).  Returns rec( cano, stab, tran ): the canonical form,
-## a pcgs of its stabilizer, and tran with <v> * tran = cano.
+## Canonical form of <v> modulo the span of <base>{[l+1..]}, for a basis
+## <base> of the whole space; or modulo nothing if <base> = fail, where <l>
+## is the length of <v>.  Returns rec( cano, stab, tran ): the canonical
+## form, a pcgs of its stabilizer, and tran with <v> * tran = cano.
 ##
 BindGlobal( "PGVectorCanonicalForm", function( pcgs, one, v, F, l, base )
     local p, d, o, B, zero, im, ind, stab, tran, cano, indu, tail, act,
@@ -122,12 +99,12 @@ BindGlobal( "PGVectorCanonicalForm", function( pcgs, one, v, F, l, base )
     B := Basis( F );
     zero := Zero( GF(p) );
 
-    # PGIndVector is applied to every tail in every round; as a matrix it
-    # costs a vector by matrix product instead of solving a linear system
-    im := PGIndVectorMatrix( l, base, F );
-    if im = fail then
-        ind := x -> PGIndVector( x, l, base );
+    # the first l coordinates with respect to <base>, by the inverse of
+    # <base>: they are needed of every tail in every round
+    if base = fail then
+        ind := x -> x;
     else
+        im := ImmutableMatrix( F, List( base^-1, r -> r{[1..l]} ) );
         ind := x -> x * im;
     fi;
 

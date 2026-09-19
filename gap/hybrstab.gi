@@ -417,6 +417,12 @@ BindGlobal( "PGCanonicalFormSetup",
     nmats := agMats{[k..Length( agMats )]};
     if ForAll( nmats, x -> x = 1 ) then return fail; fi;
 
+    # cfstab.gi needs a pcgs with relative orders p
+    if ForAny( [k..Length( agMats )],
+               i -> A.agOrder[i] <> Characteristic( A.field ) ) then
+        return fail;
+    fi;
+
     # coordinates in which K is unitriangular
     F := A.field;
     d := Length( pt[1] );
