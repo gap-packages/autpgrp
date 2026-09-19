@@ -231,8 +231,7 @@ algorithm no longer invokes this search.
 <Section Label="An interactive version of the algorithm">
 <Heading>An interactive version of the algorithm</Heading>
 
-The choice of initialisation and the choice of chopping of the
-<M>p</M>-multiplicator can also be driven by an interactive version
+The choice of initialisation can also be driven by an interactive version
 of the algorithm. We give an example.
 <P/>
 <Log><![CDATA[
@@ -249,16 +248,12 @@ choose initialisation (Over/Char/Full):     # we choose Full
 #I    computing matrix action
 #I    computing stabilizer of U
 #I    dim U = 3  dim N = 6  dim M = 6
-
-chop M/N and N: (y/n):                      # we choose n
 #I    induce autos and add central autos
 #I  step 3: 2^2 -- aut grp has size 12288
 #I    computing cover
 #I    computing matrix action
 #I    computing stabilizer of U
 #I    dim U = 6  dim N = 5  dim M = 8
-
-chop M/N and N: (y/n):                      # we choose y
 #I    induce autos and add central autos
 #I  final step: convert
 rec(
@@ -299,11 +294,8 @@ rec(
   group := <pc group of size 256 with 8 generators>, size := 32768 )
 ]]></Log>
 <P/>
-Two points are worthy of comment. First, the interactive version of the
-algorithm permits the user to make a suitable choice in each step of
-the algorithm instead of making one choice at the beginning. Secondly,
-the output of the <C>Info</C> function shows the ranks of the
-<M>p</M>-multiplicator and allowable subgroup, and thus allow the user
+The output of the <C>Info</C> function shows the ranks of the
+<M>p</M>-multiplicator and allowable subgroup, and thus allows the user
 to observe the scale of difficulty of the computation.
 </Section>
 </Chapter>

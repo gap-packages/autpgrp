@@ -44,11 +44,12 @@ end );
 #F PGOrbitStabilizer( <A>, <baseU>, <baseN>, <interrupt> )
 ##
 ## Replaces A by the stabilizer of U.  Returns fail if the orbit budget
-## A.orbitLimit is exceeded, true otherwise.
+## A.orbitLimit is exceeded, true otherwise.  <interrupt> is unused; other
+## packages pass it, so it stays.
 ##
 InstallGlobalFunction( PGOrbitStabilizer, 
     function( A, baseU, baseN, interrupt )
-    local u, n, l, baseM, str, glMats, agMats, mats, modu, chop;
+    local u, n, l, baseM, glMats, agMats, mats, modu, chop;
 
     # set up and catch some trivial cases 
     u := Length( baseU );
@@ -63,19 +64,6 @@ InstallGlobalFunction( PGOrbitStabilizer,
 
     # print some info
     Info( InfoAutGrp, 3, "  dim U = ",u, "  dim N = ",n, "  dim M = ",l );
-
-    # check interrupt
-    if interrupt then
-        str := Interrupt("chop M/N and N: (y/n)");
-        if str = "y" then
-            AUTPGRP_CHOP_MULT := true;
-        elif str = "n" then
-            AUTPGRP_CHOP_MULT := false;
-        else
-            Print("not a valid argument");
-            return true;
-        fi;
-    fi;
 
     # compute series
     glMats := List( A.glAutos, x -> x!.mat );
