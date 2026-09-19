@@ -114,9 +114,12 @@ gap> for blocks in [ 2000, 1 ] do
 >        if Size( H ) <> B.size then Print( "wrong group for ", c, "\n" ); fi;
 >      od;
 >    od;
-gap> Set( used );
-[ "enumerated, kernel orbit 2^3", "enumerated, kernel orbit 5^1", 
-  "set stabilizer, kernel orbit 5^1" ]
+
+# which kernel orbits occur depends on the series the MeatAxe chooses
+gap> ForAny( used, x -> PositionSublist( x, "enumerated" ) = 1 );
+true
+gap> ForAny( used, x -> PositionSublist( x, "set stabilizer" ) = 1 );
+true
 
 # the orbit limit is reached above the kernel
 gap> G := PcGroupCode( 216782169967590115555, 729 );;  # SmallGroup(729, 154)
