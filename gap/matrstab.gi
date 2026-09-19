@@ -5,63 +5,6 @@
 
 #############################################################################
 ##
-#F LabelOfBasis( base, info ) . . . . . . . . . . . . . . . . label to basis
-##
-BindGlobal( "LabelOfBasis", function( base, info )
-    local pt, j, i;
-
-    # compute pt
-    pt := List( [1..info.l], x -> 0 );
-    for j in [1..info.l] do
-        for i in [1..info.d] do
-            if base[j][i] <> Zero( info.field ) then 
-                pt[j] := pt[j] + IntFFE( base[j][i] ) * info.power[i];
-            fi;
-        od;
-    od;
-
-    # create label
-    return pt;
-end );
-
-#############################################################################
-##
-#F CoeffsInt( int, d, power )
-##
-BindGlobal( "CoeffsInt", function( int, d, power)
-   local i, exp;
-   i   := d;
-   exp := List( power, y -> 0 );
-   while int <> 0 do
-      exp[i] := QuoInt (int, power[i]);
-      int    := RemInt (int, power[i]);
-      i      := i - 1;
-   od;
-   return exp;
-end );
-
-#############################################################################
-##
-#F BasisOfLabel( lab, info ) . . . . . . . . . . . . . . . . . basis of label
-##
-BindGlobal( "BasisOfLabel", function ( lab, info )
-   return List( [1..info.l], x -> CoeffsInt( lab[x], info.d, info.power ) );
-end );
-
-#############################################################################
-##
-#F OnLabel( lab, mat, info ) . . . . . . . . . . . . . . . operation on label
-##
-BindGlobal( "OnLabel", function( lab, mat, info )
-    local v, w;
-    v := BasisOfLabel( lab, info );
-    w := v * mat;
-    TriangulizeMat( w );
-    return LabelOfBasis( w, info );
-end );
-
-#############################################################################
-##
 #F OnBasis( base, mat, info ) . . . . . . . . . . . . . . .operation on basis
 ##
 BindGlobal( "OnBasis", function( base, mat, info )
@@ -117,7 +60,7 @@ end );
 #F PGMatrixOrbitStabilizer( A, V, W, R )
 ##
 BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
-    local VS, WS, RS, hom, pt, glMats, agMats, lab, info, l, d, oper, induce;
+    local VS, WS, RS, hom, pt, glMats, agMats, induce;
 
     # set up factor space
     VS := VectorSpace( A.field, V, "basis" );
@@ -143,22 +86,9 @@ BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
         induce := x -> ActionOnDual( InducedActionByHom( hom, x ) );
     fi;
 
-    # use labels - if desired
-    if USE_LABEL then
-        d := Length( pt[1] );
-        l := Length( pt );
-        info := rec( power := List( [1..d], x -> A.prime^(x-1) ),
-                     field := A.field,
-                     l     := l,
-                     d     := d );
-        lab := LabelOfBasis( pt, info );
-        return PGHybridOrbitStabilizer( A, glMats, agMats, lab, OnLabel, info,
-                                        induce );
-    else
-        pt := ImmutableMatrix( A.field, pt );
-        return PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec(),
-                                        induce );
-    fi;
+    pt := ImmutableMatrix( A.field, pt );
+    return PGHybridOrbitStabilizer( A, glMats, agMats, pt, OnBasis, rec(),
+                                    induce );
 end );
 
 #############################################################################

@@ -309,7 +309,6 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     # choose flags
     CHOP_MULT := true;
     NICE_STAB := true; 
-    USE_LABEL := false;
 
     # compute special pcgs 
     pcgs := SpecialPcgs( G );
