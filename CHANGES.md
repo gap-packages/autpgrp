@@ -1,5 +1,16 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## Unreleased
+
+ - renamed the global variables that influence the algorithm, so that
+   they cannot clash with those of other packages: `InitAutGroup` is now
+   `AUTPGRP_INIT_AUT_GROUP`, and `CHOP_MULT`, `NICE_STAB`, `PERM_STAB`
+   are now `AUTPGRP_CHOP_MULT`, `AUTPGRP_NICE_STAB`, `AUTPGRP_PERM_STAB`
+ - faster automorphism groups when the automorphisms acting trivially on
+   the Frattini quotient have long orbits on subspaces of the
+   multiplicator; these orbits are no longer enumerated (algorithm by
+   Schwingel, code from the ModIsom package by Bettina Eick)
+
 ## 1.13.0 (2026-09-15)
 
  - much faster automorphism groups for p-groups whose automorphism group

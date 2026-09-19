@@ -144,7 +144,7 @@ BindGlobal( "PGMatrixOrbitStabilizer", function( A, V, W, R )
     fi;
 
     # use labels - if desired
-    if USE_LABEL then
+    if AUTPGRP_USE_LABEL then
         d := Length( pt[1] );
         l := Length( pt );
         info := rec( power := List( [1..d], x -> A.prime^(x-1) ),
@@ -228,7 +228,7 @@ BindGlobal( "PGOrbitStabilizerBySeries", function( A, baseU, chop )
                         if PGMatrixOrbitStabilizer( A, V, W, R ) = fail then
                             return fail;
                         fi;
-                        if CHECK then 
+                        if AUTPGRP_CHECK then 
                             if not CheckAgStab(A, R) then 
                                 Error("ag stab wrong ");
                             fi;
