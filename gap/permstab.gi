@@ -75,8 +75,9 @@ end );
 ## the section.  Returns a record as BlockOrbitStabilizer does (stabl,
 ## pstab, length), or fail if this method cannot beat the enumeration or
 ## its permutation domain cannot be built within <budget> vector-matrix
-## products and PG_PERM_DOMAIN_LIMIT points.  The domain built so far is kept in the
-## record <dstate>, so a later call continues where this one stopped.
+## products and PG_PERM_DOMAIN_LIMIT points.  The domain built so far is
+## kept in the record <dstate>, so a later call continues where this one
+## stopped.
 ##
 ## A subspace is fixed by an element exactly when the set of its lines is.
 ## So Stab_A(pt) is the stabilizer of a finite set in a permutation action
