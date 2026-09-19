@@ -48,18 +48,6 @@ BindGlobal( "PGFingerprint", function ( G, U )
     fi;
 end );
 
-# FIXME: DualBasis is not used in autpgrp; it is however
-# used in the sophus package. The next sophus release won't use
-# it anymore. But for now we keep this function here to not
-# break existing sophus releases...
-DualBasis := function( base )
-  local M;
-  M := NullspaceMat( TransposedMat( base ));
-  M := List( M, ShallowCopy );
-  TriangulizeMat( M );
-  return M;
-end;
-
 #############################################################################
 ##
 #F PartitionMinimalOvergrps ( G, pcgs, norm )
