@@ -87,7 +87,7 @@ BindGlobal( "InduceAuto", function( F, aut )
     baseF := pcgsF{[1..RankPGroup(F)]};
     imgsG := aut!.baseimgs;
     imgsF := List( imgsG, x -> MappedPcElement( x, aut!.pcgs, pcgsF ) );
-    if CHECK then 
+    if AUTPGRP_CHECK then 
         hom := GroupHomomorphismByImages( F, F, baseF, imgsF );
         if not IsGroupHomomorphism( hom ) then 
             Error("no hom");
@@ -161,7 +161,7 @@ BindGlobal( "ConvertAuto", function( aut, iso )
     imgs := List( imgs, x -> ImagesRepresentative( aut, x ) );
     imgs := List( imgs, x -> PreImagesRepresentative( iso, x ) );
    
-    if not CHECK then
+    if not AUTPGRP_CHECK then
         auto := GroupHomomorphismByImagesNC(G, G, pcgs, imgs );
         SetIsBijective( auto, true );
     else
@@ -187,7 +187,7 @@ InstallGlobalFunction( ConvertAutGroup,
     r := RankPGroup( G );
     gens := SpecialPcgs( G ){[1..r]};
     imgs := Pcgs( A.group ){[1..r]};
-    if not CHECK then 
+    if not AUTPGRP_CHECK then 
         iso := GroupHomomorphismByImagesNC( G, A.group, gens, imgs );
         SetIsBijective( iso, true );
     else
@@ -273,21 +273,21 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     if Length( arg ) = 1 then
 
         if IsHomoCyclic( G ) then
-            InitAutGroup := InitAutomorphismGroupFull;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupFull;
         elif (p^r - 1)/(p - 1) < 30000 then
-            InitAutGroup := InitAutomorphismGroupOver;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupOver;
         else   
-            InitAutGroup := InitAutomorphismGroupChar;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupChar;
         fi;
 
     elif Length( arg ) = 2 and IsString(arg[2]) then 
 
         if arg[2] = "Full" then 
-            InitAutGroup := InitAutomorphismGroupFull;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupFull;
         elif arg[2] = "Over" then 
-            InitAutGroup := InitAutomorphismGroupOver;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupOver;
         elif arg[2] = "Char" then 
-            InitAutGroup := InitAutomorphismGroupChar;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupChar;
         else
             Error("invalid initialisation");
         fi;
@@ -295,11 +295,11 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     elif Length( arg ) = 2 and IsBool(arg[2]) and arg[2] = true then
         str := Interrupt("choose initialisation (Over/Char/Full)");
         if str = "Over" then
-            InitAutGroup := InitAutomorphismGroupOver;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupOver;
         elif str = "Char" then
-            InitAutGroup := InitAutomorphismGroupChar;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupChar;
         elif str = "Full" then
-            InitAutGroup := InitAutomorphismGroupFull;
+            AUTPGRP_INIT_AUT_GROUP := InitAutomorphismGroupFull;
         else
             Error("invalid initialisation");
         fi;
@@ -307,9 +307,9 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     fi;
 
     # choose flags
-    CHOP_MULT := true;
-    NICE_STAB := true; 
-    USE_LABEL := false;
+    AUTPGRP_CHOP_MULT := true;
+    AUTPGRP_NICE_STAB := true; 
+    AUTPGRP_USE_LABEL := false;
 
     # compute special pcgs 
     pcgs := SpecialPcgs( G );
@@ -323,7 +323,7 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     Info( InfoAutGrp, 1, 
           "step 1: ",p,"^", first[2]-1, " -- init automorphisms ");
 
-    A := InitAutGroup( G );
+    A := AUTPGRP_INIT_AUT_GROUP( G );
     limit := ValueOption( "OrbitLimit" );
     if IsPosInt( limit ) then A.orbitLimit := limit; fi;
 

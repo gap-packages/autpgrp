@@ -89,7 +89,7 @@ subgroup of <M>GL(d, p)</M> whose extension can act on <M>G</M>.
 <P/>
 
 The user can choose the initialisation routine by assigning
-<C>InitAutGroup</C> to any one of the following:
+<C>AUTPGRP_INIT_AUT_GROUP</C> to any one of the following:
 
 <List>
 
@@ -154,12 +154,12 @@ the computation up. However, it may happen that <M>N = M</M> and hence
 results in no improvement.
 
 <ManSection>
-            <Var Name="CHOP_MULT"/>
+            <Var Name="AUTPGRP_CHOP_MULT"/>
             <Description>
 The invariant series through <M>M</M> is computed and used if the
-global variable <C>CHOP_MULT</C> is set to <K>true</K>. Otherwise, the algorithm
-tries to determine <M>Stab_A(U)</M> in one step. By default, <C>CHOP_MULT</C>
-is <K>true</K>.
+global variable <C>AUTPGRP_CHOP_MULT</C> is set to <K>true</K>. Otherwise,
+the algorithm tries to determine <M>Stab_A(U)</M> in one step. By default,
+<C>AUTPGRP_CHOP_MULT</C> is <K>true</K>.
             </Description>
 </ManSection>
 
@@ -179,10 +179,10 @@ domain at most as much work as the enumeration has done so far, so that a
 group on which it cannot help costs at most twice its enumeration.
 
 <ManSection>
-            <Var Name="PERM_STAB"/>
+            <Var Name="AUTPGRP_PERM_STAB"/>
             <Description>
-The set stabiliser method is used if the global variable <C>PERM_STAB</C>
-is <K>true</K>, the default. Setting it to <K>false</K> forces orbit
+The set stabiliser method is used if the global variable
+<C>AUTPGRP_PERM_STAB</C> is <K>true</K>, the default. Setting it to <K>false</K> forces orbit
 enumeration.
             </Description>
 </ManSection>
@@ -198,10 +198,10 @@ error in this case, since an attribute cannot be <K>fail</K>.
 <Example><![CDATA[
 gap> G := PcGroupCode( 103045690560068391423508120999240094531550914947096312619671359, 512 );;
 gap> SetInfoLevel( InfoAutGrp, 0 );
-gap> PERM_STAB := false;;
+gap> AUTPGRP_PERM_STAB := false;;
 gap> AutomorphismGroupPGroup( G : OrbitLimit := 1000 );
 fail
-gap> PERM_STAB := true;;
+gap> AUTPGRP_PERM_STAB := true;;
 gap> A := AutomorphismGroupPGroup( G : OrbitLimit := 1000 );;
 gap> A.size;
 262144
@@ -223,15 +223,15 @@ outside  as  possible. If <M>S = A</M> and a polycyclic  generating set for
 <M>S</M> is known,  many steps  of  the algorithm proceed more rapidly.
 
 <ManSection>
-            <Var Name="NICE_STAB"/>
+            <Var Name="AUTPGRP_NICE_STAB"/>
             <Description>
 It may be both time-consuming and difficult to reduce the number of
 generators for <M>A</M> outside <M>S</M>. Note that if the initialisation of the
 algorithm is by <C>InitAutomorphismGroupOver</C>, then we always know a
 permutation representation for <M>A/S</M>. Occasionally the search for
 a small generating set is expensive.  If this is  observed, one
-could set the flag <C>NICE_STAB</C> to  <K>false</K>  and  the  algorithm  no
-longer  invokes this search.
+could set the flag <C>AUTPGRP_NICE_STAB</C> to <K>false</K> and the
+algorithm no longer invokes this search.
             </Description>
 </ManSection>
 </Section>
