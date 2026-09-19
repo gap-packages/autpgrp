@@ -10,16 +10,15 @@
 #
 gap> START_TEST("autpgrp03.tst");
 
-# doc/influen.xml:198-208
+# doc/influen.xml:189-198
 gap> G := PcGroupCode( 103045690560068391423508120999240094531550914947096312619671359, 512 );;
 gap> SetInfoLevel( InfoAutGrp, 0 );
-gap> PERM_STAB := false;;
-gap> AutomorphismGroupPGroup( G : OrbitLimit := 1000 );
-fail
-gap> PERM_STAB := true;;
 gap> A := AutomorphismGroupPGroup( G : OrbitLimit := 1000 );;
 gap> A.size;
 262144
+gap> H := PcGroupCode( 216782169967590115555, 729 );;
+gap> AutomorphismGroupPGroup( H : OrbitLimit := 2 );
+fail
 
 #
 gap> STOP_TEST("autpgrp03.tst", 1);

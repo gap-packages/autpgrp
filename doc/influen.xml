@@ -178,15 +178,6 @@ the set stabiliser is tried again, allowed to spend on its permutation
 domain at most as much work as the enumeration has done so far, so that a
 group on which it cannot help costs at most twice its enumeration.
 
-<ManSection>
-            <Var Name="PERM_STAB"/>
-            <Description>
-The set stabiliser method is used if the global variable <C>PERM_STAB</C>
-is <K>true</K>, the default. Setting it to <K>false</K> forces orbit
-enumeration.
-            </Description>
-</ManSection>
-
 <Subsection Label="The option OrbitLimit">
 <Heading>The option OrbitLimit</Heading>
 <C>AutomorphismGroupPGroup( G : OrbitLimit := n )</C> returns
@@ -198,14 +189,15 @@ error in this case, since an attribute cannot be <K>fail</K>.
 <Example><![CDATA[
 gap> G := PcGroupCode( 103045690560068391423508120999240094531550914947096312619671359, 512 );;
 gap> SetInfoLevel( InfoAutGrp, 0 );
-gap> PERM_STAB := false;;
-gap> AutomorphismGroupPGroup( G : OrbitLimit := 1000 );
-fail
-gap> PERM_STAB := true;;
 gap> A := AutomorphismGroupPGroup( G : OrbitLimit := 1000 );;
 gap> A.size;
 262144
+gap> H := PcGroupCode( 216782169967590115555, 729 );;
+gap> AutomorphismGroupPGroup( H : OrbitLimit := 2 );
+fail
 ]]></Example>
+The first group has an orbit of about <M>10^8</M> subspaces, but its
+stabiliser is found as a set stabiliser.
 </Subsection>
 </Section>
 
