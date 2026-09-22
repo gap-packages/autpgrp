@@ -1,5 +1,10 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## Unreleased
+
+ - fixed a regression in 1.13.0: `SchurCovers` of the Polycyclic package
+   stopped with an error about the number of arguments
+
 ## 1.13.0 (2026-09-15)
 
  - much faster automorphism groups for p-groups whose automorphism group
