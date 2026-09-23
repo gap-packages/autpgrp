@@ -383,7 +383,7 @@ end );
 BindGlobal( "PGHybridOrbitStabilizer",
   function( A, glMats, agMats, pt, oper, info, induce... )
     local os, OS, agAutos, limit, blocks, method, time, l, round, state,
-          dstate, budget, exhausted;
+          dstate, budget, exhausted, nr;
 
     if Length( induce ) > 1 then
         Error( "PGHybridOrbitStabilizer takes six or seven arguments" );
@@ -419,16 +419,24 @@ BindGlobal( "PGHybridOrbitStabilizer",
         blocks := QuoInt( limit, l );
     fi;
 
+    # a round is measured in points, as a block costs l vector-matrix
+    # products per generator: 2000 blocks of a section with an ag-orbit of
+    # 2058 points would be 4 million products before the first attempt
     method := "enumerated";
-    round := PG_ESCALATE_BLOCKS;
+    round := Maximum( 1, QuoInt( PG_ESCALATE_POINTS, l ) );
     state := fail;
     dstate := rec();
+    nr := 0;
     repeat
         OS := BlockOrbitStabilizer( A, glMats, os, oper, info,
                                     Minimum( round, blocks ), state );
         if not IsBound( OS.partial ) then break; fi;
         state := OS;
         exhausted := round >= blocks;
+        nr := nr + 1;
+        Info( InfoAutGrp, 3, "    round ", nr, ": ", Length( state.orbit ),
+              " blocks of ", l, " points enumerated with ",
+              Length( glMats ), " generators" );
         if PERM_STAB and induce <> fail and IsBound( A.glOper ) then
             # once the orbit budget is spent, one last attempt without a
             # work bound; otherwise the enumeration has applied each gl
