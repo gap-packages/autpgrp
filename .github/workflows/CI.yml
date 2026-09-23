@@ -43,3 +43,45 @@ jobs:
       - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  # These packages call AutPGrp internals (PGOrbitStabilizer,
+  # PGHybridOrbitStabilizer, ...), so run their test suites against this
+  # AutPGrp to catch breaking them.
+  dependents:
+    name: 'upstream ${{ matrix.package }}'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - anupq
+          - modisom
+          - polycyclic
+          - sophus
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: 'Install PARI/GP'  # for alnuth, needed by polycyclic
+        run: |
+          sudo apt-get update
+          sudo apt-get install pari-gp
+      - uses: gap-actions/setup-gap@v3
+      - name: 'Replace ${{ matrix.package }} and AutPGrp shipped with GAP'
+        env:
+          PKG: ${{ matrix.package }}
+        run: |
+          # setup-gap links this checkout into /tmp/gaproot/pkg
+          rm -rf $GAPROOT/pkg/autpgrp* $GAPROOT/pkg/$PKG*
+          git clone --depth=1 https://github.com/gap-packages/$PKG $GAPROOT/pkg/$PKG
+          cd $GAPROOT/pkg
+          ../bin/BuildPackages.sh --strict $PKG
+      - name: 'Run ${{ matrix.package }} tests'
+        env:
+          PKG: ${{ matrix.package }}
+        run: |
+          # SetPackagePath fails if another AutPGrp is loaded already
+          $GAP -c '
+            SetPackagePath("autpgrp", "/tmp/gaproot/pkg/autpgrp");
+            TestPackage("'$PKG'");
+            FORCE_QUIT_GAP(1);  # the TestFile must exit GAP
+          '
