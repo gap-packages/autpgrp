@@ -1,5 +1,11 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## Unreleased
+
+ - the running time no longer depends on the random state for groups whose
+   soluble automorphisms have long orbits on the multiplicator:
+   `AutomorphismGroup(SmallGroup(7^7, 101827))` took 1 or 60 seconds, now 1
+
 ## 1.13.0 (2026-09-22)
 
  - much faster automorphism groups for p-groups whose automorphism group

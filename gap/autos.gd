@@ -19,10 +19,10 @@ if not IsBound( CHECK ) then CHECK := false; fi;
 ##
 #C Tuning constants for the stabilizer computation
 ##
-## Number of gl-orbit blocks enumerated before the set stabilizer
-## (PGPermStabilizer) is first tried, and the factor by which that number
-## grows between attempts.
-BindGlobal( "PG_ESCALATE_BLOCKS", 2000 );
+## Number of points of the gl-orbit enumerated before the set stabilizer
+## (PGPermStabilizer) is first tried, at least one block, and the factor
+## by which that number grows between attempts.
+BindGlobal( "PG_ESCALATE_POINTS", 2000 );
 BindGlobal( "PG_ESCALATE_GROWTH", 4 );
 ## Sections with at most this many lines are used whole as permutation
 ## domain; for larger ones only the lines in the orbits of the subspace's
