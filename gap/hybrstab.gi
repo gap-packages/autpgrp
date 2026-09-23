@@ -360,6 +360,128 @@ end );
 
 #############################################################################
 ##
+#F PGKernelTail( A ) . . . . . . . . . . . kernel on the Frattini quotient
+##
+## Index from which <A>.agAutos act trivially on <A>.group modulo its
+## Frattini subgroup.  If <A>.kernelIsTail is bound, these elements generate
+## that kernel: AutomorphismGroupPGroup appends central automorphisms, a
+## stabilizer pcgs keeps the tails of a pcgs, and TrySolvableSubgroup and
+## NiceHybridGroup only prepend.
+##
+BindGlobal( "PGKernelTail", function( A )
+    local r, unit, k, aut;
+    r := RankPGroup( A.group );
+    unit := IdentityMat( r );
+    k := Length( A.agAutos ) + 1;
+    while k > 1 do
+        aut := A.agAutos[k-1];
+        if ForAny( [1..r], i -> ExponentsOfPcElement( aut!.pcgs,
+                   aut!.baseimgs[i] ){[1..r]} <> unit[i] ) then
+            return k;
+        fi;
+        k := k - 1;
+    od;
+    return k;
+end );
+
+#############################################################################
+##
+#F PGCanonicalFormSetup( A, agMats, pt, fpt, info, induce )
+##
+## Canonical forms (cfstab.gi) under the kernel K = <A>.agAutos{[k..]} of
+## <A> on the Frattini quotient, a normal p-subgroup.  Returns fail if they
+## are disabled or the K-orbit of <pt> has at most AUTPGRP_CANON_MIN_ORBIT
+## points, otherwise a record with
+##
+##     k        start of K in <A>.agAutos
+##     cano     canonical form of <pt>
+##     tran     element of K with <pt> * tran = cano
+##     stab     pcgs of the stabilizer of cano in K
+##     orbit    e with K-orbit length p^e
+##     fpt      <fpt> followed by the canonical form, an action on K-orbits
+##     correct  g -> g * n, n in K, stabilizing cano, for g mapping cano
+##              into its K-orbit
+##
+BindGlobal( "PGCanonicalFormSetup",
+  function( A, agMats, pt, fpt, info, induce )
+    local k, nmats, F, d, I, B, Bi, conv, toNew, toOld, fpairs, fone, C, e,
+          lpairs, lone, res;
+
+    if not AUTPGRP_CANON_FORM or induce = fail
+       or not IsBound( A.kernelIsTail ) then
+        return fail;
+    fi;
+
+    # the package stores an identity action as the integer 1
+    k := PGKernelTail( A );
+    nmats := agMats{[k..Length( agMats )]};
+    if ForAll( nmats, x -> x = 1 ) then return fail; fi;
+
+    # cfstab.gi needs a pcgs with relative orders p
+    if ForAny( [k..Length( agMats )],
+               i -> A.agOrder[i] <> Characteristic( A.field ) ) then
+        return fail;
+    fi;
+
+    # coordinates in which K is unitriangular
+    F := A.field;
+    d := Length( pt[1] );
+    I := IdentityMat( d, F );
+    B := PGUnipotentFlagBasis( Filtered( nmats, x -> x <> 1 ), d, F );
+    Bi := B^-1;
+    conv := function( m ) if m = 1 then return I; fi; return B * m * Bi; end;
+    toNew := U -> PGTriangulizedBaseMat( U * Bi );
+    toOld := U -> ImmutableMatrix( F, PGTriangulizedBaseMat( U * B ) );
+
+    # canonise pt carrying the automorphisms along
+    fpairs := List( [k..Length( agMats )],
+                    i -> DirectProductElement(
+                             [ A.agAutos[i], conv( agMats[i] ) ] ) );
+    fone := DirectProductElement( [ A.one, I ] );
+    C := PGSubspaceCanonicalForm( fpairs, fone, toNew( pt ), F );
+    e := Length( fpairs ) - Length( C.stab );
+    if Characteristic( F )^e <= AUTPGRP_CANON_MIN_ORBIT then return fail; fi;
+
+    # images of other points need only the canonical form
+    lpairs := List( nmats, m -> DirectProductElement( [ 1, conv( m ) ] ) );
+    lone := DirectProductElement( [ 1, I ] );
+
+    res := rec( k := k, cano := toOld( C.cano ), tran := C.tran[1],
+                stab := List( C.stab, x -> x[1] ), orbit := e );
+    res.fpt := function( x, mat, inf )
+        local y;
+        y := fpt( x, mat, inf );
+        return toOld( PGSubspaceCanonicalForm( lpairs, lone,
+                                               toNew( y ), F ).cano );
+    end;
+    res.correct := function( g )
+        local D;
+        D := PGSubspaceCanonicalForm( fpairs, fone,
+                 toNew( fpt( res.cano, induce( g!.mat ), info ) ), F );
+        Assert( 1, toOld( D.cano ) = res.cano );
+        return PGMult( g, D.tran[1] );
+    end;
+    return res;
+end );
+
+#############################################################################
+##
+#F PGConjugateHybridGroup( A, t ) . . . . . . . . . . conjugate generators
+##
+## Replaces each generator g of <A> by t g t^-1, turning the stabilizer of
+## pt * t into the stabilizer of pt.  <t> acts trivially on the Frattini
+## quotient, so glOper is unchanged.
+##
+BindGlobal( "PGConjugateHybridGroup", function( A, t )
+    local ti, conj;
+    ti := PGInverse( t );
+    conj := g -> PGMult( PGMult( t, g ), ti );
+    A.agAutos := List( A.agAutos, conj );
+    A.glAutos := List( A.glAutos, conj );
+end );
+
+#############################################################################
+##
 #F PGHybridOrbitStabilizer( A, glMats, agMats, pt, oper, info[, induce] )
 ##
 ## Replaces <A> by the stabilizer of <pt>.  Returns fail if the orbit
@@ -380,10 +502,14 @@ end );
 ## work, not time, so the computation takes the same path on every
 ## machine.
 ##
+## If the kernel on the Frattini quotient has long orbits, points are
+## replaced by canonical forms under it (PGCanonicalFormSetup), and only the
+## ag part above the kernel is enumerated.
+##
 BindGlobal( "PGHybridOrbitStabilizer",
   function( A, glMats, agMats, pt, oper, info, induce... )
-    local os, OS, agAutos, limit, blocks, method, time, l, round, state,
-          dstate, budget, exhausted;
+    local os, OS, agAutos, agOrder, limit, blocks, method, time, l, round,
+          state, dstate, budget, exhausted, canon, k;
 
     if Length( induce ) > 1 then
         Error( "PGHybridOrbitStabilizer takes six or seven arguments" );
@@ -397,21 +523,46 @@ BindGlobal( "PGHybridOrbitStabilizer",
     if Length( glMats ) = 0 and Length( agMats ) = 0 then return true; fi;
     time := Runtime();
     limit := PGOrbitLimit( A );
-    os := PcgsOrbitStabilizer( A, agMats, pt, oper, info, limit );
+
+    # keep the generators of the full ag part for the set stabilizer, which
+    # needs the whole group S, not just its stabilizer
+    agAutos := A.agAutos;
+    agOrder := A.agOrder;
+
+    # with canonical forms the kernel tail is not enumerated
+    canon := PGCanonicalFormSetup( A, agMats, pt, oper, info, induce );
+    k := Length( agAutos ) + 1;
+    if canon <> fail then
+        k := canon.k;
+        pt := canon.cano;
+        oper := canon.fpt;
+        A.agAutos := agAutos{[1..k-1]};
+        A.agOrder := agOrder{[1..k-1]};
+    fi;
+
+    os := PcgsOrbitStabilizer( A, agMats{[1..k-1]}, pt, oper, info, limit );
     if os = fail then
+        A.agAutos := agAutos;
+        A.agOrder := agOrder;
         Info( InfoAutGrp, 2, "    ag-orbit exceeds limit ", limit );
         return fail;
     fi;
     Info( InfoAutGrp, 4, "    ag-orbit -- length ",Length(os.orbit));
 
-    # add info to A; keep the generators of the full ag part for the set
-    # stabilizer, which needs the whole group S, not just its stabilizer
-    agAutos := A.agAutos;
     A.agAutos := os.stabl;
     A.agOrder := os.srels;
+    if canon <> fail then
+        A.agAutos := Concatenation( List( os.stabl, canon.correct ),
+                                    canon.stab );
+        A.agOrder := Concatenation( os.srels,
+                        List( canon.stab, x -> Characteristic( A.field ) ) );
+    fi;
 
     # compute block orbit and stabiliser
-    if Length( glMats ) = 0 then return true; fi;
+    if Length( glMats ) = 0 then
+        if canon <> fail then PGConjugateHybridGroup( A, canon.tran ); fi;
+        return true;
+    fi;
     l := Length( os.orbit );
     if limit = infinity then
         blocks := infinity;
@@ -459,6 +610,13 @@ BindGlobal( "PGHybridOrbitStabilizer",
     A.glOrder := A.glOrder / OS.length;
     Assert(1,IsInt(A.glOrder));
     if IsBound( A.glOper ) then A.glOper := OS.pstab; fi;
+    if canon <> fail then
+        A.glAutos := List( A.glAutos, canon.correct );
+        PGConjugateHybridGroup( A, canon.tran );
+        method := Concatenation( method, ", kernel orbit ",
+                      String( Characteristic( A.field ) ), "^",
+                      String( canon.orbit ) );
+    fi;
 
     Info( InfoAutGrp, 2, "    stabilizer: ag-orbit ", l,
           ", gl-orbit ", OS.length, " (", method, "), gl part ", A.glOrder,
