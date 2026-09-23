@@ -154,12 +154,12 @@ the computation up. However, it may happen that <M>N = M</M> and hence
 results in no improvement.
 
 <ManSection>
-            <Var Name="CHOP_MULT"/>
+            <Var Name="AUTPGRP_CHOP_MULT"/>
             <Description>
 The invariant series through <M>M</M> is computed and used if the
-global variable <C>CHOP_MULT</C> is set to <K>true</K>. Otherwise, the algorithm
-tries to determine <M>Stab_A(U)</M> in one step. By default, <C>CHOP_MULT</C>
-is <K>true</K>.
+global variable <C>AUTPGRP_CHOP_MULT</C> is set to <K>true</K>. Otherwise,
+the algorithm tries to determine <M>Stab_A(U)</M> in one step. By default,
+<C>AUTPGRP_CHOP_MULT</C> is <K>true</K>.
             </Description>
 </ManSection>
 
@@ -215,15 +215,15 @@ outside  as  possible. If <M>S = A</M> and a polycyclic  generating set for
 <M>S</M> is known,  many steps  of  the algorithm proceed more rapidly.
 
 <ManSection>
-            <Var Name="NICE_STAB"/>
+            <Var Name="AUTPGRP_NICE_STAB"/>
             <Description>
 It may be both time-consuming and difficult to reduce the number of
 generators for <M>A</M> outside <M>S</M>. Note that if the initialisation of the
 algorithm is by <C>InitAutomorphismGroupOver</C>, then we always know a
 permutation representation for <M>A/S</M>. Occasionally the search for
 a small generating set is expensive.  If this is  observed, one
-could set the flag <C>NICE_STAB</C> to  <K>false</K>  and  the  algorithm  no
-longer  invokes this search.
+could set the flag <C>AUTPGRP_NICE_STAB</C> to <K>false</K> and the
+algorithm no longer invokes this search.
             </Description>
 </ManSection>
 </Section>

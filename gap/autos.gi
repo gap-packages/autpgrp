@@ -87,7 +87,7 @@ BindGlobal( "InduceAuto", function( F, aut )
     baseF := pcgsF{[1..RankPGroup(F)]};
     imgsG := aut!.baseimgs;
     imgsF := List( imgsG, x -> MappedPcElement( x, aut!.pcgs, pcgsF ) );
-    if CHECK then 
+    if AUTPGRP_CHECK then 
         hom := GroupHomomorphismByImages( F, F, baseF, imgsF );
         if not IsGroupHomomorphism( hom ) then 
             Error("no hom");
@@ -161,7 +161,7 @@ BindGlobal( "ConvertAuto", function( aut, iso )
     imgs := List( imgs, x -> ImagesRepresentative( aut, x ) );
     imgs := List( imgs, x -> PreImagesRepresentative( iso, x ) );
    
-    if not CHECK then
+    if not AUTPGRP_CHECK then
         auto := GroupHomomorphismByImagesNC(G, G, pcgs, imgs );
         SetIsBijective( auto, true );
     else
@@ -187,7 +187,7 @@ InstallGlobalFunction( ConvertAutGroup,
     r := RankPGroup( G );
     gens := SpecialPcgs( G ){[1..r]};
     imgs := Pcgs( A.group ){[1..r]};
-    if not CHECK then 
+    if not AUTPGRP_CHECK then 
         iso := GroupHomomorphismByImagesNC( G, A.group, gens, imgs );
         SetIsBijective( iso, true );
     else
@@ -307,8 +307,8 @@ InstallGlobalFunction( AutomorphismGroupPGroup, function( arg )
     fi;
 
     # choose flags
-    CHOP_MULT := true;
-    NICE_STAB := true; 
+    AUTPGRP_CHOP_MULT := true;
+    AUTPGRP_NICE_STAB := true; 
 
     # compute special pcgs 
     pcgs := SpecialPcgs( G );

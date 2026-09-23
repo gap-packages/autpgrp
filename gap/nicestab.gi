@@ -144,7 +144,7 @@ BindGlobal( "NiceInitGroup", function( A, flag )
 
     # finally, if a perm oper is given, then try to enlarge agAutos
     if IsPerm( A.glOper[1] ) and flag then
-        if REDU_OPER then
+        if AUTPGRP_REDU_OPER then
             ReducePermOper( A );
         else
             TrySolvableSubgroup( A );
@@ -169,7 +169,7 @@ BindGlobal( "NiceHybridGroup", function( A )
     # in case we have a perm rep
     if IsBound( A.glOper ) then
         Info( InfoAutGrp, 3, "  nice stabilizer with perm rep");
-        if REDU_OPER then
+        if AUTPGRP_REDU_OPER then
             ReducePermOper(A);
         else
             TrySolvableSubgroup( A );

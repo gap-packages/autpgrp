@@ -158,7 +158,7 @@ BindGlobal( "PGOrbitStabilizerBySeries", function( A, baseU, chop )
                         if PGMatrixOrbitStabilizer( A, V, W, R ) = fail then
                             return fail;
                         fi;
-                        if CHECK then 
+                        if AUTPGRP_CHECK then 
                             if not CheckAgStab(A, R) then 
                                 Error("ag stab wrong ");
                             fi;
