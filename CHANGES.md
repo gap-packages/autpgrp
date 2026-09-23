@@ -1,6 +1,6 @@
 # CHANGES to the 'autpgrp' GAP package
 
-## 1.13.0 (2026-09-15)
+## 1.13.0 (2026-09-22)
 
  - much faster automorphism groups for p-groups whose automorphism group
    is small compared to the general linear group of the Frattini quotient;

@@ -360,12 +360,16 @@ end );
 
 #############################################################################
 ##
-#F PGHybridOrbitStabilizer( A, glMats, agMats, pt, oper, info, induce )
+#F PGHybridOrbitStabilizer( A, glMats, agMats, pt, oper, info[, induce] )
 ##
 ## Replaces <A> by the stabilizer of <pt>.  Returns fail if the orbit
 ## budget of <A> (see PGOrbitLimit) is exceeded, true otherwise.  <induce>
 ## maps the matrix of an automorphism on the multiplicator to its action
 ## on the section the points live in.
+##
+## Without <induce> the points need not be subspaces and the orbit is
+## enumerated: the Polycyclic package calls this function with subgroups as
+## points and the automorphisms themselves in place of matrices.
 ##
 ## The gl orbit is enumerated in rounds of geometrically growing length.
 ## After each round the set stabilizer method (PGPermStabilizer) is
@@ -377,9 +381,17 @@ end );
 ## machine.
 ##
 BindGlobal( "PGHybridOrbitStabilizer",
-  function( A, glMats, agMats, pt, oper, info, induce )
+  function( A, glMats, agMats, pt, oper, info, induce... )
     local os, OS, agAutos, limit, blocks, method, time, l, round, state,
           dstate, budget, exhausted;
+
+    if Length( induce ) > 1 then
+        Error( "PGHybridOrbitStabilizer takes six or seven arguments" );
+    elif Length( induce ) = 1 then
+        induce := induce[1];
+    else
+        induce := fail;
+    fi;
 
     # compute ag orbit stabilizier
     if Length( glMats ) = 0 and Length( agMats ) = 0 then return true; fi;
@@ -417,7 +429,7 @@ BindGlobal( "PGHybridOrbitStabilizer",
         if not IsBound( OS.partial ) then break; fi;
         state := OS;
         exhausted := round >= blocks;
-        if PERM_STAB and IsBound( A.glOper ) then
+        if PERM_STAB and induce <> fail and IsBound( A.glOper ) then
             # once the orbit budget is spent, one last attempt without a
             # work bound; otherwise the enumeration has applied each gl
             # generator to about every point of every block
