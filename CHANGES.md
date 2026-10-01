@@ -1,5 +1,12 @@
 # CHANGES to the 'autpgrp' GAP package
 
+## Unreleased
+
+ - renamed the global variables `CHOP_MULT`, `NICE_STAB` and `PERM_STAB`
+   to `AUTPGRP_CHOP_MULT`, `AUTPGRP_NICE_STAB` and `AUTPGRP_PERM_STAB`, so
+   that they cannot clash with those of other packages; `PERM_STAB` is no
+   longer documented, it is only of use in tests
+
 ## 1.13.0 (2026-09-22)
 
  - much faster automorphism groups for p-groups whose automorphism group

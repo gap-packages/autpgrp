@@ -420,7 +420,7 @@ BindGlobal( "PGHybridOrbitStabilizer",
     fi;
 
     method := "enumerated";
-    round := PG_ESCALATE_BLOCKS;
+    round := AUTPGRP_ESCALATE_BLOCKS;
     state := fail;
     dstate := rec();
     repeat
@@ -429,7 +429,7 @@ BindGlobal( "PGHybridOrbitStabilizer",
         if not IsBound( OS.partial ) then break; fi;
         state := OS;
         exhausted := round >= blocks;
-        if PERM_STAB and induce <> fail and IsBound( A.glOper ) then
+        if AUTPGRP_PERM_STAB and induce <> fail and IsBound( A.glOper ) then
             # once the orbit budget is spent, one last attempt without a
             # work bound; otherwise the enumeration has applied each gl
             # generator to about every point of every block
@@ -449,7 +449,7 @@ BindGlobal( "PGHybridOrbitStabilizer",
             Info( InfoAutGrp, 2, "    gl-orbit exceeds limit ", limit );
             return fail;
         fi;
-        round := round * PG_ESCALATE_GROWTH;
+        round := round * AUTPGRP_ESCALATE_GROWTH;
     until false;
     Info( InfoAutGrp, 4, "    gl-orbit -- length ", OS.length,
                          " -- gens ",Length(OS.stabl));
@@ -465,7 +465,7 @@ BindGlobal( "PGHybridOrbitStabilizer",
           ", ", Runtime() - time, " ms" );
 
     # nice the glAutos if necessary
-    if NICE_STAB and OS.length > 1 then NiceHybridGroup( A ); fi;
+    if AUTPGRP_NICE_STAB and OS.length > 1 then NiceHybridGroup( A ); fi;
     return true;
 end );
 

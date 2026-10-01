@@ -23,13 +23,13 @@ gap> A.size;
 1572864
 
 # The orbit budget
-gap> PERM_STAB := false;;
+gap> AUTPGRP_PERM_STAB := false;;
 gap> AutomorphismGroupPGroup( G : OrbitLimit := 1000 );
 #I  step 1: 2^6 -- init automorphisms 
 #I  step 2: 2^3 -- aut grp has size 20158709760
 #I  step 2: orbit limit exceeded
 fail
-gap> PERM_STAB := true;;
+gap> AUTPGRP_PERM_STAB := true;;
 gap> A := AutomorphismGroupPGroup( G : OrbitLimit := 1000 );;
 #I  step 1: 2^6 -- init automorphisms 
 #I  step 2: 2^3 -- aut grp has size 20158709760

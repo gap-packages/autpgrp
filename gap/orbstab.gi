@@ -68,9 +68,9 @@ InstallGlobalFunction( PGOrbitStabilizer,
     if interrupt then
         str := Interrupt("chop M/N and N: (y/n)");
         if str = "y" then
-            CHOP_MULT := true;
+            AUTPGRP_CHOP_MULT := true;
         elif str = "n" then
-            CHOP_MULT := false;
+            AUTPGRP_CHOP_MULT := false;
         else
             Print("not a valid argument");
             return true;
@@ -84,7 +84,7 @@ InstallGlobalFunction( PGOrbitStabilizer,
     modu := GModuleByMats( mats, l, A.field );
     chop := [[], baseN, baseM];
 
-    if CHOP_MULT then
+    if AUTPGRP_CHOP_MULT then
         chop := BasesCompositionSeriesThrough( modu, chop[2] );
     fi;
 
