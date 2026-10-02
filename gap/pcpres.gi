@@ -183,3 +183,14 @@ InstallGlobalFunction( InnerAutGroupPGroup,
     I := Subgroup(C, imgs );
     return I;
   end);
+
+#############################################################################
+##
+#F PcSubAutPGroup( C, A ). . .  embed A, a subgroup of Aut(G), into pc group
+##
+InstallGlobalFunction( PcSubAutPGroup, 
+  function(C, A)
+    local L;
+    L := List(GeneratorsOfGroup(A), x -> ImageAutPGroup(C!.autrec, C, x));
+    return Subgroup(C, L);
+  end);
